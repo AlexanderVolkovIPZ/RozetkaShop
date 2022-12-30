@@ -1,0 +1,104 @@
+.error {
+    color: red;
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+body{
+    background: -webkit-linear-gradient(90deg, #b6c3ca,#ffffff);
+    background: linear-gradient(90deg, #b6c3ca,#ffffff);
+}
+.labelRozetka{
+    font-family: 'Nosifer', serif;
+    font-style: normal;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+.labelRozetka:hover{
+    color: white;
+}
+.form-signing,.login-error{
+    max-width: 350px;
+}
+
+.addCategoryLink{
+    text-decoration: none;
+}
+.product-list .card:hover {
+    box-shadow: 0 0 10px 5px dimgrey;
+    transform: scale(1.07);
+}
+.product-list .card:hover {
+    transition-duration: 0.75s;
+}
+.product-list a{
+    text-decoration: none;
+}
+
+.mainPhotoProduct, .photoProductSlider:hover{
+    transform: scale(1.05);
+    transition-duration: 0.4s;
+}
+
+.btnWishProduct:hover,.customerButtonsCardBody:hover,.mainPhotoProduct:hover,.btnUpdateProduct:hover,.btnDeleteProduct:hover{
+    transform: scale(1.10);
+    transition-duration: 0.2s;
+}
+.button, .btnSettings{
+    cursor: pointer;
+}
+
+.svgProductAvailable,.svgProductNotAvailable {
+    margin-right: 7px;
+}
+
+.priceProduct{
+    font-weight: 600;
+}
+.btnAddProductToBasket{
+    padding-top: 6px;
+    padding-bottom: 6px
+}
+/*.carousel-control-next-icon{*/
+
+/*    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%20fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");*/
+/*}*/
+/*.main-header{*/
+/*    position: fixed;*/
+/*    width: 100%;*/
+
+/*    z-index: 3;*/
+
+/*}*/
+/*nav{*/
+/*    padding-top: 50px;*/
+/*}*/
+
+@media (max-width: 652px) {
+    .menu-burger-admin{
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 425px) {
+    .menu-burger-admin{
+        margin-right: 50px;
+    }
+}
+@media (max-width: 768px) {
+    .productDescription{
+        margin-top: 15px;
+    }
+}
+
+/*header>div{*/
+/*    position: fixed;*/
+/*    z-index: 3;*/
+/*}*/
+
+/*.LoginRegisterControl{*/
+/*    width: 100%;*/
+/*}*/
