@@ -43,8 +43,8 @@ body{
     transition-duration: 0.4s;
 }
 
-.btnWishProduct:hover,.customerButtonsCardBody:hover,.mainPhotoProduct:hover,.btnUpdateProduct:hover,.btnDeleteProduct:hover{
-    transform: scale(1.10);
+.btnWishProduct:hover,.customerButtonsCardBody:hover,.mainPhotoProduct:hover,.btnUpdateProduct:hover,.btnDeleteProduct:hover,.changeUserAccessIcon:hover{
+    transform: scale(1.09);
     transition-duration: 0.2s;
 }
 .button, .btnSettings{
@@ -62,6 +62,122 @@ body{
     padding-top: 6px;
     padding-bottom: 6px
 }
+
+.changeUserAccessIcon:hover{
+    fill: darkred;
+}
+.basketFormInputCountProduct{
+    width: 50px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid black;
+    font-size: 18px;
+}
+.addProductCountBasket,.removeProductCountBasket,.btnRemoveProductFromBasket,.btnDeleteProductFromBasket{
+    cursor: pointer;
+}
+.imgBasket{
+    width: 91px;
+    height: 60px;
+    border-radius: 8px;
+}
+.imgBasket:hover{
+    scale: 1.06;
+}
+.btnRemoveProductFromBasket:hover,.wrapperBasketProductCount>svg:hover,.btnDeleteProductFromBasket:hover{
+    scale: 1.2;
+    transition-duration: 0.3s;
+}
+.wrapperBasketProductCount{
+    width: 114px;
+}
+.wrapperBasketProductCount>svg:hover,.btnDeleteProductFromBasket:hover{
+    fill: red;
+}
+svg{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.svgUserDates, .svgUserLogin, .svgUserPassword{
+    margin-right: 20px;
+}
+.btnEditLogin{
+    margin-left: 15px;
+}
+
+.editPassword1Wrapper, .editPassword2Wrapper{
+    position: relative;
+}
+
+.labelLoginEdit{
+    margin-right: 15px
+}
+
+.password-control {
+    position: absolute;
+    right: 6px;
+    bottom: 4px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url(/files/additionalsForCSS/eye_30px.png) 0 0 no-repeat;
+}
+.password-control.view {
+    background: url(/files/additionalsForCSS/invisible_30px.png) 0 0 no-repeat;
+}
+.mark-star{
+    width: 40px;
+    height: 40px;
+    background-image: url('/files/additionalsForCSS/reitingStars/mark-star-black.png');
+    background-size: cover;
+    cursor: pointer;
+}
+.mark-star-for-user{
+    width: 20px;
+    height: 20px;
+    background-image: url('/files/additionalsForCSS/reitingStars/mark-star-black.png');
+    background-size: cover;
+    cursor: pointer;
+}
+.reitingRadio{
+    visibility: hidden;
+    position: absolute;
+}
+
+.iconCommentBought{
+    fill: green;
+    margin-right: 10px;
+}
+.commentWrapper{
+    height: 200px;
+    overflow: auto;
+    text-align: justify;
+    background-color: white
+}
+
+/*.mark-star{*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    background-image: url('/files/additionalsForCSS/reitingStars/mark-star-black.png');*/
+/*    background-size: cover;*/
+/*    cursor: pointer;*/
+/*}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*.carousel-control-next-icon{*/
 
 /*    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%20fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");*/
@@ -93,12 +209,3 @@ body{
         margin-top: 15px;
     }
 }
-
-/*header>div{*/
-/*    position: fixed;*/
-/*    z-index: 3;*/
-/*}*/
-
-/*.LoginRegisterControl{*/
-/*    width: 100%;*/
-/*}*/

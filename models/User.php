@@ -24,7 +24,7 @@ class User
     }
     public static function selectUser($fieldsList = "*", $conditionsArray = null, $orderByArray = null, $limit = null, $offset = null)
     {
-        \core\Core::getInstance()->db->select(
+       $users =  \core\Core::getInstance()->db->select(
             self::$tableName,
             $fieldsList,
             $conditionsArray,
@@ -32,6 +32,7 @@ class User
             $limit,
             $offset
         );
+       return $users;
     }
 
     public static function deleteUser($where = null)
@@ -43,7 +44,7 @@ class User
     }
 
     public static function updateUser($id,$updatesArray){
-        $updatesArray = Utils::filterArray($updatesArray,['firstname','middlename','lastname']);
+        $updatesArray = Utils::filterArray($updatesArray,['firstName','middleName','lastName', 'typeAccess','password','login']);
         \core\Core::getInstance()->db->update(
             self::$tableName,
             $updatesArray,
@@ -65,11 +66,11 @@ class User
         $user = \core\Core::getInstance()->db->select(self::$tableName,'*',
             ['login'=>$login, 'password'=>self::hashPassword($password)]);
         if(!empty($user))
-            var_dump($user);
             return $user[0];
         return null;
     }
     public static function logoutUser(){
+        session_destroy();
         unset($_SESSION['user']);
     }
     public static function authenticationUser($user){

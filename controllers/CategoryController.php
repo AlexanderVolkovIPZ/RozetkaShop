@@ -130,6 +130,10 @@ class CategoryController extends Controller
             }else{
                 $productsNameInCategory[] = $products[0]['name'];
             }
+        }else{
+            return $this->render('views/category/empty_category.php',[
+                'name' => $category['name']
+                ]);
         }
 
 

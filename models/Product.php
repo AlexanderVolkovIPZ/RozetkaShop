@@ -28,8 +28,9 @@ class Product
         ]);
     }
 
-    public static function getProductById($id){
-        $row = Core::getInstance()->db->select(self::$tableName,'*',[
+    public static function getProductById($id, $array = "*"){
+
+        $row = Core::getInstance()->db->select(self::$tableName,$array,[
             'id'=>$id
         ]);
 

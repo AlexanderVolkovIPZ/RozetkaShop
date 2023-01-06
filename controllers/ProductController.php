@@ -5,6 +5,7 @@ namespace controllers;
 use core\Controller;
 use core\Core;
 use models\Category;
+use models\Comment;
 use models\PhotoProduct;
 use models\Product;
 use models\User;
@@ -124,16 +125,66 @@ class ProductController extends Controller
         }
     }
 
-
     public function viewAction($params)
     {
+        $errors = [];
         $id = intval($params[0]);
+        $user= User::getCarrentAuthenticatedUser();
         $rows = PhotoProduct::getProductPhotoByName(Product::getProductById($id)['name'], 'name');
-
         $product = Product::getProductById($id);
+
+        if(Core::getInstance()->requestMethod=='POST'){
+            $reitingRadio = $_POST['reitingRadio'];
+            $userName = $_POST['cmNameUser'];
+            $cmAdvantages = $_POST['cmAdvantages'];
+            $cmDisadvantages = $_POST['cmDisadvantages'];
+            $comment = $_POST['comment'];
+            $cmNameUser = $_POST['cmNameUser'];
+            $date = date('Y-m-d');
+            if(empty($reitingRadio)){
+                $errors['reitingRadio'] = "Оберіть рейтинг даного товару!";
+            }
+            if(empty($comment)){
+                $errors['comment'] = "Напишіть відгук про даний товар!";
+            }
+            if(empty($cmNameUser)){
+                $errors['cmNameUser'] = "Залишіть своє ім'я та прізвище!";
+            }
+            if(!User::isUserAdmin()||!User::isAuthenticatedUser()){
+                if(!Comment::isLevedCommentByUser($id, $user['id'])){
+                    if(count($errors)>0){
+                        return $this->render(null,[
+                            'errors'=>$errors,
+                            'product' => $product,
+                            'rows' => $rows
+                        ]);
+                    }else{
+                        Comment::addComment([
+                            'id_user'=>$user['id'],
+                            'id_product'=>$id,
+                            'comment'=>$comment,
+                            'reiting'=>$reitingRadio,
+                            'advantages'=>$cmAdvantages,
+                            'disadvantages'=>$cmDisadvantages,
+                            'user_name'=>$userName,
+                            'date'=>$date
+                        ]);
+
+                    }
+                }else{
+                    return $this->render('views/site/error-404.php');
+                }
+            }else{
+                return $this->render('views/site/error-404.php');
+            }
+        }
+        $comments = Comment::selectCommentsByProductId($id);
         return $this->render(null, [
             'product' => $product,
-            'rows' => $rows
+            'rows' => $rows,
+            'errors'=>$errors,
+            'user'=>$user,
+            'comments'=>$comments,
         ]);
     }
 

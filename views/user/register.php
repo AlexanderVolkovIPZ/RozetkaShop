@@ -69,95 +69,95 @@ core\Core::getInstance()->pageParams['title'] = 'Реєстрація на са�
     <button class="w-100 btn btn-primary btn-lg" type="submit">Зареєструватися</button>
 </form>
 <script>
-    let firstNameField = document.getElementById('firstname');
-    let middleNameField = document.getElementById('middlename');
-    let lastNameField = document.getElementById('lastname');
-    let loginField = document.getElementById('login');
-    let password1Field = document.getElementById('password1');
-    let password2Field  = document.getElementById('password2');
-    let invalidFeedback = document.querySelectorAll('.invalid-feedback');
-
-
-    firstNameField.addEventListener('change',()=>{
-        if (firstNameField.value === ""){
-            firstNameField.classList.add('is-invalid');
-            firstNameField.classList.remove('is-valid');
-
-        }else{
-            firstNameField.classList.add('is-valid');
-            firstNameField.classList.remove('is-invalid');
-        }
-    })
-
-    middleNameField.addEventListener('change',()=>{
-        if (middleNameField.value === ""){
-            middleNameField.classList.add('is-invalid');
-            middleNameField.classList.remove('is-valid');
-        }else{
-            middleNameField.classList.add('is-valid');
-            middleNameField.classList.remove('is-invalid');
-        }
-    })
-
-    lastNameField.addEventListener('change',()=>{
-        if (lastNameField.value === ""){
-            lastNameField.classList.add('is-invalid');
-            lastNameField.classList.remove('is-valid');
-        }else{
-            lastNameField.classList.add('is-valid');
-            lastNameField.classList.remove('is-invalid');
-        }
-    })
-
-
-    loginField.addEventListener('change',()=>{
-        var pattern = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-        if (loginField.value === ""|| pattern.test(loginField.value)===false){
-            loginField.classList.add('is-invalid');
-            loginField.classList.remove('is-valid');
-        }else{
-            loginField.classList.add('is-valid');
-            loginField.classList.remove('is-invalid');
-        }
-    })
-
-    password1Field.addEventListener('change',()=>{
-        if (password1Field.value === "" || (password2Field.value!=="" && password1Field.value!==password2Field.value)){
-            password1Field.classList.add('is-invalid');
-            password1Field.classList.remove('is-valid');
-        }else{
-            password1Field.classList.add('is-valid');
-            password1Field.classList.remove('is-invalid');
-            if(password1Field.value===password2Field.value){
-                password2Field.classList.add('is-valid');
-                password2Field.classList.remove('is-invalid');
-            }
-        }
-    })
-
-    password2Field.addEventListener('change',()=>{
-        if (password2Field.value === "" || (password1Field.value!=="" && password1Field.value!==password2Field.value)){
-            password2Field.classList.add('is-invalid');
-            password2Field.classList.remove('is-valid');
-        }else{
-            password2Field.classList.add('is-valid');
-            password2Field.classList.remove('is-invalid');
-            if(password1Field.value===password2Field.value){
-                password1Field.classList.add('is-valid');
-                password1Field.classList.remove('is-invalid');
-            }
-        }
-    })
-
-
-    for(let i = 0;i<invalidFeedback.length;i++){
-        if(invalidFeedback[i].innerText.trim().length!==0){
-            // alert(invalidFeedback[i].innerText);
-            // alert(invalidFeedback[i].length)
-            invalidFeedback[i].previousElementSibling.classList.add('is-invalid');
-            invalidFeedback[i].previousElementSibling.classList.remove('is-valid');
-        }
-    }
+    // let firstNameField = document.getElementById('firstname');
+    // let middleNameField = document.getElementById('middlename');
+    // let lastNameField = document.getElementById('lastname');
+    // let loginField = document.getElementById('login');
+    // let password1Field = document.getElementById('password1');
+    // let password2Field  = document.getElementById('password2');
+    // let invalidFeedback = document.querySelectorAll('.invalid-feedback');
+    //
+    //
+    // firstNameField.addEventListener('change',()=>{
+    //     if (firstNameField.value === ""){
+    //         firstNameField.classList.add('is-invalid');
+    //         firstNameField.classList.remove('is-valid');
+    //
+    //     }else{
+    //         firstNameField.classList.add('is-valid');
+    //         firstNameField.classList.remove('is-invalid');
+    //     }
+    // })
+    //
+    // middleNameField.addEventListener('change',()=>{
+    //     if (middleNameField.value === ""){
+    //         middleNameField.classList.add('is-invalid');
+    //         middleNameField.classList.remove('is-valid');
+    //     }else{
+    //         middleNameField.classList.add('is-valid');
+    //         middleNameField.classList.remove('is-invalid');
+    //     }
+    // })
+    //
+    // lastNameField.addEventListener('change',()=>{
+    //     if (lastNameField.value === ""){
+    //         lastNameField.classList.add('is-invalid');
+    //         lastNameField.classList.remove('is-valid');
+    //     }else{
+    //         lastNameField.classList.add('is-valid');
+    //         lastNameField.classList.remove('is-invalid');
+    //     }
+    // })
+    //
+    //
+    // loginField.addEventListener('change',()=>{
+    //     var pattern = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    //     if (loginField.value === ""|| pattern.test(loginField.value)===false){
+    //         loginField.classList.add('is-invalid');
+    //         loginField.classList.remove('is-valid');
+    //     }else{
+    //         loginField.classList.add('is-valid');
+    //         loginField.classList.remove('is-invalid');
+    //     }
+    // })
+    //
+    // password1Field.addEventListener('change',()=>{
+    //     if (password1Field.value === "" || (password2Field.value!=="" && password1Field.value!==password2Field.value)){
+    //         password1Field.classList.add('is-invalid');
+    //         password1Field.classList.remove('is-valid');
+    //     }else{
+    //         password1Field.classList.add('is-valid');
+    //         password1Field.classList.remove('is-invalid');
+    //         if(password1Field.value===password2Field.value){
+    //             password2Field.classList.add('is-valid');
+    //             password2Field.classList.remove('is-invalid');
+    //         }
+    //     }
+    // })
+    //
+    // password2Field.addEventListener('change',()=>{
+    //     if (password2Field.value === "" || (password1Field.value!=="" && password1Field.value!==password2Field.value)){
+    //         password2Field.classList.add('is-invalid');
+    //         password2Field.classList.remove('is-valid');
+    //     }else{
+    //         password2Field.classList.add('is-valid');
+    //         password2Field.classList.remove('is-invalid');
+    //         if(password1Field.value===password2Field.value){
+    //             password1Field.classList.add('is-valid');
+    //             password1Field.classList.remove('is-invalid');
+    //         }
+    //     }
+    // })
+    //
+    //
+    // for(let i = 0;i<invalidFeedback.length;i++){
+    //     if(invalidFeedback[i].innerText.trim().length!==0){
+    //         // alert(invalidFeedback[i].innerText);
+    //         // alert(invalidFeedback[i].length)
+    //         invalidFeedback[i].previousElementSibling.classList.add('is-invalid');
+    //         invalidFeedback[i].previousElementSibling.classList.remove('is-valid');
+    //     }
+    // }
 
 </script>
 
