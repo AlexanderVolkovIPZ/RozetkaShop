@@ -1,6 +1,6 @@
 <?php
 /** @var array $basket */
-var_dump($basket);
+
 ?>
 <form action="" method="post" enctype="multipart/form-data">
     <div class="container">
@@ -19,6 +19,7 @@ var_dump($basket);
             <tbody class="bodyBasketTable tableBody">
 
             <?php foreach ($basket['products'] as $row): ?>
+
                 <tr class="align-items-center <?=$row['product']['id']?>" >
                     <?php if (!empty($row['photo'])): ?>
                         <td><img src="files/product/<?= $row['photo'] ?>" alt="" class="imgBasket" data-set = "<?=$row['product']['id']?>"</td>
@@ -44,7 +45,7 @@ var_dump($basket);
                             </svg>
                         </div>
                     </td>
-                    <td><span class="allSumOneProductInBasket"><?= $row['product']['price'] * $row['count'] ?></span>
+                    <td><span class="allSumOneProductInBasket" id="<?=$row['product']['id']?>"><?= $row['product']['price'] * $row['count'] ?></span>
                     </td>
                     <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -61,7 +62,7 @@ var_dump($basket);
                 <th></th>
                 <th></th>
                 <th></th>
-                <th><?=$basket['totalPrice']." ₴"?></th>
+                <th class="allSumBasket"><?=$basket['totalPrice']." ₴"?></th>
                 <th></th>
             </tr>
             </tfoot>

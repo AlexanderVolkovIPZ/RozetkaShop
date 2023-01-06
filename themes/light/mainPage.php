@@ -129,7 +129,11 @@ else
                                 </svg>
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success countProductsInBasket">
                                     <?php if(isset($_SESSION['basket'])) {
-                                        echo count($_SESSION['basket']);
+                                        $count = 0;
+                                        foreach ($_SESSION['basket'] as $key=>$value){
+                                            $count+=$value;
+                                        }
+                                        echo $count;
                                     }else{
                                         echo 0;
                                     }

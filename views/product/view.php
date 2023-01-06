@@ -186,7 +186,7 @@ use \models\Comment;
                                         </div>
                                         <div class="mt-3">
                                             <label for="comment" class="form-label">Коментар</label>
-                                            <textarea class="form-control" placeholder="Написати..." name="comment"
+                                            <textarea class="form-control commentArea" placeholder="Написати..." name="comment"
                                                       id="comment"></textarea>
                                             <div class="invalid-feedback">
                                                 <?php if (!empty($errors['comment'])): ?>

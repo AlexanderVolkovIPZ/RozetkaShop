@@ -15,6 +15,16 @@ class Basket
         $_SESSION['basket'][$productId] += $count;
     }
 
+    public static function getCountProductInBasket(){
+        $count = 0;
+        foreach ($_SESSION['basket'] as $key =>$value){
+            $count+=$value;
+        }
+        return $count;
+    }
+
+
+
     public static function deleteFromBasket($productId){
         foreach($_SESSION['basket'] as $key=>$value){
             if($key == $productId){
@@ -29,7 +39,6 @@ class Basket
                 $_SESSION['basket'][$key] = $count;
             }
         }
-        return $count;
     }
 
     public static function updateBasketInDB($userId)
@@ -82,5 +91,20 @@ class Basket
             return $resultBasketArray;
         }
         return null;
+    }
+
+    public static function getAllSumBasket(){
+        $sum = 0;
+        foreach ($_SESSION['basket'] as $key => $value){
+            $product = Product::getProductById($key);
+            $sum+=$value*$product['price'];
+        }
+        return $sum;
+    }
+
+    public static function getSumOneRecord($id, $count){
+        $product = Product::getProductById($id);
+        $sum = $count*$product['price'];
+        return $sum;
     }
 }
