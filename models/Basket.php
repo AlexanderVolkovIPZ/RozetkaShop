@@ -107,4 +107,11 @@ class Basket
         $sum = $count*$product['price'];
         return $sum;
     }
+
+    public static  function deleteProductFromBasketStorage($productId, $userId){
+        Core::getInstance()->db->delete(self::$tableName,[
+            'id_user'=>$userId,
+            'id_product'=>$productId
+        ]);
+    }
 }

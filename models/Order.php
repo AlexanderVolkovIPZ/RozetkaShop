@@ -7,8 +7,8 @@ use core\Core;
 class Order
 {
     protected static string $tableName = '_order_';
-    public static function createOreder(){
-
+    public static function createOreder($filedList){
+        Core::getInstance()->db->insert(self::$tableName,$filedList);
     }
 
     public static function getAllTowns(){

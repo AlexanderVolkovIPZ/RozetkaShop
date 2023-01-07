@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use core\Core;
 use models\Basket;
 use models\Order;
 use models\User;
@@ -56,6 +57,55 @@ class BasketController extends \core\Controller
     }
 
     public  function orderAction(){
+//        var_dump($_POST);
+        if(Core::getInstance()->requestMethod=="POST"){
+            $userId = User::getCarrentAuthenticatedUser()['id'];
+            $firstName = $_POST['firstName'];
+            $middleName = $_POST['middleName'];
+            $mobile= $_POST['mobile'];
+            $email = $_POST['email'];
+            $selectTown = $_POST['selectTown'];
+            $selectDestination = $_POST['selectDestination'];
+            $typePayment = $_POST['typePayment'];
+            if (User::isAuthenticatedUser()){
+                foreach ($_SESSION['basket'] as $key=>$value){
+                    $orderList=[
+                        'id_product'=>$key,
+                        'id_destination'=>$selectDestination,
+                        'id_user'=>$userId,
+                        'mobile'=>$mobile,
+                        'typePayment_id'=>$typePayment,
+                        'count'=>$value
+                    ];
+                    Order::createOreder($orderList);
+                    Basket::deleteProductFromBasketStorage($key, $userId);
+                }
+            }else{
+                foreach ($_SESSION['basket'] as $key=>$value){
+                    $orderList=[
+                        'id_product'=>$key,
+                        'id_destination'=>$selectDestination,
+                        'mobile'=>$mobile,
+                        'firstName'=>$firstName,
+                        'middleName'=>$middleName,
+                        'login'=>$email,
+                        'typePayment_id'=>$typePayment,
+                        'count'=>$value
+                    ];
+                    Order::createOreder($orderList);
+                }
+            }
+            $_SESSION['basket'] = [];
+            $this->redirect('/basket/order_success');
+        }
+
+
+
+
+
+
+
+
         $basket = Basket::getProductsInBasket();
         $towns = Order::getAllTowns();
         if(User::isAuthenticatedUser()){
@@ -66,8 +116,14 @@ class BasketController extends \core\Controller
                 'towns'=>$towns
             ]);
         }
+        return $this->render(null,[
+            'basket'=>$basket,
+            'towns'=>$towns
+        ]);
+    }
+    public function order_successAction(){
         return $this->render();
     }
-}
 
+}
 
