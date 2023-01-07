@@ -1,7 +1,8 @@
 <?php
 /** @var array $basket */
 /** @var array $user */
-//var_dump($basket);
+/** @var array $towns */
+//var_dump($towns);
 ?>
 <div class="container">
     <div class="row">
@@ -127,14 +128,12 @@
                                 <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                             </svg>
-                            <select class="form-select" aria-label="Пример выбора по умолчанию">
-                                <option selected>Оберіть ваше місто</option>
-                                <option value="1">Житомир</option>
-                                <option value="2">Київ</option>
-                                <option value="3">Дніпро</option>
-                                <option value="4">Одеса</option>
+                            <select class="form-select selectTown" name="selectTown" aria-label="Пример выбора по умолчанию">
+                                <option value="0" selected>Оберіть ваше місто</option>
+                                <?php foreach ($towns as $town):?>
+                                    <option value="<?=$town['id']?>"><?=$town['name']?></option>
+                                <?php endforeach;?>
                             </select>
-
                         </div>
 
 
@@ -145,19 +144,8 @@
                                 <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
                                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                             </svg>
-                            <select class="form-select" aria-label="Пример выбора по умолчанию">
-                                <option selected>Оберіть пункт видачі Rozetka</option>
-                                <option value="1">Житомир</option>
-                                <option value="2">Київ</option>
-                                <option value="3">Дніпро</option>
-                                <option value="4">Одеса</option>
-                                <option value="5">Миколаїв</option>
-                                <option value="6">Херсон</option>
-                                <option value="7">Маріуполь</option>
-                                <option value="8">Херсон</option>
-                                <option value="9">Запоріжжя</option>
-                                <option value="10">Донецьк</option>
-                                <option value="11">Луганськ</option>
+                            <select class="form-select selectDestination" name="selectDestination" aria-label="Пример выбора по умолчанию">
+                                <option value="default" selected>Оберіть пункт видачі Rozetka</option>
                             </select>
                         </div>
                     </div>
@@ -172,14 +160,14 @@
                         </div>
                         <div class="radioTypePayment mt-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="typePayment" id="flexRadioDefault1"
+                                <input class="form-check-input" type="radio" name="typePayment" value="cashType" id="flexRadioDefault1"
                                        checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Готівковий розрахунок (при отриманні товару)
                                 </label>
                             </div>
                             <div class="form-check mt-2">
-                                <input class="form-check-input" type="radio" name="typePayment" id="flexRadioDefault2">
+                                <input class="form-check-input" type="radio" name="typePayment" value="cashTypeNot" id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Безготівковий розрахунок (при отриманні товару)
                                 </label>
@@ -190,7 +178,9 @@
             </div>
         </div>
         <div class="col-3">
-            Ітого
+            <div>
+
+            </div>
         </div>
     </div>
 </div>

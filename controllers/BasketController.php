@@ -3,6 +3,7 @@
 namespace controllers;
 
 use models\Basket;
+use models\Order;
 use models\User;
 
 class BasketController extends \core\Controller
@@ -46,14 +47,23 @@ class BasketController extends \core\Controller
         exit (json_encode(Basket::getAllSumBasket()));
     }
 
-    public  function orderAction(){
+    public static function destinationsAction(){
+        $id = intval($_GET['id']);
+        if(!empty($id)){
+            exit (json_encode(Order::getAllDestinationsByIdTown($id)));
+        }
 
+    }
+
+    public  function orderAction(){
         $basket = Basket::getProductsInBasket();
+        $towns = Order::getAllTowns();
         if(User::isAuthenticatedUser()){
             $user = User::getCarrentAuthenticatedUser();
             return $this->render(null,[
                 'user'=>$user,
-                'basket'=>$basket
+                'basket'=>$basket,
+                'towns'=>$towns
             ]);
         }
         return $this->render();
