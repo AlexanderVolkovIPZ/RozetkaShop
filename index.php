@@ -11,7 +11,6 @@ spl_autoload_register(function ($className) {
 });
 
 
-
 $core = \core\Core::getInstance();
 $core->initialize();
 $core->run();

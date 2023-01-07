@@ -54,7 +54,7 @@ class Controller
 //            $globalParams = [];
 //        }
 //        $moduleName = strtolower((new \ReflectionClass($this))->getShortName());
-//        $globalParams['PageContent'] = $tpl->render("views/{$moduleName}/{$viewName}.php");
+//        $globalParams['PageContent'] = $tpl->render("views/{$moduleName}/{$viewName}index.php");
 //        return $globalParams;
 //    }
 }

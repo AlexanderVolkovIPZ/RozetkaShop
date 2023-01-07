@@ -108,7 +108,7 @@ class Core
 //     * @param $className string Назва класу
 //     */
 //    public static function __autoload($className){
-//        $fileName = $className.'.php';
+//        $fileName = $className.'index.php';
 //        if(is_file($fileName)){
 //            include ($fileName);
 //        }

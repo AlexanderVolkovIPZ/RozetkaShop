@@ -157,6 +157,29 @@ svg{
     background-color: white
 }
 
+.sumOrder,.redactLink{
+    margin-right: 38px;
+}
+.svgLocation,.radioTypePayment{
+    margin-left: 30px;
+}
+
+.textLabel{
+    font-size: 12px;
+}
+
+.textValue{
+    font-size: 16px;
+}
+
+.imgOrder{
+    width: 73px;
+    height: 48px
+}
+
+a{
+    text-decoration: none;
+}
 /*.mark-star{*/
 /*    width: 40px;*/
 /*    height: 40px;*/

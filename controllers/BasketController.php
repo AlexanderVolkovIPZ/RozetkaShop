@@ -45,6 +45,19 @@ class BasketController extends \core\Controller
     public static function sumAction(){
         exit (json_encode(Basket::getAllSumBasket()));
     }
+
+    public  function orderAction(){
+
+        $basket = Basket::getProductsInBasket();
+        if(User::isAuthenticatedUser()){
+            $user = User::getCarrentAuthenticatedUser();
+            return $this->render(null,[
+                'user'=>$user,
+                'basket'=>$basket
+            ]);
+        }
+        return $this->render();
+    }
 }
 
 

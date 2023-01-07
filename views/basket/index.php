@@ -68,7 +68,7 @@
             </tfoot>
         </table>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-success">Оформити замовлення</button>
+            <a class="btn btn-success" href="basket/order">Оформити замовлення</a>
         </div>
         <?php else:?>
             <div class="alert alert-warning d-flex align-items-center w-100 h-25 mx-3 mt-3" role="alert">
