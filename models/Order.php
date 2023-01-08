@@ -21,10 +21,35 @@ class Order
         return $destinations;
     }
 
+    public static function getDestinationById($id){
+        $destination = Core::getInstance()->db->select('destination','*',[
+            'id'=>$id
+        ]);
+        return $destination[0];
+    }
+
+    public static function getTypePaymentById($id){
+        $type = Core::getInstance()->db->select('typePayment','*',[
+            'id'=>$id
+        ]);
+        return $type[0];
+    }
+
+
+
     public static function getAllDestinationsByIdTown($id){
         $destinations = Core::getInstance()->db->select('destination',"*",[
             'id_town'=>$id
         ]);
         return $destinations;
+    }
+
+    public static function getAllOrders(){
+        $orders = Core::getInstance()->db->select(self::$tableName,"*");
+        if(!empty($orders)){
+            return $orders;
+        }else{
+            return null;
+        }
     }
 }

@@ -57,8 +57,10 @@ class BasketController extends \core\Controller
     }
 
     public  function orderAction(){
-//        var_dump($_POST);
+        $basket = Basket::getProductsInBasket();
+        $towns = Order::getAllTowns();
         if(Core::getInstance()->requestMethod=="POST"){
+            $errors = [];
             $userId = User::getCarrentAuthenticatedUser()['id'];
             $firstName = $_POST['firstName'];
             $middleName = $_POST['middleName'];
@@ -67,32 +69,71 @@ class BasketController extends \core\Controller
             $selectTown = $_POST['selectTown'];
             $selectDestination = $_POST['selectDestination'];
             $typePayment = $_POST['typePayment'];
+
+            if(empty($mobile)){
+                $errors['mobile'] = "Відсутній номер мобільного телефону!";
+            }
+            if(empty($firstName)){
+                $errors['firstName'] = "Відсутнє ваше ім'я!";
+            }
+
+            if(empty($middleName)){
+                $errors['middleName'] = "Відсутнє ваше прізвище!";
+            }
+
+            if(empty($email )){
+                $errors['email'] = "Відсутній адрес електронної пошти!";
+            }
+            if(empty($selectDestination)||$selectDestination=='default'){
+                $errors['selectDestination'] = "Відсутнє місце доставки товару!";
+            }
+
             if (User::isAuthenticatedUser()){
-                foreach ($_SESSION['basket'] as $key=>$value){
-                    $orderList=[
-                        'id_product'=>$key,
-                        'id_destination'=>$selectDestination,
-                        'id_user'=>$userId,
-                        'mobile'=>$mobile,
-                        'typePayment_id'=>$typePayment,
-                        'count'=>$value
-                    ];
-                    Order::createOreder($orderList);
-                    Basket::deleteProductFromBasketStorage($key, $userId);
+                $user = User::getCarrentAuthenticatedUser();
+                if(count($errors)>0){
+                    return $this->render(null,[
+                        'user'=>$user,
+                        'basket'=>$basket,
+                        'towns'=>$towns,
+                        'errors'=>$errors
+                    ]);
+                }else{
+                    foreach ($_SESSION['basket'] as $key=>$value){
+                        $orderList=[
+                            'id_product'=>$key,
+                            'id_destination'=>$selectDestination,
+                            'id_user'=>$userId,
+                            'mobile'=>$mobile,
+                            'typePayment_id'=>$typePayment,
+                            'count'=>$value,
+                            'sum'=>$basket['totalPrice']
+                        ];
+                        Order::createOreder($orderList);
+                        Basket::deleteProductFromBasketStorage($key, $userId);
+                    }
                 }
             }else{
-                foreach ($_SESSION['basket'] as $key=>$value){
-                    $orderList=[
-                        'id_product'=>$key,
-                        'id_destination'=>$selectDestination,
-                        'mobile'=>$mobile,
-                        'firstName'=>$firstName,
-                        'middleName'=>$middleName,
-                        'login'=>$email,
-                        'typePayment_id'=>$typePayment,
-                        'count'=>$value
-                    ];
-                    Order::createOreder($orderList);
+                if(count($errors)>0){
+                    return $this->render(null,[
+                        'basket'=>$basket,
+                        'towns'=>$towns,
+                        'errors'=>$errors
+                    ]);
+                }else{
+                    foreach ($_SESSION['basket'] as $key=>$value){
+                        $orderList=[
+                            'id_product'=>$key,
+                            'id_destination'=>$selectDestination,
+                            'mobile'=>$mobile,
+                            'firstName'=>$firstName,
+                            'middleName'=>$middleName,
+                            'login'=>$email,
+                            'typePayment_id'=>$typePayment,
+                            'count'=>$value,
+                            'sum'=>$basket['totalPrice']
+                        ];
+                        Order::createOreder($orderList);
+                    }
                 }
             }
             $_SESSION['basket'] = [];
@@ -100,14 +141,6 @@ class BasketController extends \core\Controller
         }
 
 
-
-
-
-
-
-
-        $basket = Basket::getProductsInBasket();
-        $towns = Order::getAllTowns();
         if(User::isAuthenticatedUser()){
             $user = User::getCarrentAuthenticatedUser();
             return $this->render(null,[

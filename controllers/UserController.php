@@ -6,6 +6,7 @@ use core\Controller;
 use core\Core;
 use models\Basket;
 use models\Category;
+use models\Order;
 use models\User;
 
 class UserController extends Controller
@@ -165,6 +166,16 @@ class UserController extends Controller
         return $this->render(null,[
             'id'=>$userId
         ]);
+    }
+
+    public function orderAction(){
+        $orders = Order::getAllOrders();
+        if($orders!=null){
+            return $this->render(null,[
+                'orders'=>$orders
+            ]);
+        }
+        return $this->render();
     }
 
 }

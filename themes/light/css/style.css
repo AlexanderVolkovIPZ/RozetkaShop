@@ -43,7 +43,7 @@ body{
     transition-duration: 0.4s;
 }
 
-.btnWishProduct:hover,.customerButtonsCardBody:hover,.mainPhotoProduct:hover,.btnUpdateProduct:hover,.btnDeleteProduct:hover,.changeUserAccessIcon:hover{
+.btnWishProduct:hover,.customerButtonsCardBody:hover,.mainPhotoProduct:hover,.btnUpdateProduct:hover,.btnDeleteProduct:hover,.changeUserAccessIcon:hover, .productWasSend:hover{
     transform: scale(1.09);
     transition-duration: 0.2s;
 }
@@ -63,7 +63,7 @@ body{
     padding-bottom: 6px
 }
 
-.changeUserAccessIcon:hover{
+.changeUserAccessIcon:hover, .productWasSend:hover{
     fill: darkred;
 }
 .basketFormInputCountProduct{
@@ -190,6 +190,20 @@ a{
 .warningPasspord,.orderConditions{
     font-size: 13px;
     text-align: justify;
+}
+
+.invalidDestination{
+    margin-left: 67px;
+}
+
+.tHeadOrders{
+    font-size: 13px;
+    text-align: center;
+    align-items: center;
+}
+
+.tBodyOrders{
+    font-size: 13px;
 }
 /*.mark-star{*/
 /*    width: 40px;*/

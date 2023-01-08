@@ -1,6 +1,7 @@
 <?php
 
 namespace models;
+use core\Core;
 use core\Utils;
 class User
 {
@@ -88,5 +89,12 @@ class User
     public static function isUserAdmin(){
         $user = self::getCarrentAuthenticatedUser();
         return $user['typeAccess']==10;
+    }
+
+    public static function getUserById($id){
+        $user = Core::getInstance()->db->select(self::$tableName,'*',[
+            'id'=>$id
+        ]);
+        return $user[0];
     }
 }

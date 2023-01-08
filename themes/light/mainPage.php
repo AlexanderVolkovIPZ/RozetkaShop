@@ -173,7 +173,6 @@ else
             <div class="container d-flex flex-wrap justify-content-end">
                 <div class="text-end">
                     <?php if (User::isAuthenticatedUser()) : ?>
-                        <!--                    <a href="/user/logout" type="button" class="btn btn-light text-dark me-2">Вийти</a>-->
                         <a type="button" class="btn btn-danger" href="/user/logout">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-box-arrow-left" viewBox="0 0 16 16">
@@ -321,7 +320,7 @@ else
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/user/order">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none"
                                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

@@ -2,6 +2,7 @@
 /** @var array $basket */
 /** @var array $user */
 /** @var array $towns */
+/** @var array $errors */
 ?>
 <div class="container">
     <div class="row">
@@ -25,22 +26,42 @@
                             <label for="orderFirstName" class="text-secondary">Ім'я</label>
                             <input type="text" class="form-control mt-2" id="orderFirstName " name="firstName"
                                    value="<?php if (!empty($user)) echo $user['firstName'] ?>">
+                            <div class="invalid-feedback">
+                                <?php if (!empty($errors['firstName'])): ?>
+                                    <?= $errors['firstName'] ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="col-5">
                             <label for="orderLastName" class="text-secondary">Прізвище</label>
                             <input type="text" class="form-control mt-2" id="orderLastName" name="middleName"
                                    value="<?php if (!empty($user)) echo $user['lastName'] ?>">
+                            <div class="invalid-feedback">
+                                <?php if (!empty($errors['middleName'])): ?>
+                                    <?= $errors['middleName'] ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around row flex-wrap mt-2">
                         <div class="col-5">
                             <label for="orderMobile" class="text-secondary">Мобільний телефон</label>
                             <input type="text" class="form-control mt-2" id="orderMobile" name="mobile">
+                            <div class="invalid-feedback">
+                                <?php if (!empty($errors['mobile'])): ?>
+                                    <?= $errors['mobile'] ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="col-5">
                             <label for="orderEmail" class="text-secondary">Електронна пошта</label>
                             <input type="text" class="form-control mt-2" id="orderEmail" name="email"
                                    value="<?php if (!empty($user)) echo $user['login'] ?>">
+                            <div class="invalid-feedback">
+                                <?php if (!empty($errors['login'])): ?>
+                                    <?= $errors['login'] ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
 
@@ -201,10 +222,15 @@
                                      class="bi bi-house svgLocation" viewBox="0 0 16 16">
                                     <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
                                 </svg>
-                                <select class="form-select selectDestination" name="selectDestination"
+                                <select class="form-select selectDestination form-control" name="selectDestination"
                                         aria-label="Пример выбора по умолчанию">
                                     <option value="default" selected>Оберіть пункт видачі Rozetka</option>
                                 </select>
+                            </div>
+                            <div class="invalid-feedback my-1  invalidDestination">
+                                <?php if (!empty($errors['selectDestination'])): ?>
+                                    <?= $errors['selectDestination'] ?>
+                                <?php endif; ?>
                             </div>
 
 
