@@ -558,11 +558,30 @@ function requestGetDestinations(id,selectDestination){
 let selectTown = document.querySelector('.selectTown');
 let selectDestination = document.querySelector('.selectDestination');
 
-selectTown.addEventListener('change',(event)=>{
-    let selectedValue = +event.target.value;
-    if(selectedValue!=null){
-        requestGetDestinations(selectedValue,selectDestination)
-    }
+if(selectTown!=null){
+    selectTown.addEventListener('change',(event)=>{
+        let selectedValue = +event.target.value;
+        if(selectedValue!=null){
+            requestGetDestinations(selectedValue,selectDestination)
+        }
+    })
+}
 
+///////////////////////////////////////////// CHANGE STATUS PRODUCT ///////////////////////////////
+function sendRequestChangeStatusOrder(orderId){
+    const xhr = new XMLHttpRequest();
+    // console.log(xhr.responseText)
+    xhr.open("GET", `/basket/order_status?id=${orderId}`);
+    xhr.onload=()=>{}
+    xhr.send();
+}
+
+
+let svgBtnChangeStatusProduct = document.querySelectorAll('.productWasSend');
+svgBtnChangeStatusProduct.forEach(button=>{
+    button.addEventListener('click',(event)=>{
+        let orderId = +event.currentTarget.closest('tr').dataset.order;
+        sendRequestChangeStatusOrder(orderId)
+        event.currentTarget.closest('tr').remove();
+    })
 })
-

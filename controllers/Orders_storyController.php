@@ -1,0 +1,21 @@
+<?php
+
+namespace controllers;
+
+use models\Order;
+use models\User;
+
+class Orders_storyController extends \core\Controller
+{
+    public function indexAction(){
+        $user = User::getCarrentAuthenticatedUser();
+        $orders = Order::getAllOrders([
+            'id_user'=>$user['id']
+        ]);
+
+        return $this->render(null,[
+            'user'=>$user,
+            'orders'=>$orders
+        ]);
+    }
+}

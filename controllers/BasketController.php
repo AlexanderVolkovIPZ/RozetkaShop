@@ -158,5 +158,13 @@ class BasketController extends \core\Controller
         return $this->render();
     }
 
+    public function order_statusAction(){
+        $id = intval($_GET['id']);
+        Order::updateOrderById([
+            'status'=>1
+        ],[
+            'id'=>$id
+        ]);
+    }
 }
 

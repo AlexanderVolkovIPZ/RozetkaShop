@@ -35,8 +35,6 @@ class Order
         return $type[0];
     }
 
-
-
     public static function getAllDestinationsByIdTown($id){
         $destinations = Core::getInstance()->db->select('destination',"*",[
             'id_town'=>$id
@@ -44,12 +42,16 @@ class Order
         return $destinations;
     }
 
-    public static function getAllOrders(){
-        $orders = Core::getInstance()->db->select(self::$tableName,"*");
+    public static function getAllOrders($condition = null){
+        $orders = Core::getInstance()->db->select(self::$tableName,"*",$condition);
         if(!empty($orders)){
             return $orders;
         }else{
             return null;
         }
+    }
+
+    public static function updateOrderById($fields,$conditions=null){
+        Core::getInstance()->db->update(self::$tableName,$fields,$conditions);
     }
 }
