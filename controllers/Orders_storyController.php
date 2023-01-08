@@ -13,9 +13,17 @@ class Orders_storyController extends \core\Controller
             'id_user'=>$user['id']
         ]);
 
-        return $this->render(null,[
-            'user'=>$user,
-            'orders'=>$orders
-        ]);
+        if(!empty($orders)){
+            return $this->render(null,[
+                'user'=>$user,
+                'orders'=>$orders
+            ]);
+        }else{
+            return $this->render("views/orders_story/empty.php");
+        }
+    }
+
+    public function emptyAction(){
+        return $this->render();
     }
 }

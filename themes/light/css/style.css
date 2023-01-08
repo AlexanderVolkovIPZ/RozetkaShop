@@ -205,6 +205,22 @@ a{
 .tBodyOrders{
     font-size: 13px;
 }
+
+.stickOrderStory{
+    width: 8px;
+    background-color: yellowgreen;
+    margin-right: 10px;
+}
+
+.labelSecondaryStoryOrder{
+    font-size: 13px;
+}
+.orderHeaderInform{
+    font-size: 15px;
+}
+.linkProductOrderStory{
+    font-size: 14px;
+}
 /*.mark-star{*/
 /*    width: 40px;*/
 /*    height: 40px;*/

@@ -106,7 +106,7 @@ class BasketController extends \core\Controller
                             'mobile'=>$mobile,
                             'typePayment_id'=>$typePayment,
                             'count'=>$value,
-                            'sum'=>$basket['totalPrice']
+                            'date'=>date("Y-m-d")
                         ];
                         Order::createOreder($orderList);
                         Basket::deleteProductFromBasketStorage($key, $userId);
@@ -130,7 +130,7 @@ class BasketController extends \core\Controller
                             'login'=>$email,
                             'typePayment_id'=>$typePayment,
                             'count'=>$value,
-                            'sum'=>$basket['totalPrice']
+                            'date'=>date("d/m/Y")
                         ];
                         Order::createOreder($orderList);
                     }

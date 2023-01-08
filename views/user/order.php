@@ -58,7 +58,6 @@ $counter = 1
             <?php endforeach;?>
         </tbody>
         <tfoot>
-
         </tfoot>
     </table>
 </div>
