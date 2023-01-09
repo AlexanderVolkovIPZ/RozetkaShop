@@ -22,15 +22,12 @@ function check() {
 }
 
 
-
-
-
-////////////// BUTTON CUSTOMER BUY PRODUCT///////////////////
+//////////////////////////// BUTTON CUSTOMER BUY PRODUCT IN CATEGORY///////////////////////////////
 function sendRequestAddProductToBasket(productId) {
     const xhr = new XMLHttpRequest();
     productId = encodeURIComponent(productId);
     xhr.open("GET", `/basket/add?id=${productId}`);
-    xhr.onload=()=>{
+    xhr.onload = () => {
         document.querySelector('.countProductsInBasket').textContent = JSON.parse(xhr.response);
     }
     xhr.send();
@@ -66,11 +63,24 @@ if (productList != null) {
         }
     })
 }
+//////////////////////////// BUTTON CUSTOMER BUY PRODUCT IN PRODUCT///////////////////////////////
+
+let buttonsAddProduct = document.querySelectorAll('.btnAddProductToBasket')
+buttonsAddProduct.forEach(button => {
+    button.addEventListener('click', (event) => {
+
+    if(!event.currentTarget.lastElementChild.classList.contains('d-none')){
+        event.currentTarget.lastElementChild.classList.add('d-none');
+        event.currentTarget.firstElementChild.classList.toggle('d-none');
+        let idProduct = +event.currentTarget.dataset.id
+        sendRequestAddProductToBasket(idProduct)
+    }
+    })
+})
+
 
 ////////////// BUTTON CUSTOMER LIKE PRODUCT///////////////////
 let addProductInLikeList = document.querySelectorAll('.btnAddToLikeList');
-
-
 
 
 // addProductInLikeList.forEach(button => {
@@ -87,36 +97,6 @@ let addProductInLikeList = document.querySelectorAll('.btnAddToLikeList');
 //         event.preventDefault();
 //     })
 // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ////////////// SLIDER OPERATION///////////////////
@@ -210,16 +190,16 @@ function sendRequestAccess(userId, typeAccess) {
     }
     xhr.send();
 }
+
 let buttons = document.querySelectorAll('.changeUserAccess');
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
         event.preventDefault();
-        if (event.target.tagName === "svg") {
-            let valueTypeAccess = +event.target.parentElement.parentElement.previousElementSibling.firstElementChild.value;
-            let userId = +event.target.parentElement.parentElement.previousElementSibling.firstElementChild.dataset.access;
-            if(Number.isFinite(valueTypeAccess)&&(valueTypeAccess===10||valueTypeAccess===1)&& Number.isFinite(userId)){
-                sendRequestAccess(userId, valueTypeAccess);
-            }
+
+        let valueTypeAccess = +event.target.closest('td').previousElementSibling.firstElementChild.value
+        let userId = +event.target.closest('td').previousElementSibling.firstElementChild.dataset.access;
+        if (Number.isFinite(valueTypeAccess) && (valueTypeAccess === 10 || valueTypeAccess === 1) && Number.isFinite(userId)) {
+            sendRequestAccess(userId, valueTypeAccess);
         }
     })
 })
@@ -232,7 +212,7 @@ let inputCountProductBasket = document.querySelectorAll('.basketFormInputCountPr
 
 inputCountProductBasket.forEach(button => {
     button.addEventListener('input', (event) => {
-        event.currentTarget.value =  event.currentTarget.value.replace(/[^0-9]/gi, '')
+        event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]/gi, '')
     })
 
 })
@@ -241,38 +221,40 @@ function updateMethodCountProductBsk(productId, count) {
     const xhr = new XMLHttpRequest();
     console.log(xhr.responseText)
     xhr.open("GET", `/basket/update?id=${productId}&count=${count}`);
-    xhr.onload=()=>{
+    xhr.onload = () => {
         document.querySelector('.countProductsInBasket').textContent = JSON.parse(xhr.response);
     }
     xhr.send();
 }
-function getSumBasket(){
+
+function getSumBasket() {
     const xhr = new XMLHttpRequest();
     console.log(xhr.responseText)
     xhr.open("GET", `/basket/sum`);
-    xhr.onload=()=>{
+    xhr.onload = () => {
         document.querySelector('.allSumBasket').textContent = JSON.parse(xhr.response);
     }
     xhr.send();
 }
 
-function getSumOneRecord(id,count){
+function getSumOneRecord(id, count) {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `/basket/sum_one_record?id=${id}&count=${count}`);
-    xhr.onload=()=>{
+    xhr.onload = () => {
         document.getElementById(id).textContent = JSON.parse(xhr.response);
     }
     xhr.send();
 }
+
 addProductBsk.forEach(button => {
     button.addEventListener('click', (event) => {
-        let eventTarget =event.currentTarget.previousElementSibling;
+        let eventTarget = event.currentTarget.previousElementSibling;
         let count = +eventTarget.value;
         count += 1;
         eventTarget.value = count;
         let productId = +eventTarget.dataset.id;
         updateMethodCountProductBsk(productId, count);
-        getSumOneRecord(productId,count)
+        getSumOneRecord(productId, count)
         getSumBasket();
     })
 })
@@ -281,31 +263,31 @@ removeProductBsk.forEach(button => {
     button.addEventListener('click', (event) => {
         let eventTarget = event.currentTarget.nextElementSibling;
         let count = +eventTarget.value;
-        if(count>1){
+        if (count > 1) {
             count -= 1;
             eventTarget.value = count;
             let productId = +eventTarget.dataset.id;
             updateMethodCountProductBsk(productId, count);
-            getSumOneRecord(productId,count)
+            getSumOneRecord(productId, count)
             getSumBasket();
         }
     })
 })
 
 ///////////////////////////////////////BUTTONS DELETE PRODUCTS FROM BASKET//////////////////////////////////////
-function deleteProductFromBsk(idProduct){
+function deleteProductFromBsk(idProduct) {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `/basket/delete?id=${idProduct}`);
-    xhr.onload=()=>{
+    xhr.onload = () => {
         document.querySelector('.countProductsInBasket').textContent = JSON.parse(xhr.response);
     }
     xhr.send();
 }
 
 let deleteProductFromBasket = document.querySelectorAll('.btnDeleteProductFromBasket')
-deleteProductFromBasket.forEach(button=>{
+deleteProductFromBasket.forEach(button => {
     let dataIdAttribute;
-    button.addEventListener('click',(event)=>{
+    button.addEventListener('click', (event) => {
         if (event.target.tagName === 'path') {
             dataIdAttribute = +event.target.parentElement.dataset.id;
         } else if (event.target.tagName === 'svg') {
@@ -314,22 +296,21 @@ deleteProductFromBasket.forEach(button=>{
         event.currentTarget.parentElement.parentElement.remove();
         deleteProductFromBsk(dataIdAttribute);
         getSumBasket();
-        if(document.querySelector('.tableBody').children.length===0){
+        if (document.querySelector('.tableBody').children.length === 0) {
             location.reload();
         }
     })
 })
 
 
-
 ///////////////////////////////////////VALIDATION REGISTER USER//////////////////////////////////////
-function validationMethodFIO(fieldName){
+function validationMethodFIO(fieldName) {
     var pattern = /[А-ЯЇІ][а-яії]+/i;
 
-    if (fieldName.value === ""||fieldName.value.length<3||pattern.test(fieldName.value)===false){
+    if (fieldName.value === "" || fieldName.value.length < 3 || pattern.test(fieldName.value) === false) {
         fieldName.classList.add('is-invalid');
         fieldName.classList.remove('is-valid');
-    }else{
+    } else {
         fieldName.classList.add('is-valid');
         fieldName.classList.remove('is-invalid');
     }
@@ -340,63 +321,63 @@ let middleNameField = document.getElementById('middlename');
 let lastNameField = document.getElementById('lastname');
 let loginField = document.getElementById('login');
 let password1Field = document.getElementById('password1');
-let password2Field  = document.getElementById('password2');
+let password2Field = document.getElementById('password2');
 let invalidFeedback = document.querySelectorAll('.invalid-feedback');
 
-if(firstNameField!=null)
-    firstNameField.addEventListener('change',()=>{
+if (firstNameField != null)
+    firstNameField.addEventListener('change', () => {
         validationMethodFIO(firstNameField)
     })
 
-if(middleNameField!=null)
-    middleNameField.addEventListener('change',()=>{
+if (middleNameField != null)
+    middleNameField.addEventListener('change', () => {
         validationMethodFIO(middleNameField)
     })
 
-if(lastNameField!=null)
-    lastNameField.addEventListener('change',()=>{
+if (lastNameField != null)
+    lastNameField.addEventListener('change', () => {
         validationMethodFIO(lastNameField)
     })
 
-if(loginField!=null)
-    loginField.addEventListener('change',()=>{
+if (loginField != null)
+    loginField.addEventListener('change', () => {
         var pattern = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-        if (loginField.value === ""|| pattern.test(loginField.value)===false){
+        if (loginField.value === "" || pattern.test(loginField.value) === false) {
             loginField.classList.add('is-invalid');
             loginField.classList.remove('is-valid');
-        }else{
+        } else {
             loginField.classList.add('is-valid');
             loginField.classList.remove('is-invalid');
         }
     })
 
-function validPassword(password1Field, password2Field){
+function validPassword(password1Field, password2Field) {
     let pattern = /^(?=.*[a-z])(?=.*[A-Z]*)(?=.*\d)[a-zA-Z\d]{8,}$/
-        password1Field.addEventListener('change',()=>{
-            if (password1Field.value === "" || (password2Field.value!=="" && password1Field.value!==password2Field.value)||password1Field.value.length<3||pattern.test(password2Field.value)===false){
-                password1Field.classList.add('is-invalid');
-                password1Field.classList.remove('is-valid');
-            }else{
-                password1Field.classList.add('is-valid');
-                password1Field.classList.remove('is-invalid');
-                if(password1Field.value===password2Field.value){
-                    password2Field.classList.add('is-valid');
-                    password2Field.classList.remove('is-invalid');
-                }
+    password1Field.addEventListener('change', () => {
+        if (password1Field.value === "" || (password2Field.value !== "" && password1Field.value !== password2Field.value) || password1Field.value.length < 3 || pattern.test(password2Field.value) === false) {
+            password1Field.classList.add('is-invalid');
+            password1Field.classList.remove('is-valid');
+        } else {
+            password1Field.classList.add('is-valid');
+            password1Field.classList.remove('is-invalid');
+            if (password1Field.value === password2Field.value) {
+                password2Field.classList.add('is-valid');
+                password2Field.classList.remove('is-invalid');
             }
-        })
+        }
+    })
 }
 
-if(password1Field!=null){
-    validPassword(password1Field,password2Field)
+if (password1Field != null) {
+    validPassword(password1Field, password2Field)
 }
 
-if(password2Field!=null){
+if (password2Field != null) {
     validPassword(password2Field, password1Field)
 }
 
-for(let i = 0;i<invalidFeedback.length;i++){
-    if(invalidFeedback[i].innerText.trim().length!==0){
+for (let i = 0; i < invalidFeedback.length; i++) {
+    if (invalidFeedback[i].innerText.trim().length !== 0) {
         invalidFeedback[i].previousElementSibling.classList.add('is-invalid');
         invalidFeedback[i].previousElementSibling.classList.remove('is-valid');
     }
@@ -412,19 +393,19 @@ let middleNameLabel = document.querySelector('.middleNameLabel')
 let lastNameLabel = document.querySelector('.lastNameLabel')
 
 if (buttonEdit != null) {
-    buttonEdit.addEventListener('click',(event)=>{
+    buttonEdit.addEventListener('click', (event) => {
         event.currentTarget.parentElement.classList.toggle('d-none');
         event.target.parentElement.nextElementSibling.classList.toggle('d-none')
-        firstNameLabel.nextElementSibling.setAttribute('value',firstNameLabel.textContent)
+        firstNameLabel.nextElementSibling.setAttribute('value', firstNameLabel.textContent)
         toggleClassesLable(firstNameLabel)
-        middleNameLabel.nextElementSibling.setAttribute('value',middleNameLabel.textContent)
+        middleNameLabel.nextElementSibling.setAttribute('value', middleNameLabel.textContent)
         toggleClassesLable(middleNameLabel)
-        lastNameLabel.nextElementSibling.setAttribute('value',lastNameLabel.textContent)
+        lastNameLabel.nextElementSibling.setAttribute('value', lastNameLabel.textContent)
         toggleClassesLable(lastNameLabel)
     })
 }
-if(buttonChange!=null){
-    buttonChange.addEventListener('click',(event)=>{
+if (buttonChange != null) {
+    buttonChange.addEventListener('click', (event) => {
         event.currentTarget.parentElement.classList.toggle('d-none')
         buttonEdit.parentElement.classList.toggle('d-none')
 
@@ -440,8 +421,8 @@ if(buttonChange!=null){
     })
 }
 
-if(buttonNoEdit!=null){
-    buttonNoEdit.addEventListener('click',(event)=>{
+if (buttonNoEdit != null) {
+    buttonNoEdit.addEventListener('click', (event) => {
         event.currentTarget.parentElement.classList.toggle('d-none')
         buttonEdit.parentElement.classList.toggle('d-none')
 
@@ -452,7 +433,7 @@ if(buttonNoEdit!=null){
     })
 }
 
-function toggleClassesLable(labelName){
+function toggleClassesLable(labelName) {
     labelName.classList.toggle('d-none')
     labelName.nextElementSibling.classList.toggle('d-none')
 }
@@ -465,19 +446,19 @@ function toggleClassesLable(labelName){
 // }
 
 /////////////////////////////////EDIT SHOW/HIDE PASSWORD/////////////////////////////////////////////
-if(document.querySelector('.img-edit-password1')!=null){
-    document.querySelector('.img-edit-password1').addEventListener('click', (event)=>{
+if (document.querySelector('.img-edit-password1') != null) {
+    document.querySelector('.img-edit-password1').addEventListener('click', (event) => {
         showHidePasswordInSettings('.editPassword1', event);
     })
 }
-if(document.querySelector('.img-edit-password2')!=null){
-    document.querySelector('.img-edit-password2').addEventListener('click', (event)=>{
+if (document.querySelector('.img-edit-password2') != null) {
+    document.querySelector('.img-edit-password2').addEventListener('click', (event) => {
         showHidePasswordInSettings('.editPassword2', event);
     })
 }
 
 
-function showHidePasswordInSettings(editPasswordFieldClass,event){
+function showHidePasswordInSettings(editPasswordFieldClass, event) {
     let input = document.querySelector(editPasswordFieldClass);
     if (input.getAttribute('type') === 'password') {
         event.target.classList.add('view');
@@ -491,13 +472,13 @@ function showHidePasswordInSettings(editPasswordFieldClass,event){
 ////////////////////////////////////////////////////PRODUCT REITING COMMENT WRITE///////////////////////////////////////////////
 let reitingRadious = document.querySelectorAll('.reitingRadio');
 let markStars = document.querySelectorAll('.mark-star');
-reitingRadious.forEach(mark=>{
-    mark.addEventListener('click',(event)=>{
+reitingRadious.forEach(mark => {
+    mark.addEventListener('click', (event) => {
         let id = +event.target.value;
-        for(let i = 0;i<5;i++){
-            if(i<id){
+        for (let i = 0; i < 5; i++) {
+            if (i < id) {
                 markStars[i].style.backgroundImage = "url('/files/additionalsForCSS/reitingStars/mark-star-yellow.png')";
-            }else{
+            } else {
                 markStars[i].style.backgroundImage = "url('/files/additionalsForCSS/reitingStars/mark-star-black.png')";
             }
         }
@@ -517,12 +498,12 @@ reitingRadious.forEach(mark=>{
 ////////////////////////////////////////////////////PRODUCT REITING COMMENT PRINT///////////////////////////////////////////////
 let reitingScores = document.querySelectorAll('.scoreReiting');
 
-reitingScores.forEach(value=>{
+reitingScores.forEach(value => {
     let reitingValue = +value.dataset.reiting;
-    for (let i = 0;i<5;i++){
-        if(i<reitingValue){
+    for (let i = 0; i < 5; i++) {
+        if (i < reitingValue) {
             value.children[i].style.backgroundImage = "url('/files/additionalsForCSS/reitingStars/mark-star-yellow.png')";
-        }else{
+        } else {
             value.children[i].style.backgroundImage = "url('/files/additionalsForCSS/reitingStars/mark-star-black.png')";
         }
     }
@@ -531,21 +512,20 @@ reitingScores.forEach(value=>{
 //////////////////////////////////////////////////////SELECT TOWN AND DESTINATION////////////////////////////////////////
 
 
-
-function requestGetDestinations(id,selectDestination){
+function requestGetDestinations(id, selectDestination) {
     const xhr = new XMLHttpRequest();
     // console.log(xhr.responseText)
     xhr.open("GET", `/basket/destinations?id=${id}`);
-    xhr.onload=()=>{
+    xhr.onload = () => {
         let objs = JSON.parse(xhr.response)
 
-        if(selectDestination.children.length>1){
-            for (let i = selectDestination.children.length-1;i>0;i--){
+        if (selectDestination.children.length > 1) {
+            for (let i = selectDestination.children.length - 1; i > 0; i--) {
                 selectDestination.children[i].remove();
             }
         }
 
-        for (let obj of objs){
+        for (let obj of objs) {
             let option = document.createElement('option');
             option.setAttribute('value', obj['id'])
             option.textContent = obj['name'];
@@ -558,28 +538,29 @@ function requestGetDestinations(id,selectDestination){
 let selectTown = document.querySelector('.selectTown');
 let selectDestination = document.querySelector('.selectDestination');
 
-if(selectTown!=null){
-    selectTown.addEventListener('change',(event)=>{
+if (selectTown != null) {
+    selectTown.addEventListener('change', (event) => {
         let selectedValue = +event.target.value;
-        if(selectedValue!=null){
-            requestGetDestinations(selectedValue,selectDestination)
+        if (selectedValue != null) {
+            requestGetDestinations(selectedValue, selectDestination)
         }
     })
 }
 
 ///////////////////////////////////////////// CHANGE STATUS PRODUCT ///////////////////////////////
-function sendRequestChangeStatusOrder(orderId){
+function sendRequestChangeStatusOrder(orderId) {
     const xhr = new XMLHttpRequest();
     // console.log(xhr.responseText)
     xhr.open("GET", `/basket/order_status?id=${orderId}`);
-    xhr.onload=()=>{}
+    xhr.onload = () => {
+    }
     xhr.send();
 }
 
 
 let svgBtnChangeStatusProduct = document.querySelectorAll('.productWasSend');
-svgBtnChangeStatusProduct.forEach(button=>{
-    button.addEventListener('click',(event)=>{
+svgBtnChangeStatusProduct.forEach(button => {
+    button.addEventListener('click', (event) => {
         let orderId = +event.currentTarget.closest('tr').dataset.order;
         sendRequestChangeStatusOrder(orderId)
         event.currentTarget.closest('tr').remove();

@@ -11,7 +11,7 @@ use \models\PhotoProduct;
 
 <div class="container" style="max-width: 700px">
     <?php foreach ($orders as $order): ?>
-<!--        --><?php //var_dump($order) ?>
+<!--        --><?php //echo $order['status'] ?>
         <div class="accordion accordion-flush mt-2" id="accordionFlush<?= $order['id'] ?>">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
@@ -21,10 +21,22 @@ use \models\PhotoProduct;
                         <div class="d-flex justify-content-between align-items-center w-100">
 
                             <div class="d-flex">
-                                <div class="rounded-5 stickOrderStory"></div>
+                                <div class="rounded-5 stickOrderStory" style="background-color:
+<?php if($order['status']==1):?>
+    <?="yellowgreen;"?>
+<?php else:?>
+    <?="orange;"?>
+<?php endif;?>
+"></div>
                                 <div>
                                     <div class="text-secondary labelSecondaryStoryOrder">№<?= $order['id'] ?> від <?= $order['date'] ?></div>
-                                    <div class="orderHeaderInform">Виконано</div>
+                                    <div class="orderHeaderInform">
+                                        <?php if($order['status']==1):?>
+                                        Виконано
+                                        <?php else:?>
+                                        Очікується
+                                        <?php endif;?>
+                                    </div>
                                 </div>
                             </div>
 

@@ -1,74 +1,8 @@
 <?php
 /** @var array $errors */
 /** @var array $user */
-
 ?>
-<!--<h1 class="text-center login-label fs-1 mb-3">Налаштування</h1>-->
-<!---->
-<!--<form class="need-validation m-auto" novalidate="" style="max-width: 550px" method="post" action="" >-->
-<!--    <div class="row g-3">-->
-<!--        <div class="col-sm-6">-->
-<!--            <label for="firstname" class="form-label">Ім'я</label>-->
-<!--            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="" value="--><? //= $model['firstname'] ?><!--" required="" >-->
-<!--            <div class="invalid-feedback">-->
-<!--                --><?php //if (!empty($errors['firstname'])): ?>
-<!--                    --><? //= $errors['firstname'] ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="col-sm-6">-->
-<!--            <label for="lastname" class="form-label">Прізвище</label>-->
-<!--            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="" value="--><? //= $model['lastname'] ?><!--" required="" >-->
-<!--            <div class="invalid-feedback">-->
-<!--                --><?php //if (!empty($errors['lastname'])): ?>
-<!--                    --><? //= $errors['lastname'] ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="col-sm-12">-->
-<!--            <label for="middlename" class="form-label">По-батькові</label>-->
-<!--            <input type="text" class="form-control" id="middlename" name="middlename" placeholder="" value="--><? //= $model['middlename'] ?><!--" required="">-->
-<!--            <div class="invalid-feedback">-->
-<!--                --><?php //if (!empty($errors['middlename'])): ?>
-<!--                    --><? //= $errors['middlename'] ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="col-12">-->
-<!--            <label for="login" class="form-label">Email</label>-->
-<!--            <input type="email" class="form-control" id="login" name="login" placeholder="you@gmail.com" value="--><? //= $model['login'] ?><!--">-->
-<!--            <div class="invalid-feedback">-->
-<!--                --><?php //if (!empty($errors['login'])): ?>
-<!--                    --><? //= $errors['login'] ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="col-12">-->
-<!--            <label for="password1" class="form-label">Пароль</label>-->
-<!--            <input type="password" class="form-control" id="password1" name="password1" value="--><? //= $model['password1'] ?><!--" aria-describedby="">-->
-<!--            <div class="invalid-feedback">-->
-<!--                --><?php //if (!empty($errors['password'])): ?>
-<!--                    --><? //= $errors['password'] ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-12">-->
-<!--            <label for="password2" class="form-label">Пароль (ще раз)</label>-->
-<!--            <input type="password" class="form-control" id="password2" name="password2" value="--><? //= $model['password2'] ?><!--">-->
-<!--            <div class="invalid-feedback">-->
-<!--                --><?php //if (!empty($errors['password'])): ?>
-<!--                    --><? //= $errors['password'] ?>
-<!--                --><?php //endif; ?>
-<!--            </div>-->
-<!--        </div>-->
-<!--        <hr class="my-4">-->
-<!--        <button class="w-100 btn btn-danger btn-lg" type="submit">Видалити аккаунт</button>-->
-<!--</form>-->
-<!--<script>-->
+
 <div class="accordion accordion-flush mx-auto mt-3 w-100" id="accordionFlushExample" style="max-width: 500px">
     <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingOne">
@@ -122,7 +56,7 @@
             </div>
         </form>
     </div>
-    <div class="accordion-item">
+    <div class="accordion-item mt-1">
         <h2 class="accordion-header" id="flush-headingTwo">
             <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -147,7 +81,7 @@
             </div>
         </div>
     </div>
-    <div class="accordion-item">
+    <div class="accordion-item mt-1">
         <h2 class="accordion-header" id="flush-headingThree">
             <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
@@ -196,7 +130,7 @@
             </div>
         </div>
     </div>
-    <div class="accordion-item">
+    <div class="accordion-item mt-1">
         <h2 class="accordion-header" id="flush-headingFour">
             <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">

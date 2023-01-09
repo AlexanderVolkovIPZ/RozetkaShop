@@ -60,7 +60,7 @@ use \models\User;
                                     <?php if ($product['count'] > 0): ?>
                                         <a href="/?product=add&id=<?= $product['id'] ?> "
                                            data-id="<?= $product['id'] ?>" class="btnProductAddToBasket
-<?php if (!empty($_SESSION['basket'][$product['id']])) echo "d-none" ?>
+<?php if (!empty($_SESSION['basket'][$product['id']])) echo " d-none" ?>
 ">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                  fill="currentColor"
@@ -70,7 +70,7 @@ use \models\User;
                                             </svg>
                                         </a>
                                         <a href="/basket" class="btnProductInBasket
-<?php if (empty($_SESSION['basket'][$product['id']])) echo "d-none" ?>
+<?php if (empty($_SESSION['basket'][$product['id']])) echo " d-none" ?>
 ">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                  fill="currentColor"
