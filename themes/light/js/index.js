@@ -51,16 +51,17 @@ if (productList != null) {
         if (targetClick.parentNode.classList.contains('btnProductAddToBasket')) {
             targetClick.parentNode.classList.add('d-none');
             targetClick.parentNode.nextElementSibling.classList.remove("d-none")
-            // let number = +countProductsInBasket.textContent.trim();
-            // number += 1;
-            // countProductsInBasket.textContent = number.toString();
-
-        } else if (targetClick.parentElement.classList.contains('btnAddToLikeList') || targetClick.parentElement.classList.contains('btnProductInLikeList')) {
-            let elements = targetClick.parentElement.parentElement.children;
-            for (let i = 0; i < elements.length; i++) {
-                elements[i].classList.toggle('d-none');
-            }
         }
+
+
+
+        // else if (targetClick.parentElement.classList.contains('btnAddToLikeList') || targetClick.parentElement.classList.contains('btnProductInLikeList')) {
+        //     let elements = targetClick.parentElement.parentElement.children;
+        //     for (let i = 0; i < elements.length; i++) {
+        //         elements[i].classList.toggle('d-none');
+        //     }
+        // }
+
     })
 }
 //////////////////////////// BUTTON CUSTOMER BUY PRODUCT IN PRODUCT///////////////////////////////
@@ -80,23 +81,61 @@ buttonsAddProduct.forEach(button => {
 
 
 ////////////// BUTTON CUSTOMER LIKE PRODUCT///////////////////
+function sendRequestAddProductToWishList(productId){
+     const xhr = new XMLHttpRequest();
+    xhr.open("GET",`/wish/add?idProduct=${productId}`);
+    xhr.onload = ()=>{
+
+    }
+    xhr.send();
+}
+
 let addProductInLikeList = document.querySelectorAll('.btnAddToLikeList');
+let elem = document.querySelector('.wishListCount');
+addProductInLikeList.forEach(button => {
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
+        let elemValue = +elem.textContent;
+        elemValue+=1;
+        elem.textContent = elemValue;
+        let productId = +event.currentTarget.dataset.id;
+        event.currentTarget.classList.toggle('d-none');
+        event.currentTarget.nextElementSibling.classList.toggle('d-none')
+        sendRequestAddProductToWishList(productId)
+    })
+})
+function sendRequestRemoveProductFromWishList(productId){
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET",`/wish/remove?idProduct=${productId}`);
+    xhr.onload = ()=>{
+
+    }
+    xhr.send();
+}
+
+let btnProductInLikeList = document.querySelectorAll('.btnProductInLikeList');
+let wishListMainWrapper = document.querySelector('.wishListMainWrapper');
+btnProductInLikeList.forEach(button=>{
+    button.addEventListener('click', (event)=>{
+        event.preventDefault();
+        let elemValue = +elem.textContent;
+        elemValue-=1;
+        elem.textContent = elemValue;
+        let productId = +event.currentTarget.dataset.id;
+
+        event.currentTarget.classList.toggle('d-none')
+        event.currentTarget.previousElementSibling.classList.toggle('d-none')
+        sendRequestRemoveProductFromWishList(productId)
+        if(event.currentTarget.classList.contains('wishSection')){
+            event.currentTarget.closest('.wishSectionWrapper').remove();
+        }
+        if(wishListMainWrapper.children.length===0){
+            location.reload();
+        }
+    })
+})
 
 
-// addProductInLikeList.forEach(button => {
-//     button.addEventListener('click', (event) => {
-//
-// function sendRequestAddBasketWishList(){
-//      const xhr = new XMLHttpRequest();
-//     xhr.open("GET","basket/add?productId=3&count=3");
-//     xhr.onload = ()=>{
-//         console.log(JSON.parse(xhr.responseText).length)
-//     }
-//     xhr.send();
-// }
-//         event.preventDefault();
-//     })
-// })
 
 
 ////////////// SLIDER OPERATION///////////////////

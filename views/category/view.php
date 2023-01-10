@@ -3,7 +3,6 @@
 /** @var array $products */
 /** @var array $rows */
 
-//var_dump($_SESSION['basket']);
 use \models\User;
 
 ?>
@@ -23,21 +22,31 @@ use \models\User;
                     <div class="p-3 text-center pb-0">
                         <?php if (!User::isUserAdmin()): ?>
                             <div class="text-end addToListLikeBlock">
-                                <a href="" class="btnAddToLikeList">
+                                <a href="" class="btnAddToLikeList
+<?php if(isset($_SESSION['wish'][$product['id']])):?>
+                                        <?=" d-none"?>
+                                    <?php endif;?>
+" data-id="<?= $product['id'] ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                         class="bi bi-heart text-warning fw-bold button btnAddToLikeListIcon btnWishProductIcon"
+                                         class="bi bi-heart text-warning fw-bold button btnAddToLikeListIcon"
                                          viewBox="0 0 16 16">
                                         <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                                     </svg>
                                 </a>
-                                <a href="" class="btnProductInLikeList d-none">
+
+                                <a href="" class="btnProductInLikeList
+<?php if(empty($_SESSION['wish'][$product['id']])):?>
+    <?=" d-none"?>
+<?php endif;?>
+" data-id="<?= $product['id'] ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                         class="bi bi-heart-fill text-warning button btnProductInLikeListIcon btnWishProductIcon"
+                                         class="bi bi-heart-fill text-warning button btnProductInLikeListIcon"
                                          viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                               d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                                     </svg>
                                 </a>
+
                             </div>
                         <?php endif; ?>
                         <a href="/product/view/<?= $product['id'] ?>" class="card-link">
@@ -71,7 +80,7 @@ use \models\User;
                                         </a>
                                         <a href="/basket" class="btnProductInBasket
 <?php if (empty($_SESSION['basket'][$product['id']])) echo " d-none" ?>
-">
+" >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                  fill="currentColor"
                                                  class="btnProductInBasketIcon bi bi-cart-check-fill text-success button"
