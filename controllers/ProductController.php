@@ -42,9 +42,8 @@ class ProductController extends Controller
 
             if (empty($errors)) {
                 Product::addProduct($_POST);
-//                var_dump($_FILES['file']['tmp_name']);
                 PhotoProduct::addPhoto($_POST['name'], $_FILES['file']['tmp_name']);
-                return $this->redirect('/');
+                $this->redirect('/');
             } else {
                 $model = $_POST;
                 return $this->render(null, [
@@ -88,15 +87,6 @@ class ProductController extends Controller
                 }
 
                 if (empty($errors)) {
-
-//                    if(!empty($FILES)){
-//                        foreach ($photos as $photo){
-//                            $filePath = 'files/product/' . $photo['name'];
-//                            if (is_file($filePath)) {
-//                                unlink($filePath);
-//                            }
-//                        }
-//                    }
 
                     Product::updateProduct($id,$_POST);
 

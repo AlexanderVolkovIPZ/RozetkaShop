@@ -69,7 +69,7 @@ if (productList != null) {
 let buttonsAddProduct = document.querySelectorAll('.btnAddProductToBasket')
 buttonsAddProduct.forEach(button => {
     button.addEventListener('click', (event) => {
-
+    event.preventDefault()
     if(!event.currentTarget.lastElementChild.classList.contains('d-none')){
         event.currentTarget.lastElementChild.classList.add('d-none');
         event.currentTarget.firstElementChild.classList.toggle('d-none');
@@ -256,22 +256,12 @@ inputCountProductBasket.forEach(button => {
 
 })
 
-function updateMethodCountProductBsk(productId, count) {
-    const xhr = new XMLHttpRequest();
-    console.log(xhr.responseText)
-    xhr.open("GET", `/basket/update?id=${productId}&count=${count}`);
-    xhr.onload = () => {
-        document.querySelector('.countProductsInBasket').textContent = JSON.parse(xhr.response);
-    }
-    xhr.send();
-}
-
 function getSumBasket() {
     const xhr = new XMLHttpRequest();
     console.log(xhr.responseText)
     xhr.open("GET", `/basket/sum`);
     xhr.onload = () => {
-        document.querySelector('.allSumBasket').textContent = JSON.parse(xhr.response);
+        document.querySelector('.allSumBasket').textContent = JSON.parse(xhr.response)+" ₴";
     }
     xhr.send();
 }
@@ -280,10 +270,24 @@ function getSumOneRecord(id, count) {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `/basket/sum_one_record?id=${id}&count=${count}`);
     xhr.onload = () => {
-        document.getElementById(id).textContent = JSON.parse(xhr.response);
+        document.getElementById(id).textContent = JSON.parse(xhr.response) +" ₴";
     }
     xhr.send();
 }
+
+function updateMethodCountProductBsk(productId, count, eventTarget) {
+    const xhr = new XMLHttpRequest();
+    console.log(xhr.responseText)
+    xhr.open("GET", `/basket/update?id=${productId}&count=${count}`);
+    xhr.onload = () => {
+        document.querySelector('.countProductsInBasket').textContent = JSON.parse(xhr.response)[0];
+        eventTarget.value = JSON.parse(xhr.response)[1]
+        getSumOneRecord(productId, JSON.parse(xhr.response)[1])
+        getSumBasket()
+    }
+    xhr.send();
+}
+
 
 addProductBsk.forEach(button => {
     button.addEventListener('click', (event) => {
@@ -292,9 +296,7 @@ addProductBsk.forEach(button => {
         count += 1;
         eventTarget.value = count;
         let productId = +eventTarget.dataset.id;
-        updateMethodCountProductBsk(productId, count);
-        getSumOneRecord(productId, count)
-        getSumBasket();
+        updateMethodCountProductBsk(productId, count, eventTarget);
     })
 })
 
@@ -307,8 +309,6 @@ removeProductBsk.forEach(button => {
             eventTarget.value = count;
             let productId = +eventTarget.dataset.id;
             updateMethodCountProductBsk(productId, count);
-            getSumOneRecord(productId, count)
-            getSumBasket();
         }
     })
 })

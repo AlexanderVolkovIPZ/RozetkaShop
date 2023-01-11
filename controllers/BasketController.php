@@ -5,6 +5,7 @@ namespace controllers;
 use core\Core;
 use models\Basket;
 use models\Order;
+use models\Product;
 use models\User;
 
 class BasketController extends \core\Controller
@@ -34,9 +35,12 @@ class BasketController extends \core\Controller
 
     public function updateAction(){
         if(isset($_GET['id']) && $_GET['count']){
-            Basket::updateBasket($_GET['id'],$_GET['count']);
+            if(Product::getProductById($_GET['id'])['count']>=intval($_GET['count'])){
+                Basket::updateBasket($_GET['id'],intval($_GET['count']));
+            }
         }
-        exit(json_encode(Basket::getCountProductInBasket()));
+        exit(json_encode(array(Basket::getCountProductInBasket(),$_SESSION['basket'][$_GET['id']])));
+
     }
     public function sum_one_recordAction(){
         $id = intval($_GET['id']);
@@ -110,6 +114,9 @@ class BasketController extends \core\Controller
                         ];
                         Order::createOreder($orderList);
                         Basket::deleteProductFromBasketStorage($key, $userId);
+                        Product::updateProduct($key, [
+                            'count'=>Product::getProductById($key)['count']-$value
+                        ]);
                     }
                 }
             }else{
