@@ -8,6 +8,7 @@ use models\Basket;
 use models\Category;
 use models\Order;
 use models\User;
+use models\Wish;
 
 class UserController extends Controller
 {
@@ -68,17 +69,17 @@ class UserController extends Controller
         if (User::isAuthenticatedUser()) {
             $this->redirect('/');
         }
+        $error = null;
         if(Core::getInstance()->requestMethod==='POST') {
 
-
             $user = User::getUserByLoginAndPassword($_POST['login'], $_POST['password']);
-            $error = null;
             if (empty($user)) {
                 $error = 'Неправилиний логін або пароль';
 
             } else {
-                User::authenticationUser($user);
+                User::authentificationUser($user);
                 Basket::initializeBasket();
+                Wish::initializeWishList();
                 $this->redirect('/');
             }
         }
@@ -88,8 +89,11 @@ class UserController extends Controller
     }
 
     public function logoutAction(){
-        if(User::isAuthenticatedUser() && !User::isUserAdmin())
-            Basket::updateBasketInDB(User::getCarrentAuthenticatedUser()['id']);
+        if(User::isAuthenticatedUser() && !User::isUserAdmin()){
+            $userId = User::getCarrentAuthenticatedUser()['id'];
+            Basket::updateBasketInDB($userId);
+            Wish::updateWishListInDB($userId);
+        }
         User::logoutUser();
         $this->redirect('/user/login');
     }

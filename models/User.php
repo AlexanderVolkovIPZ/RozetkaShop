@@ -74,7 +74,7 @@ class User
         session_destroy();
         unset($_SESSION['user']);
     }
-    public static function authenticationUser($user){
+    public static function authentificationUser($user){
         $_SESSION['user'] = $user;
     }
 

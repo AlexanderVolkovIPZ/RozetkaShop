@@ -101,17 +101,5 @@ class Core
         $html = $tpl->getHTML();
         echo $html;
     }
-
-
-//    /**
-//     * Автозавантажувач класів
-//     * @param $className string Назва класу
-//     */
-//    public static function __autoload($className){
-//        $fileName = $className.'index.php';
-//        if(is_file($fileName)){
-//            include ($fileName);
-//        }
-//    }
 }
 

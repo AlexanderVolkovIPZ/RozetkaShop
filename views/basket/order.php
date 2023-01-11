@@ -101,54 +101,6 @@
                                     </a>
                                 </div>
                             </div>
-
-
-<!--                                                        --><?php //foreach ($basket['products'] as $product): ?>
-<!---->
-<!--                                                            <div class="d-flex justify-content-between align-items-center mx-5 gap-2 mt-2">-->
-<!--                                                                <div class="d-flex align-items-center gap-2">-->
-<!--                                                                    <div>-->
-<!--                                                                        --><?php //if (!empty($product['photo'])): ?>
-<!--                                                                            <img class="rounded-2 imgOrder"-->
-<!--                                                                                 src="/files/product/--><?//= $product['photo']?><!--" alt="">-->
-<!--                                                                        --><?php //else: ?>
-<!--                                                                            <img class="rounded-2 imgOrder" src="/files/product/default.jpg" alt="">-->
-<!--                                                                        --><?php //endif; ?>
-<!--                                                                    </div>-->
-<!--                                                                    <div class="text-center">-->
-<!--                                                                        <img src="" alt="">-->
-<!--                                                                        <a href="/product/view/-->
-<!--                            --><?//= $product['product']['id']; ?><!--"-->
-<!--                                                                           class="textValue">-->
-<!--                            --><?//= $product['product']['name']; ?><!--</a>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="text-center">-->
-<!--                                                                    <div class="text-secondary textLabel">Ціна</div>-->
-<!--                                                                    <div class="textValue">-->
-<!--                            --><?//= $product['product']['price'] ?><!-- ₴</div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="text-center">-->
-<!--                                                                    <div class="text-secondary textLabel">Кількість</div>-->
-<!--                                                                    <div class="textValue">-->
-<!--                            --><?//= $product['count'] ?><!--</div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="text-center">-->
-<!--                                                                    <div class="text-secondary textLabel">Сума</div>-->
-<!--                                                                    <div class="textValue">-->
-<!---->
-<!--                            --><?//= $product['product']['price'] * $product['count'] ?><!-- ₴-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        --><?php //endforeach; ?>
-
-
-
-
-
-
-
                             <table class="col-12 align-items-center mx-0">
                                 <?php foreach ($basket['products'] as $product): ?>
                                     <tr class="">
