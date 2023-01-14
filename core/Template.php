@@ -19,9 +19,6 @@ class Template
         $this->parameters[$name] = $value;
     }
 
-//    public function getParam($name){
-//        return $this->parameters[$name];
-//    }
     public function setParams($params){
         foreach ($params as $name=>$value){
             $this->setParam($name,$value);
@@ -35,8 +32,4 @@ class Template
         ob_end_clean();
         return $html;
     }
-
-//    public function display($path){
-//       echo $this->render($path);
-//    }
 }

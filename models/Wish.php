@@ -55,17 +55,4 @@ class Wish
             ]);
         }
     }
-
-
-
-
-
-//    public static function addWish($values){
-//        Core::getInstance()->db->insert(self::$tableName, $values);
-//    }
-//
-//    public static function selectWish($conditions,$fields="*"){
-//        $rows = Core::getInstance()->db->select(self::$tableName, $fields,$conditions);
-//        return $rows;
-//    }
 }

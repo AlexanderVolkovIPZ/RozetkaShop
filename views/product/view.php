@@ -123,10 +123,6 @@ use \models\Comment;
 
 
             </div>
-            <!--            <div>-->
-            <!--                Доступна кількість: --><? //= $product['count'] ?><!-- шт.-->
-            <!--            </div>-->
-
             <?php if (empty($product['brief_description']) != 1): ?>
                 <div class="fs-4">
                     Короткий опис:
@@ -266,7 +262,7 @@ use \models\Comment;
                     foreach ($comments as $comment) {
                         $middleReiting += $comment['reiting'];
                     }
-                    $middleReiting = $middleReiting / count($comments);
+                    $middleReiting = round($middleReiting / count($comments),1);
                     ?>
                     <div class="fs-4 text-primary mt-2" style="margin-left: 15px">
                         Загальний рейтинг <b><?= $middleReiting ?>/5</b>

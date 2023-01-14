@@ -6,112 +6,130 @@
     vertical-align: -.125em;
     fill: currentColor;
 }
-body{
-    background: -webkit-linear-gradient(90deg, #b6c3ca,#ffffff);
-    background: linear-gradient(90deg, #b6c3ca,#ffffff);
+
+body {
+    background: -webkit-linear-gradient(90deg, #b6c3ca, #ffffff);
+    background: linear-gradient(90deg, #b6c3ca, #ffffff);
 }
-.labelRozetka{
+
+.labelRozetka {
     font-family: 'Nosifer', serif;
     font-style: normal;
     text-decoration: none;
     color: white;
     cursor: pointer;
 }
-.labelRozetka:hover{
+
+.labelRozetka:hover {
     color: white;
 }
-.form-signing,.login-error{
+
+.form-signing, .login-error {
     max-width: 350px;
 }
 
-.addCategoryLink{
+.addCategoryLink {
     text-decoration: none;
 }
+
 .product-list .card:hover {
     box-shadow: 0 0 10px 5px dimgrey;
     transform: scale(1.07);
 }
+
 .product-list .card:hover {
     transition-duration: 0.75s;
 }
-.product-list a{
+
+.product-list a {
     text-decoration: none;
 }
 
-.mainPhotoProduct, .photoProductSlider:hover{
+.mainPhotoProduct, .photoProductSlider:hover {
     transform: scale(1.05);
     transition-duration: 0.4s;
 }
 
-.btnWishProduct:hover,.customerButtonsCardBody:hover,.mainPhotoProduct:hover,.btnUpdateProduct:hover,.btnDeleteProduct:hover,.changeUserAccessIcon:hover, .productWasSend:hover{
+.btnWishProduct:hover, .customerButtonsCardBody:hover, .mainPhotoProduct:hover, .btnUpdateProduct:hover, .btnDeleteProduct:hover, .changeUserAccessIcon:hover, .productWasSend:hover {
     transform: scale(1.09);
     transition-duration: 0.2s;
 }
-.button, .btnSettings{
+
+.button, .btnSettings {
     cursor: pointer;
 }
 
-.svgProductAvailable,.svgProductNotAvailable {
+.svgProductAvailable, .svgProductNotAvailable {
     margin-right: 7px;
 }
 
-.priceProduct{
+.priceProduct {
     font-weight: 600;
 }
-.btnAddProductToBasket{
+
+.btnAddProductToBasket {
     padding-top: 6px;
     padding-bottom: 6px
 }
 
-.changeUserAccessIcon:hover, .productWasSend:hover{
+.changeUserAccessIcon:hover, .productWasSend:hover {
     fill: darkred;
 }
-.basketFormInputCountProduct{
+
+.basketFormInputCountProduct {
     width: 50px;
     height: 40px;
     border-radius: 10px;
     border: 2px solid black;
     font-size: 18px;
 }
-.addProductCountBasket,.removeProductCountBasket,.btnRemoveProductFromBasket,.btnDeleteProductFromBasket{
+
+.addProductCountBasket, .removeProductCountBasket, .btnRemoveProductFromBasket, .btnDeleteProductFromBasket {
     cursor: pointer;
 }
-.imgBasket{
+
+.imgBasket {
     width: 91px;
     height: 60px;
     border-radius: 8px;
 }
-.imgBasket:hover{
+
+.imgBasket:hover {
     scale: 1.06;
 }
-.btnRemoveProductFromBasket:hover,.wrapperBasketProductCount>svg:hover,.btnDeleteProductFromBasket:hover{
+
+.btnRemoveProductFromBasket:hover, .wrapperBasketProductCount > svg:hover, .btnDeleteProductFromBasket:hover {
     scale: 1.2;
     transition-duration: 0.3s;
 }
-.wrapperBasketProductCount{
+
+.wrapperBasketProductCount {
     width: 114px;
 }
-.wrapperBasketProductCount>svg:hover,.btnDeleteProductFromBasket:hover{
+
+.wrapperBasketProductCount > svg:hover, .btnDeleteProductFromBasket:hover {
     fill: red;
 }
-svg{
+
+svg {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
 }
 
-.svgUserDates, .svgUserLogin, .svgUserPassword{
+.svgUserDates, .svgUserLogin, .svgUserPassword {
     margin-right: 20px;
 }
-.btnEditLogin{
+
+.btnEditLogin {
     margin-left: 15px;
 }
 
-.editPassword1Wrapper, .editPassword2Wrapper{
+.editPassword1Wrapper, .editPassword2Wrapper {
     position: relative;
 }
 
-.labelLoginEdit{
+.labelLoginEdit {
     margin-right: 15px
 }
 
@@ -124,151 +142,129 @@ svg{
     height: 30px;
     background: url(/files/additionalsForCSS/eye_30px.png) 0 0 no-repeat;
 }
+
 .password-control.view {
     background: url(/files/additionalsForCSS/invisible_30px.png) 0 0 no-repeat;
 }
-.mark-star{
+
+.mark-star {
     width: 40px;
     height: 40px;
     background-image: url('/files/additionalsForCSS/reitingStars/mark-star-black.png');
     background-size: cover;
     cursor: pointer;
 }
-.mark-star-for-user{
+
+.mark-star-for-user {
     width: 20px;
     height: 20px;
     background-image: url('/files/additionalsForCSS/reitingStars/mark-star-black.png');
     background-size: cover;
     cursor: pointer;
 }
-.reitingRadio{
+
+.reitingRadio {
     visibility: hidden;
     position: absolute;
 }
 
-.iconCommentBought{
+.iconCommentBought {
     fill: green;
     margin-right: 10px;
 }
-.commentWrapper{
+
+.commentWrapper {
     height: 200px;
     overflow: auto;
     text-align: justify;
     background-color: white
 }
 
-.sumOrder,.redactLink{
+.sumOrder, .redactLink {
     margin-right: 38px;
 }
-.svgLocation,.radioTypePayment{
+
+.svgLocation, .radioTypePayment {
     margin-left: 30px;
 }
 
-.textLabel{
+.textLabel {
     font-size: 12px;
 }
 
-.textValue{
+.textValue {
     font-size: 16px;
 }
 
-.imgOrder{
+.imgOrder {
     width: 73px;
     height: 48px
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-.confirmOrderWrapper{
+.confirmOrderWrapper {
     background-color: aliceblue;
     padding: 15px;
     height: auto;
 }
 
-.warningPasspord,.orderConditions{
+.warningPasspord, .orderConditions {
     font-size: 13px;
     text-align: justify;
 }
 
-.invalidDestination{
+.invalidDestination {
     margin-left: 67px;
 }
 
-.tHeadOrders{
+.tHeadOrders {
     font-size: 13px;
     text-align: center;
     align-items: center;
 }
 
-.tBodyOrders{
+.tBodyOrders {
     font-size: 13px;
 }
 
-.stickOrderStory{
+.stickOrderStory {
     width: 8px;
     margin-right: 10px;
 }
 
-.labelSecondaryStoryOrder{
+.labelSecondaryStoryOrder {
     font-size: 13px;
 }
-.orderHeaderInform{
+
+.orderHeaderInform {
     font-size: 15px;
 }
-.linkProductOrderStory{
+
+.linkProductOrderStory {
     font-size: 14px;
 }
-/*.mark-star{*/
-/*    width: 40px;*/
-/*    height: 40px;*/
-/*    background-image: url('/files/additionalsForCSS/reitingStars/mark-star-black.png');*/
-/*    background-size: cover;*/
-/*    cursor: pointer;*/
-/*}*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.carousel-control-next-icon{*/
-
-/*    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%20fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");*/
-/*}*/
-/*.main-header{*/
-/*    position: fixed;*/
-/*    width: 100%;*/
-
-/*    z-index: 3;*/
-
-/*}*/
-/*nav{*/
-/*    padding-top: 50px;*/
-/*}*/
+.li-item-search:hover {
+    background-color: rgba(188, 188, 188, 0.3);
+}
 
 @media (max-width: 652px) {
-    .menu-burger-admin{
+    .menu-burger-admin {
         margin-right: 50px;
     }
 }
 
 @media (max-width: 425px) {
-    .menu-burger-admin{
+    .menu-burger-admin {
         margin-right: 50px;
     }
 }
+
 @media (max-width: 768px) {
-    .productDescription{
+    .productDescription {
         margin-top: 15px;
     }
 }

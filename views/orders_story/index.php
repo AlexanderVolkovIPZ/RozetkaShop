@@ -11,7 +11,6 @@ use \models\PhotoProduct;
 
 <div class="container" style="max-width: 700px">
     <?php foreach ($orders as $order): ?>
-<!--        --><?php //echo $order['status'] ?>
         <div class="accordion accordion-flush mt-2" id="accordionFlush<?= $order['id'] ?>">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
@@ -22,25 +21,24 @@ use \models\PhotoProduct;
 
                             <div class="d-flex">
                                 <div class="rounded-5 stickOrderStory" style="background-color:
-<?php if($order['status']==1):?>
-    <?="yellowgreen;"?>
-<?php else:?>
-    <?="orange;"?>
-<?php endif;?>
-"></div>
+                                <?php if ($order['status'] == 1): ?>
+                                    <?= "yellowgreen;" ?>
+                                <?php else: ?>
+                                    <?= "orange;" ?>
+                                <?php endif; ?>
+                                        "></div>
                                 <div>
-                                    <div class="text-secondary labelSecondaryStoryOrder">№<?= $order['id'] ?> від <?= $order['date'] ?></div>
+                                    <div class="text-secondary labelSecondaryStoryOrder">№<?= $order['id'] ?>
+                                        від <?= $order['date'] ?></div>
                                     <div class="orderHeaderInform">
-                                        <?php if($order['status']==1):?>
-                                        Виконано
-                                        <?php else:?>
-                                        Очікується
-                                        <?php endif;?>
+                                        <?php if ($order['status'] == 1): ?>
+                                            Виконано
+                                        <?php else: ?>
+                                            Очікується
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
-
-
                             <div>
                                 <div class="text-secondary labelSecondaryStoryOrder">Сума замовлення
                                 </div>
@@ -69,28 +67,32 @@ use \models\PhotoProduct;
                                     <div class="d-flex align-items-center">
                                         <img src="/files/product/<?= PhotoProduct::getProductPhotoByName(Product::getProductById($order['id_product'])['name'])[0]['name']; ?>"
                                              style="width: 73px; height: 48px">
-                                        <a href="/product/view/<?=$order['id_product']?>" class="linkProductOrderStory px-0 mx-0">
-                                            <?=Product::getProductById($order['id_product'])['name']?>
+                                        <a href="/product/view/<?= $order['id_product'] ?>"
+                                           class="linkProductOrderStory px-0 mx-0">
+                                            <?= Product::getProductById($order['id_product'])['name'] ?>
                                         </a>
                                     </div>
 
                                 </td>
                                 <td class="align-top text-center">
                                     <div class="text-secondary labelSecondaryStoryOrder">Ціна</div>
-                                    <div><?=Product::getProductById($order['id_product'])['price']?> ₴</div>
+                                    <div><?= Product::getProductById($order['id_product'])['price'] ?> ₴</div>
                                 </td>
                                 <td class="align-top text-center">
                                     <div class="text-secondary labelSecondaryStoryOrder">Кількість</div>
-                                    <div><?=$order['count']?></div>
+                                    <div><?= $order['count'] ?></div>
                                 </td>
                                 <td class="align-top text-center">
                                     <div class="text-secondary labelSecondaryStoryOrder">Сума</div>
-                                    <div><?= $order['count'] * Product::getProductById($order['id_product'])['price'] ?> ₴</div>
+                                    <div><?= $order['count'] * Product::getProductById($order['id_product'])['price'] ?>
+                                        ₴
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="1" class="text-secondary pt-3 text-start">Оплата</td>
-                                <td colspan="3" class="pt-3 text-end"><?=\models\Order::getTypePaymentById($order['typePayment_id'])['name']?></td>
+                                <td colspan="3"
+                                    class="pt-3 text-end"><?= \models\Order::getTypePaymentById($order['typePayment_id'])['name'] ?></td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-secondary pt-2 text-start">Доставка</td>
@@ -98,7 +100,10 @@ use \models\PhotoProduct;
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-secondary pt-2 text-start">Всього</td>
-                                <td colspan="2" class="pt-2 text-end fs-5"><?= $order['count'] * Product::getProductById($order['id_product'])['price'] ?> ₴</td>
+                                <td colspan="2"
+                                    class="pt-2 text-end fs-5"><?= $order['count'] * Product::getProductById($order['id_product'])['price'] ?>
+                                    ₴
+                                </td>
                             </tr>
                         </table>
                     </div>

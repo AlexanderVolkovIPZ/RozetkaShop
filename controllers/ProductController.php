@@ -4,6 +4,7 @@ namespace controllers;
 
 use core\Controller;
 use core\Core;
+use models\Basket;
 use models\Category;
 use models\Comment;
 use models\PhotoProduct;
@@ -66,8 +67,8 @@ class ProductController extends Controller
         }
         if ($id > 0) {
 
-            $product= Product::getProductById($id);
-            $photos= PhotoProduct::getProductPhotoByName($product['name']);
+            $product = Product::getProductById($id);
+            $photos = PhotoProduct::getProductPhotoByName($product['name']);
             $categories = Category::getCategories();
             if (Core::getInstance()->requestMethod === 'POST') {
                 $errors = [];
@@ -88,10 +89,10 @@ class ProductController extends Controller
 
                 if (empty($errors)) {
 
-                    Product::updateProduct($id,$_POST);
+                    Product::updateProduct($id, $_POST);
 
                     if (!empty($_FILES)) {
-                        PhotoProduct::changePhoto($_POST['name'],$_FILES['file']['tmp_name']);
+                        PhotoProduct::changePhoto($_POST['name'], $_FILES['file']['tmp_name']);
                     }
                     return $this->redirect('/');
                 } else {
@@ -99,16 +100,16 @@ class ProductController extends Controller
                     return $this->render(null, [
                         'errors' => $errors,
                         'categories' => $categories,
-                        'product'=>$product,
-                        'productPhoto'=>$photos
+                        'product' => $product,
+                        'productPhoto' => $photos
                     ]);
                 }
             }
 
             return $this->render(null, [
                 'categories' => $categories,
-                'product'=>$product,
-                'productPhoto'=>$photos
+                'product' => $product,
+                'productPhoto' => $photos
             ]);
         } else {
             return $this->error(403);
@@ -119,11 +120,11 @@ class ProductController extends Controller
     {
         $errors = [];
         $id = intval($params[0]);
-        $user= User::getCarrentAuthenticatedUser();
+        $user = User::getCarrentAuthenticatedUser();
         $rows = PhotoProduct::getProductPhotoByName(Product::getProductById($id)['name'], 'name');
         $product = Product::getProductById($id);
 
-        if(Core::getInstance()->requestMethod=='POST'){
+        if (Core::getInstance()->requestMethod == 'POST') {
             $reitingRadio = $_POST['reitingRadio'];
             $userName = $_POST['cmNameUser'];
             $cmAdvantages = $_POST['cmAdvantages'];
@@ -131,40 +132,40 @@ class ProductController extends Controller
             $comment = $_POST['comment'];
             $cmNameUser = $_POST['cmNameUser'];
             $date = date('Y-m-d');
-            if(empty($reitingRadio)){
+            if (empty($reitingRadio)) {
                 $errors['reitingRadio'] = "Оберіть рейтинг даного товару!";
             }
-            if(empty($comment)){
+            if (empty($comment)) {
                 $errors['comment'] = "Напишіть відгук про даний товар!";
             }
-            if(empty($cmNameUser)){
+            if (empty($cmNameUser)) {
                 $errors['cmNameUser'] = "Залишіть своє ім'я та прізвище!";
             }
-            if(!User::isUserAdmin()||!User::isAuthenticatedUser()){
-                if(!Comment::isLevedCommentByUser($id, $user['id'])){
-                    if(count($errors)>0){
-                        return $this->render(null,[
-                            'errors'=>$errors,
+            if (!User::isUserAdmin() || !User::isAuthenticatedUser()) {
+                if (!Comment::isLevedCommentByUser($id, $user['id'])) {
+                    if (count($errors) > 0) {
+                        return $this->render(null, [
+                            'errors' => $errors,
                             'product' => $product,
                             'rows' => $rows
                         ]);
-                    }else{
+                    } else {
                         Comment::addComment([
-                            'id_user'=>$user['id'],
-                            'id_product'=>$id,
-                            'comment'=>$comment,
-                            'reiting'=>$reitingRadio,
-                            'advantages'=>$cmAdvantages,
-                            'disadvantages'=>$cmDisadvantages,
-                            'user_name'=>$userName,
-                            'date'=>$date
+                            'id_user' => $user['id'],
+                            'id_product' => $id,
+                            'comment' => $comment,
+                            'reiting' => $reitingRadio,
+                            'advantages' => $cmAdvantages,
+                            'disadvantages' => $cmDisadvantages,
+                            'user_name' => $userName,
+                            'date' => $date
                         ]);
 
                     }
-                }else{
+                } else {
                     return $this->render('views/site/error-404.php');
                 }
-            }else{
+            } else {
                 return $this->render('views/site/error-404.php');
             }
         }
@@ -172,9 +173,9 @@ class ProductController extends Controller
         return $this->render(null, [
             'product' => $product,
             'rows' => $rows,
-            'errors'=>$errors,
-            'user'=>$user,
-            'comments'=>$comments,
+            'errors' => $errors,
+            'user' => $user,
+            'comments' => $comments,
         ]);
     }
 
@@ -191,15 +192,14 @@ class ProductController extends Controller
             $photoProduct = PhotoProduct::getProductPhotoByName($product['name']);
 
             if ($confirmDeleting) {
-                foreach ($photoProduct as $photo){
+                foreach ($photoProduct as $photo) {
                     $filePath = 'files/product/' . $photo['name'];
-                    echo $filePath;
-                    if (is_file($filePath) and $photo['name']!='default.png') {
+                    if (is_file($filePath) and $photo['name'] != 'default.png') {
                         unlink($filePath);
                     }
                 }
                 Product::deleteProductById($id);
-                 $this->redirect("/category/view/".$product['id_category']);
+                $this->redirect("/category/view/" . $product['id_category']);
             }
             return $this->render(null, [
                 'product' => $product
@@ -207,5 +207,15 @@ class ProductController extends Controller
         } else {
             return $this->error(403);
         }
+    }
+
+
+    public function selectAction()
+    {
+        $wordSearch = "%" . $_GET['word'] . "%";
+        $rows = Product::selectProduct(null, "*", [
+            'name' => $wordSearch
+        ]);
+        exit (json_encode($rows));
     }
 }

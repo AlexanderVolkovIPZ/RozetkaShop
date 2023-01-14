@@ -54,7 +54,6 @@ if (productList != null) {
         }
 
 
-
         // else if (targetClick.parentElement.classList.contains('btnAddToLikeList') || targetClick.parentElement.classList.contains('btnProductInLikeList')) {
         //     let elements = targetClick.parentElement.parentElement.children;
         //     for (let i = 0; i < elements.length; i++) {
@@ -69,22 +68,22 @@ if (productList != null) {
 let buttonsAddProduct = document.querySelectorAll('.btnAddProductToBasket')
 buttonsAddProduct.forEach(button => {
     button.addEventListener('click', (event) => {
-    event.preventDefault()
-    if(!event.currentTarget.lastElementChild.classList.contains('d-none')){
-        event.currentTarget.lastElementChild.classList.add('d-none');
-        event.currentTarget.firstElementChild.classList.toggle('d-none');
-        let idProduct = +event.currentTarget.dataset.id
-        sendRequestAddProductToBasket(idProduct)
-    }
+        event.preventDefault()
+        if (!event.currentTarget.lastElementChild.classList.contains('d-none')) {
+            event.currentTarget.lastElementChild.classList.add('d-none');
+            event.currentTarget.firstElementChild.classList.toggle('d-none');
+            let idProduct = +event.currentTarget.dataset.id
+            sendRequestAddProductToBasket(idProduct)
+        }
     })
 })
 
 
 ////////////// BUTTON CUSTOMER LIKE PRODUCT///////////////////
-function sendRequestAddProductToWishList(productId){
-     const xhr = new XMLHttpRequest();
-    xhr.open("GET",`/wish/add?idProduct=${productId}`);
-    xhr.onload = ()=>{
+function sendRequestAddProductToWishList(productId) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/wish/add?idProduct=${productId}`);
+    xhr.onload = () => {
 
     }
     xhr.send();
@@ -96,7 +95,7 @@ addProductInLikeList.forEach(button => {
     button.addEventListener('click', (event) => {
         event.preventDefault();
         let elemValue = +elem.textContent;
-        elemValue+=1;
+        elemValue += 1;
         elem.textContent = elemValue;
         let productId = +event.currentTarget.dataset.id;
         event.currentTarget.classList.toggle('d-none');
@@ -104,10 +103,11 @@ addProductInLikeList.forEach(button => {
         sendRequestAddProductToWishList(productId)
     })
 })
-function sendRequestRemoveProductFromWishList(productId){
+
+function sendRequestRemoveProductFromWishList(productId) {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET",`/wish/remove?idProduct=${productId}`);
-    xhr.onload = ()=>{
+    xhr.open("GET", `/wish/remove?idProduct=${productId}`);
+    xhr.onload = () => {
 
     }
     xhr.send();
@@ -115,27 +115,25 @@ function sendRequestRemoveProductFromWishList(productId){
 
 let btnProductInLikeList = document.querySelectorAll('.btnProductInLikeList');
 let wishListMainWrapper = document.querySelector('.wishListMainWrapper');
-btnProductInLikeList.forEach(button=>{
-    button.addEventListener('click', (event)=>{
+btnProductInLikeList.forEach(button => {
+    button.addEventListener('click', (event) => {
         event.preventDefault();
         let elemValue = +elem.textContent;
-        elemValue-=1;
+        elemValue -= 1;
         elem.textContent = elemValue;
         let productId = +event.currentTarget.dataset.id;
 
         event.currentTarget.classList.toggle('d-none')
         event.currentTarget.previousElementSibling.classList.toggle('d-none')
         sendRequestRemoveProductFromWishList(productId)
-        if(event.currentTarget.classList.contains('wishSection')){
+        if (event.currentTarget.classList.contains('wishSection')) {
             event.currentTarget.closest('.wishSectionWrapper').remove();
         }
-        if(wishListMainWrapper.children.length===0){
+        if (wishListMainWrapper.children.length === 0) {
             location.reload();
         }
     })
 })
-
-
 
 
 ////////////// SLIDER OPERATION///////////////////
@@ -261,7 +259,7 @@ function getSumBasket() {
     console.log(xhr.responseText)
     xhr.open("GET", `/basket/sum`);
     xhr.onload = () => {
-        document.querySelector('.allSumBasket').textContent = JSON.parse(xhr.response)+" ₴";
+        document.querySelector('.allSumBasket').textContent = JSON.parse(xhr.response) + " ₴";
     }
     xhr.send();
 }
@@ -270,7 +268,7 @@ function getSumOneRecord(id, count) {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `/basket/sum_one_record?id=${id}&count=${count}`);
     xhr.onload = () => {
-        document.getElementById(id).textContent = JSON.parse(xhr.response) +" ₴";
+        document.getElementById(id).textContent = JSON.parse(xhr.response) + " ₴";
     }
     xhr.send();
 }
@@ -308,7 +306,7 @@ removeProductBsk.forEach(button => {
             count -= 1;
             eventTarget.value = count;
             let productId = +eventTarget.dataset.id;
-            updateMethodCountProductBsk(productId, count);
+            updateMethodCountProductBsk(productId, count, eventTarget);
         }
     })
 })
@@ -346,12 +344,12 @@ deleteProductFromBasket.forEach(button => {
 function validationMethodFIO(fieldName) {
     var pattern = /[А-ЯЇІ][а-яії]+/i;
 
-    if (fieldName.value === "" || fieldName.value.length < 3 || pattern.test(fieldName.value) === false) {
-        fieldName.classList.add('is-invalid');
-        fieldName.classList.remove('is-valid');
+    if (pattern.test(fieldName.value) === false) {
+        fieldName.classList.toggle('is-invalid');
+        fieldName.classList.toggle('is-valid');
     } else {
-        fieldName.classList.add('is-valid');
-        fieldName.classList.remove('is-invalid');
+        fieldName.classList.toggle('is-valid');
+        fieldName.classList.toggle('is-invalid');
     }
 }
 
@@ -421,6 +419,37 @@ for (let i = 0; i < invalidFeedback.length; i++) {
         invalidFeedback[i].previousElementSibling.classList.remove('is-valid');
     }
 }
+///////////////////////////////////VALIDATE SETTINGS///////////////////////////////////////////////////
+let firstNameInput = document.querySelector('.firstNameInput')
+let middleNameInput = document.querySelector('.middleNameInput')
+let lastNameInput = document.querySelector('.lastNameInput')
+let loginChange = document.querySelector('.loginChange')
+
+if (firstNameInput != null)
+    firstNameInput.addEventListener('change', () => {
+        validationMethodFIO(firstNameInput)
+    })
+if (middleNameInput != null)
+    middleNameInput.addEventListener('change', () => {
+        validationMethodFIO(middleNameInput)
+    })
+
+if (lastNameInput != null)
+    lastNameInput.addEventListener('change', () => {
+        validationMethodFIO(lastNameInput)
+    })
+if (loginChange != null)
+    loginChange.addEventListener('change', () => {
+        let pattern = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+        if (loginChange.value === "" || pattern.test(loginChange.value) === false) {
+            loginChange.classList.add('is-invalid');
+            loginChange.classList.remove('is-valid');
+        } else {
+            loginChange.classList.add('is-valid');
+            loginChange.classList.remove('is-invalid');
+        }
+    })
+
 
 /////////////////////////////////// EDIT USER DATES ///////////////////////////////////////////////////
 let buttonEdit = document.querySelector('.btnEditUserDates');
@@ -477,13 +506,6 @@ function toggleClassesLable(labelName) {
     labelName.nextElementSibling.classList.toggle('d-none')
 }
 
-
-// function returnLabelUserInfo(){
-//     firstNameLabel.classList.toggle('d-none')
-//     middleNameLabel.classList.toggle('d-none')
-//     lastNameLabel.classList.toggle('d-none')
-// }
-
 /////////////////////////////////EDIT SHOW/HIDE PASSWORD/////////////////////////////////////////////
 if (document.querySelector('.img-edit-password1') != null) {
     document.querySelector('.img-edit-password1').addEventListener('click', (event) => {
@@ -495,7 +517,6 @@ if (document.querySelector('.img-edit-password2') != null) {
         showHidePasswordInSettings('.editPassword2', event);
     })
 }
-
 
 function showHidePasswordInSettings(editPasswordFieldClass, event) {
     let input = document.querySelector(editPasswordFieldClass);
@@ -549,8 +570,6 @@ reitingScores.forEach(value => {
 })
 
 //////////////////////////////////////////////////////SELECT TOWN AND DESTINATION////////////////////////////////////////
-
-
 function requestGetDestinations(id, selectDestination) {
     const xhr = new XMLHttpRequest();
     // console.log(xhr.responseText)
@@ -604,4 +623,66 @@ svgBtnChangeStatusProduct.forEach(button => {
         sendRequestChangeStatusOrder(orderId)
         event.currentTarget.closest('tr').remove();
     })
+})
+
+/////////////////////////////////////SEARCH PRODUCT//////////////////////////////////////////
+let searchProductInput = document.querySelector('.searchProduct');
+let searchProductWrapper = document.querySelector('.searchProductWrapper');
+
+
+let listSearchWrapper = document.createElement('div')
+listSearchWrapper.style.position = 'absolute'
+listSearchWrapper.style.zIndex = "100"
+listSearchWrapper.style.top = '38px'
+listSearchWrapper.style.borderRadius = "10px"
+listSearchWrapper.style.backgroundColor = 'white'
+listSearchWrapper.style.width = "274px"
+listSearchWrapper.style.maxHeight = "350px"
+listSearchWrapper.style.overflowY = "scroll"
+listSearchWrapper.style.cursor = "pointer"
+listSearchWrapper.style.color = "black"
+
+let listItems = document.createElement('ul');
+listItems.style.listStyleType = "none"
+listItems.style.marginLeft = "0"
+listItems.style.marginTop = "5px"
+listItems.style.marginBottom = "5px"
+listItems.style.paddingLeft = "0"
+listSearchWrapper.append(listItems);
+
+searchProductInput.addEventListener('input', (event) => {
+    searchProductWrapper.append(listSearchWrapper)
+    let value = event.currentTarget.value;
+    listItems.innerHTML = "";
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/product/select?word=${value}`);
+
+    xhr.onload = () => {
+        let values = JSON.parse(xhr.responseText)
+        if (JSON.parse(xhr.responseText).length > 0) {
+            listItems.style.display = "block"
+            for (const value of values) {
+                let li = document.createElement('li');
+                li.classList.add('li-item-search');
+                li.style.paddingLeft = "10px";
+                li.textContent = value['name'];
+                listItems.append(li);
+            }
+        } else {
+            listItems.style.display = "none"
+        }
+
+
+        for (const value of listItems.children) {
+            value.addEventListener('click', (event) => {
+                event.currentTarget.style.active = "none"
+                searchProductInput.value = event.currentTarget.textContent;
+                // listItems.style.display = "none";
+            })
+        }
+        document.addEventListener('click', () => {
+            listItems.style.display = "none";
+        })
+    }
+    xhr.send();
 })

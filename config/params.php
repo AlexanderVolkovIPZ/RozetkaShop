@@ -2,6 +2,6 @@
 
 
 $pageParams = [
-    'siteName'=>'CMS',
-    'title'=> 'Головна сторінка',
+    'siteName' => 'CMS',
+    'title' => 'Головна сторінка',
 ];

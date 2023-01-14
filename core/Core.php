@@ -60,9 +60,9 @@ class Core
         if (empty($moduleName))
             $moduleName = "site";
         if (empty($actionName))
-            if(User::isUserAdmin()){
+            if (User::isUserAdmin()) {
                 $actionName = "admin";
-            }else{
+            } else {
                 $actionName = "index";
             }
 
@@ -74,7 +74,7 @@ class Core
             $controller = new $controllerName();
             if (method_exists($controller, $actionName)) {
                 $actionResult = $controller->$actionName($pathParts);
-                if($actionResult instanceof Error)
+                if ($actionResult instanceof Error)
                     $statusCode = $actionResult->code;
                 $this->pageParams['content'] = $actionResult;
             } else {

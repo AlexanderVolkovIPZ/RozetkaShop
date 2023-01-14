@@ -25,9 +25,9 @@ class SliderController extends Controller
         }
         if (Core::getInstance()->requestMethod === 'POST') {
             $sliderPhotos = Slider::getPhoto();
-            if(!empty($sliderPhotos)){
-                foreach ($sliderPhotos as $photo){
-                    $filePath = 'files/discount/'.$photo['name'];
+            if (!empty($sliderPhotos)) {
+                foreach ($sliderPhotos as $photo) {
+                    $filePath = 'files/discount/' . $photo['name'];
                     if (is_file($filePath)) {
                         unlink($filePath);
                     }
@@ -35,15 +35,14 @@ class SliderController extends Controller
             }
             Slider::deletePhoto();
             $arrayURL = [];
-            foreach ($_POST as $key=>$value){
-                if(preg_match("/url\\d*/",$key)){
+            foreach ($_POST as $key => $value) {
+                if (preg_match("/url\\d*/", $key)) {
                     $arrayURL[] = $value;
                 }
             }
-            Slider::addPhoto($_FILES['file']['tmp_name'],$_POST['photoSelected'],$arrayURL);
-           return $this->redirect('/');
-        }
-        else {
+            Slider::addPhoto($_FILES['file']['tmp_name'], $_POST['photoSelected'], $arrayURL);
+            return $this->redirect('/');
+        } else {
             return $this->render();
         }
     }
@@ -54,17 +53,17 @@ class SliderController extends Controller
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
-            $photos = Slider::getPhoto();
-            if ($confirmDeleting) {
-                foreach ($photos as $photo) {
-                    $filePath = 'files/discount/' . $photo['name'];
-                    if (is_file($filePath)) {
-                        unlink($filePath);
-                    }
+        $photos = Slider::getPhoto();
+        if ($confirmDeleting) {
+            foreach ($photos as $photo) {
+                $filePath = 'files/discount/' . $photo['name'];
+                if (is_file($filePath)) {
+                    unlink($filePath);
                 }
-                Slider::deletePhoto();
-                return $this->redirect('/');
             }
+            Slider::deletePhoto();
+            return $this->redirect('/');
+        }
         return $this->render();
     }
 }

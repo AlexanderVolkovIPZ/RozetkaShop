@@ -1,8 +1,10 @@
 <?php
 
 namespace models;
+
 use core\Core;
 use core\Utils;
+
 class User
 {
     protected static $tableName = 'user';
@@ -20,12 +22,15 @@ class User
             ]
         );
     }
-    public static function hashPassword($password){
+
+    public static function hashPassword($password)
+    {
         return md5($password);
     }
+
     public static function selectUser($fieldsList = "*", $conditionsArray = null, $orderByArray = null, $limit = null, $offset = null)
     {
-       $users =  \core\Core::getInstance()->db->select(
+        $users = \core\Core::getInstance()->db->select(
             self::$tableName,
             $fieldsList,
             $conditionsArray,
@@ -33,7 +38,7 @@ class User
             $limit,
             $offset
         );
-       return $users;
+        return $users;
     }
 
     public static function deleteUser($where = null)
@@ -44,56 +49,69 @@ class User
         );
     }
 
-    public static function updateUser($id,$updatesArray){
-        $updatesArray = Utils::filterArray($updatesArray,['firstName','middleName','lastName', 'typeAccess','password','login']);
+    public static function updateUser($id, $updatesArray)
+    {
+        $updatesArray = Utils::filterArray($updatesArray, ['firstName', 'middleName', 'lastName', 'typeAccess', 'password', 'login']);
         \core\Core::getInstance()->db->update(
             self::$tableName,
             $updatesArray,
-            ['id'=>$id]
+            ['id' => $id]
         );
     }
 
-    public static function isLoginExist($login){
-        $user = \core\Core::getInstance()->db->select(self::$tableName,'*',['login'=>$login]);
+    public static function isLoginExist($login)
+    {
+        $user = \core\Core::getInstance()->db->select(self::$tableName, '*', ['login' => $login]);
         return !empty($user);
     }
 
-    public static function verifyUser($login, $password){
-        $user = \core\Core::getInstance()->db->select(self::$tableName,'*',
-            ['login'=>$login, 'password'=>$password]);
+    public static function verifyUser($login, $password)
+    {
+        $user = \core\Core::getInstance()->db->select(self::$tableName, '*',
+            ['login' => $login, 'password' => $password]);
         return !empty($user);
     }
-    public static function getUserByLoginAndPassword($login, $password){
-        $user = \core\Core::getInstance()->db->select(self::$tableName,'*',
-            ['login'=>$login, 'password'=>self::hashPassword($password)]);
-        if(!empty($user))
+
+    public static function getUserByLoginAndPassword($login, $password)
+    {
+        $user = \core\Core::getInstance()->db->select(self::$tableName, '*',
+            ['login' => $login, 'password' => self::hashPassword($password)]);
+        if (!empty($user))
             return $user[0];
         return null;
     }
-    public static function logoutUser(){
+
+    public static function logoutUser()
+    {
         session_destroy();
         unset($_SESSION['user']);
     }
-    public static function authentificationUser($user){
+
+    public static function authentificationUser($user)
+    {
         $_SESSION['user'] = $user;
     }
 
-    public static function isAuthenticatedUser(){
+    public static function isAuthenticatedUser()
+    {
         return isset($_SESSION['user']);
     }
 
-    public static function getCarrentAuthenticatedUser(){
+    public static function getCarrentAuthenticatedUser()
+    {
         return $_SESSION['user'];
     }
 
-    public static function isUserAdmin(){
+    public static function isUserAdmin()
+    {
         $user = self::getCarrentAuthenticatedUser();
-        return $user['typeAccess']==10;
+        return $user['typeAccess'] == 10;
     }
 
-    public static function getUserById($id){
-        $user = Core::getInstance()->db->select(self::$tableName,'*',[
-            'id'=>$id
+    public static function getUserById($id)
+    {
+        $user = Core::getInstance()->db->select(self::$tableName, '*', [
+            'id' => $id
         ]);
         return $user[0];
     }

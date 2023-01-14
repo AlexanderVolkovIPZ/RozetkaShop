@@ -1,8 +1,9 @@
 <?php
-/** @var array $category */
+///** @var array $category */
 /** @var array $products */
 /** @var array $rows */
 
+//var_dump($rows);
 use \models\User;
 
 ?>
@@ -23,9 +24,9 @@ use \models\User;
                         <?php if (!User::isUserAdmin()): ?>
                             <div class="text-end addToListLikeBlock">
                                 <a href="" class="btnAddToLikeList
-<?php if(isset($_SESSION['wish'][$product['id']])):?>
-                                        <?=" d-none"?>
-                                    <?php endif;?>
+<?php if (isset($_SESSION['wish'][$product['id']])): ?>
+                                        <?= " d-none" ?>
+                                    <?php endif; ?>
 " data-id="<?= $product['id'] ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                          class="bi bi-heart text-warning fw-bold button btnAddToLikeListIcon"
@@ -35,9 +36,9 @@ use \models\User;
                                 </a>
 
                                 <a href="" class="btnProductInLikeList
-<?php if(empty($_SESSION['wish'][$product['id']])):?>
-    <?=" d-none"?>
-<?php endif;?>
+<?php if (empty($_SESSION['wish'][$product['id']])): ?>
+    <?= " d-none" ?>
+<?php endif; ?>
 " data-id="<?= $product['id'] ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                          class="bi bi-heart-fill text-warning button btnProductInLikeListIcon"
@@ -80,7 +81,7 @@ use \models\User;
                                         </a>
                                         <a href="/basket" class="btnProductInBasket
 <?php if (empty($_SESSION['basket'][$product['id']])) echo " d-none" ?>
-" >
+">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                  fill="currentColor"
                                                  class="btnProductInBasketIcon bi bi-cart-check-fill text-success button"

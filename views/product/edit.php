@@ -2,10 +2,6 @@
 /** @var array $product */
 /** @var array $categories */
 /** @var array $productPhoto */
-//var_dump($productPhoto);
-//echo "<pre>";
-//var_dump($product);
-
 ?>
 
 

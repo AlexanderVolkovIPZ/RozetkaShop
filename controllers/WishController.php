@@ -10,25 +10,27 @@ use models\Wish;
 
 class WishController extends \core\Controller
 {
-    public function indexAction(){
+    public function indexAction()
+    {
         $products = [];
         $photoProduct = [];
-        if(!empty($_SESSION['wish'])){
-            foreach ($_SESSION['wish'] as $key => $value){
-                $products[$key]=Product::getProductById($key);
+        if (!empty($_SESSION['wish'])) {
+            foreach ($_SESSION['wish'] as $key => $value) {
+                $products[$key] = Product::getProductById($key);
                 $photoProduct[$key] = PhotoProduct::getProductPhotoByName(Product::getProductById($key)['name'])[0];
             }
-            return $this->render(null,[
-                'products'=>$products,
-                'photoProduct'=>$photoProduct
+            return $this->render(null, [
+                'products' => $products,
+                'photoProduct' => $photoProduct
             ]);
-        }else{
+        } else {
             return $this->render("views/wish/empty.php");
         }
 
     }
 
-    public function addAction(){
+    public function addAction()
+    {
         $idProduct = intval($_GET['idProduct']);
         Wish::addWish($idProduct);
 //        $idUser = User::getCarrentAuthenticatedUser()['id'];
@@ -40,7 +42,8 @@ class WishController extends \core\Controller
 //        }
     }
 
-    public function removeAction(){
+    public function removeAction()
+    {
         $idProduct = intval($_GET['idProduct']);
         Wish::deleteFromWish($idProduct);
     }

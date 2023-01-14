@@ -130,8 +130,8 @@ class UserController extends Controller
                 $login = trim($_POST['loginUserEdit']);
                 $password = trim($_POST['password']);
                 $passwordRepeat = trim($_POST['passwordRepeat']);
-
-                if(strlen($firstName)>=3&&strlen($middleName)>=3&&strlen($lastName)>=3){
+                $patternName = '/[А-ЯЇІ][а-яії]+/';
+                if(preg_match($patternName,$firstName)&& preg_match($patternName,$middleName)&&preg_match($patternName,$lastName)){
                     User::updateUser($userId, [
                         'firstName' => $firstName,
                         'middleName'=>$middleName,
@@ -141,7 +141,8 @@ class UserController extends Controller
                     User::updateUser($userId, [
                         'login'=>$login
                     ]);
-                }else if($password==$passwordRepeat&&$password>=3){
+                }else if($password==$passwordRepeat&&preg_match('/^(?=.*[a-z])(?=.*[A-Z]*)(?=.*\d)[a-zA-Z\d]{8,}$/',$password)){
+
                     User::updateUser($userId, [
                         'password'=>User::hashPassword($password)
                     ]);
