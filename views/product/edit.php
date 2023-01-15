@@ -100,8 +100,8 @@
         <input class="form-control mt-3 formNewPhotoUpdate" multiple type="file" name="file[]" id="formFile"
                accept=" image/png, image/jpeg">
         <div class="newPhotoUpdateProduct"></div>
-
-
+        <?php
+        ?>
     </div>
     <button class="btn btn-primary mt-3" type="submit">Зробити зміну</button>
 </form>
@@ -113,8 +113,6 @@
         document.querySelector("[name = 'count']").setAttribute('value', '<' + `?=$products[${index}]['count']?>`)
         alert(document.querySelector("[name = 'count']").textContent)
     })
-
-
 </script>
 <script>
     let textEditors = document.querySelectorAll('.ckeditor');

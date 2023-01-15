@@ -150,7 +150,7 @@ use \models\Comment;
                 </div>
             <?php endif; ?>
             <div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mt-3">
                     <div class="fs-4">
                         Відгуки покупців
                     </div>
@@ -262,7 +262,7 @@ use \models\Comment;
                     foreach ($comments as $comment) {
                         $middleReiting += $comment['reiting'];
                     }
-                    $middleReiting = round($middleReiting / count($comments),1);
+                    $middleReiting = round($middleReiting / count($comments), 1);
                     ?>
                     <div class="fs-4 text-primary mt-2" style="margin-left: 15px">
                         Загальний рейтинг <b><?= $middleReiting ?>/5</b>

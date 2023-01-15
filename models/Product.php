@@ -46,11 +46,9 @@ class Product
         }
     }
 
-    public static function getProductInCategory($id_category)
+    public static function getProductInCategory($arrayCondition = null)
     {
-        $rows = Core::getInstance()->db->select(self::$tableName, '*', [
-            'id_category' => $id_category
-        ]);
+        $rows = Core::getInstance()->db->select(self::$tableName, '*', $arrayCondition);
         return $rows;
     }
 

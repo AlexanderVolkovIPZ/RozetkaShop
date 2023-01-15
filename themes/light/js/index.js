@@ -650,39 +650,43 @@ listItems.style.marginBottom = "5px"
 listItems.style.paddingLeft = "0"
 listSearchWrapper.append(listItems);
 
-searchProductInput.addEventListener('input', (event) => {
-    searchProductWrapper.append(listSearchWrapper)
-    let value = event.currentTarget.value;
-    listItems.innerHTML = "";
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `/product/select?word=${value}`);
+if(searchProductInput!==null){
+    searchProductInput.addEventListener('input', (event) => {
+        searchProductWrapper.append(listSearchWrapper)
+        let value = event.currentTarget.value;
+        listItems.innerHTML = "";
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/product/select?word=${value}`);
 
-    xhr.onload = () => {
-        let values = JSON.parse(xhr.responseText)
-        if (JSON.parse(xhr.responseText).length > 0) {
-            listItems.style.display = "block"
-            for (const value of values) {
-                let li = document.createElement('li');
-                li.classList.add('li-item-search');
-                li.style.paddingLeft = "10px";
-                li.textContent = value['name'];
-                listItems.append(li);
+        xhr.onload = () => {
+            let values = JSON.parse(xhr.responseText)
+            if (JSON.parse(xhr.responseText).length > 0) {
+                listItems.style.display = "block"
+                for (const value of values) {
+                    let li = document.createElement('li');
+                    li.classList.add('li-item-search');
+                    li.style.paddingLeft = "10px";
+                    li.textContent = value['name'];
+                    listItems.append(li);
+                }
+            } else {
+                listItems.style.display = "none"
             }
-        } else {
-            listItems.style.display = "none"
-        }
 
 
-        for (const value of listItems.children) {
-            value.addEventListener('click', (event) => {
-                event.currentTarget.style.active = "none"
-                searchProductInput.value = event.currentTarget.textContent;
-                // listItems.style.display = "none";
+            for (const value of listItems.children) {
+                value.addEventListener('click', (event) => {
+                    event.currentTarget.style.active = "none"
+                    searchProductInput.value = event.currentTarget.textContent;
+                    // listItems.style.display = "none";
+                })
+            }
+            document.addEventListener('click', () => {
+                listItems.style.display = "none";
             })
         }
-        document.addEventListener('click', () => {
-            listItems.style.display = "none";
-        })
-    }
-    xhr.send();
-})
+        xhr.send();
+    })
+}
+
+

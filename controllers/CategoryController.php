@@ -147,7 +147,7 @@ class CategoryController extends Controller
 
         $id = intval($params[0]);
         $category = Category::getCategoryById($id);
-        $products = Product::getProductInCategory($id);
+        $products = Product::getProductInCategory(['id_category' => $id, 'visibility' => 0]);
 
         if (!empty($products)) {
             if (is_array($products)) {

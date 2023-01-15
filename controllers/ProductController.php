@@ -41,6 +41,17 @@ class ProductController extends Controller
                 $errors['count'] = 'Некоректно задана кількість товару';
             }
 
+            if (!empty($_POST['brief_description'])) {
+                if (strlen($_POST['brief_description']) < 30 || strlen($_POST['brief_description']) > 200) {
+                    $errors['brief_description'] = "Кількість введених символів повинна бути не менша 30 та не більше 200!";
+                }
+            }
+            if (!empty($_POST['full_description'])) {
+                if (strlen($_POST['full_description']) <= 200 || strlen($_POST['full_description']) > 2000) {
+                    $errors['full_description'] = "Кількість введених символів повинна бути не менша 200 та не більше 2000!";
+                }
+            }
+
             if (empty($errors)) {
                 Product::addProduct($_POST);
                 PhotoProduct::addPhoto($_POST['name'], $_FILES['file']['tmp_name']);
