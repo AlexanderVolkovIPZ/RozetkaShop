@@ -19,7 +19,12 @@
         <label for="id_category" class="form-label">Категорія товару</label>
         <select class="form-select" id="id_category" name="id_category">
             <?php foreach ($categories as $category): ?>
-                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                <option value="<?= $category['id'] ?>"
+                <?php
+                    if($category['id']==$products['id_category'])
+                        echo "selected"
+                ?>
+                ><?= $category['name'] ?></option>
             <?php endforeach; ?>
         </select>
         <?php if (!empty($errors['id_category']) and $_POST): ?>

@@ -650,7 +650,7 @@ listItems.style.marginBottom = "5px"
 listItems.style.paddingLeft = "0"
 listSearchWrapper.append(listItems);
 
-if(searchProductInput!==null){
+if (searchProductInput !== null) {
     searchProductInput.addEventListener('input', (event) => {
         searchProductWrapper.append(listSearchWrapper)
         let value = event.currentTarget.value;
@@ -660,8 +660,10 @@ if(searchProductInput!==null){
 
         xhr.onload = () => {
             let values = JSON.parse(xhr.responseText)
+            console.log(xhr.responseText)
             if (JSON.parse(xhr.responseText).length > 0) {
                 listItems.style.display = "block"
+                let counter = 0;
                 for (const value of values) {
                     let li = document.createElement('li');
                     li.classList.add('li-item-search');

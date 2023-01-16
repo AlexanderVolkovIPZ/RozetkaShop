@@ -60,6 +60,22 @@ class CategoryController extends Controller
                 if (is_file($filePath)) {
                     unlink($filePath);
                 }
+
+                $productsInCategory = Product::selectProduct([
+                    'id_category' => $category['id']
+                ], [
+                    'name'
+                ]);
+
+                foreach ($productsInCategory as $item) {
+                    $photoProduct = PhotoProduct::getProductPhotoByName($item['name']);
+                    foreach ($photoProduct as $photo) {
+                        $filePath = 'files/product/' . $photo['name'];
+                        if (is_file($filePath) and $photo['name'] != 'default.png') {
+                            unlink($filePath);
+                        }
+                    }
+                }
                 Category::deleteCategoryById($id);
                 return $this->redirect('/');
             }

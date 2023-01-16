@@ -47,7 +47,6 @@ class ProductController extends Controller
                     $errors['brief_description'] = "Кількість введених символів повинна бути не менша 30 та не більше 800!";
                 }
             }
-            echo strlen($_POST['brief_description']);
             if (!empty($_POST['full_description'])) {
                 if (strlen($_POST['full_description']) <= 800 || strlen($_POST['full_description']) > 4000) {
                     $errors['full_description'] = "Кількість введених символів повинна бути не менша 800 та не більше 4000!";
@@ -222,7 +221,6 @@ class ProductController extends Controller
             return $this->error(403);
         }
     }
-
 
     public function selectAction()
     {

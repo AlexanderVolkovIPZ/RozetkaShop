@@ -1,9 +1,6 @@
 <?php
-///** @var array $category */
 /** @var array $products */
 /** @var array $rows */
-
-//var_dump($rows);
 use \models\User;
 
 ?>
