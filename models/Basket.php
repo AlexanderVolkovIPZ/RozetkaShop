@@ -23,8 +23,6 @@ class Basket
         return $count;
     }
 
-
-
     public static function deleteFromBasket($productId){
         foreach($_SESSION['basket'] as $key=>$value){
             if($key == $productId){

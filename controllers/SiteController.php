@@ -39,6 +39,4 @@ class SiteController extends Controller
                 break;
         }
     }
-
-
 }

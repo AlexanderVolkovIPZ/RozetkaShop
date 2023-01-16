@@ -25,6 +25,7 @@ class ProductController extends Controller
         }
         $categories = Category::getCategories();
         if (Core::getInstance()->requestMethod === 'POST') {
+            $productInfo = $_POST;
             $errors = [];
             $_POST['name'] = trim($_POST['name']);
 
@@ -34,7 +35,7 @@ class ProductController extends Controller
             if (empty($_POST['id_category'])) {
                 $errors['id_category'] = 'Відсутній індекс категорії';
             }
-            if ($_POST['price'] <= 0) {
+            if ($_POST['price'] < 0) {
                 $errors['price'] = 'Некоректно задана ціна товару';
             }
             if ($_POST['count'] < 0) {
@@ -42,13 +43,14 @@ class ProductController extends Controller
             }
 
             if (!empty($_POST['brief_description'])) {
-                if (strlen($_POST['brief_description']) < 30 || strlen($_POST['brief_description']) > 200) {
-                    $errors['brief_description'] = "Кількість введених символів повинна бути не менша 30 та не більше 200!";
+                if (strlen($_POST['brief_description']) < 30 || strlen($_POST['brief_description']) > 800) {
+                    $errors['brief_description'] = "Кількість введених символів повинна бути не менша 30 та не більше 800!";
                 }
             }
+            echo strlen($_POST['brief_description']);
             if (!empty($_POST['full_description'])) {
-                if (strlen($_POST['full_description']) <= 200 || strlen($_POST['full_description']) > 2000) {
-                    $errors['full_description'] = "Кількість введених символів повинна бути не менша 200 та не більше 2000!";
+                if (strlen($_POST['full_description']) <= 800 || strlen($_POST['full_description']) > 4000) {
+                    $errors['full_description'] = "Кількість введених символів повинна бути не менша 800 та не більше 4000!";
                 }
             }
 
@@ -61,7 +63,8 @@ class ProductController extends Controller
                 return $this->render(null, [
                     'errors' => $errors,
                     'model' => $model,
-                    'categories' => $categories
+                    'categories' => $categories,
+                    'products'=>$productInfo
                 ]);
             }
         }
@@ -91,10 +94,10 @@ class ProductController extends Controller
                 if (empty($_POST['id_category'])) {
                     $errors['id_category'] = 'Відсутня категорія товару';
                 }
-                if (empty($_POST['count'])) {
+                if ($_POST['count'] < 0) {
                     $errors['count'] = 'Відсутня кількість товару';
                 }
-                if (empty($_POST['price'])) {
+                if ($_POST['price'] < 0) {
                     $errors['price'] = 'Відсутня ціна товару';
                 }
 
