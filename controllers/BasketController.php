@@ -63,7 +63,6 @@ class BasketController extends \core\Controller
         if (!empty($id)) {
             exit (json_encode(Order::getAllDestinationsByIdTown($id)));
         }
-
     }
 
     public function orderAction()

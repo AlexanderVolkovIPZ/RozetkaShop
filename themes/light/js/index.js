@@ -342,14 +342,14 @@ deleteProductFromBasket.forEach(button => {
 
 ///////////////////////////////////////VALIDATION REGISTER USER//////////////////////////////////////
 function validationMethodFIO(fieldName) {
-    var pattern = /[А-ЯЇІ][а-яії]+/i;
+    var pattern = /^[А-ЯЇІ][а-яії]+$/i;
 
     if (pattern.test(fieldName.value) === false) {
-        fieldName.classList.toggle('is-invalid');
-        fieldName.classList.toggle('is-valid');
+        fieldName.classList.add('is-invalid');
+        fieldName.classList.remove('is-valid');
     } else {
-        fieldName.classList.toggle('is-valid');
-        fieldName.classList.toggle('is-invalid');
+        fieldName.classList.add('is-valid');
+        fieldName.classList.remove('is-invalid');
     }
 }
 

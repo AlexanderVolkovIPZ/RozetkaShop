@@ -17,6 +17,7 @@ use core\Core;
                         <?= $row['name'] ?>
                     </a>
                 <?php endforeach; ?>
+                <?php if(!empty(User::getCarrentAuthenticatedUser())):?>
                 <a class="nav-link px-0 btnSettings" href="/user/settings">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-gear text-dark" viewBox="0 0 16 16">
@@ -25,6 +26,7 @@ use core\Core;
                     </svg>
                     Налаштування
                 </a>
+                <?php endif;?>
             </nav>
         </div>
     </div>

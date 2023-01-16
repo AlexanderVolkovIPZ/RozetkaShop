@@ -63,7 +63,7 @@ class ProductController extends Controller
                     'errors' => $errors,
                     'model' => $model,
                     'categories' => $categories,
-                    'products'=>$productInfo
+                    'products' => $productInfo
                 ]);
             }
         }
