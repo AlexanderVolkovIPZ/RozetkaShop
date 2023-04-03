@@ -1,6 +1,6 @@
 <?php
 /** @var array $orders */
-
+//var_dump($orders);
 use \models\User;
 use \models\Product;
 use \models\Order;

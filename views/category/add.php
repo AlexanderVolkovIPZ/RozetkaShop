@@ -1,7 +1,9 @@
 <?php
 /** @var array $model */
 /** @var array $errors */
-
+/** @var array $filters */
+//echo "<pre>";
+//var_dump($filters);
 ?>
 <form action="" method="post" enctype="multipart/form-data" class="container">
     <h2 class="mt-3">Додавання категорії</h2>
@@ -18,10 +20,15 @@
         <input class="form-control filesSelectedForCategory" type="file" name="file" id="formFile"
                accept="image/svg+xml, image/png">
     </div>
-
-    <div class="divSelectedFilesForCategory d-flex flex-wrap">
-
+<?php if(!empty($filters)):?>
+    <div class="mt-3 mb-3">
+        <?php foreach ($filters as $key=>$value):?>
+        <div class="form-check form-switch">
+            <input class="form-check-input" name="filters[]" value="<?=$value['id']?>" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault"><?=$value['name']?></label>
+        </div>
+        <?php endforeach;?>
     </div>
-
+<?php endif;?>
     <button class="btn btn-primary" type="submit">Створити категорію</button>
 </form>

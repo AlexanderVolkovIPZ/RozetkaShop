@@ -10,7 +10,6 @@ class DB
 
     public function __construct($server, $login, $password, $database)
     {
-
         $this->pdo = new \PDO("mysql:host={$server};dbname={$database};", $login, $password);
     }
 

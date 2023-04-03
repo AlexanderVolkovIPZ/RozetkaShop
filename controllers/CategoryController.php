@@ -5,6 +5,8 @@ namespace controllers;
 use core\Controller;
 use core\Core;
 use models\Category;
+use models\CategoryFilter;
+use models\Filter;
 use models\PhotoProduct;
 use models\Product;
 use models\User;
@@ -24,6 +26,10 @@ class CategoryController extends Controller
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
+
+        $filters = Filter::selectFilter();
+
+
         if (Core::getInstance()->requestMethod === 'POST') {
             $errors = [];
             $_POST['name'] = trim($_POST['name']);
@@ -32,7 +38,19 @@ class CategoryController extends Controller
                 $errors['name'] = 'Відсутня назва категорії';
             }
             if (empty($errors)) {
+
                 Category::addCategory($_POST['name'], $_FILES['file']['tmp_name']);
+
+                $categoryId = Category::getCategories('id',[
+                    'name'=>$_POST['name']
+                ])[0]['id'];
+
+                if (!empty($_POST['filters'])){
+                    foreach ($_POST['filters'] as $key=>$value){
+                       CategoryFilter::addCategoryFilter($categoryId, $value);
+                    }
+                }
+
                 return $this->redirect('/');
             } else {
                 $model = $_POST;
@@ -42,7 +60,9 @@ class CategoryController extends Controller
                 ]);
             }
         }
-        return $this->render();
+        return $this->render(null,[
+            'filters'=>$filters
+        ]);
     }
 
     public function deleteAction($params)

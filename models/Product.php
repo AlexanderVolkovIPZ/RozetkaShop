@@ -11,7 +11,7 @@ class Product
 
     public static function addProduct($row)
     {
-        $fieldsList = ['count', 'name', 'price', 'id_category', 'brief_description', 'full_description', 'visibility'];
+        $fieldsList = ['count', 'name', 'price', 'id_category','id_mark', 'brief_description', 'full_description', 'visibility'];
         $row = Utils::filterArray($row, $fieldsList);
         Core::getInstance()->db->insert(self::$tableName, $row);
     }
@@ -25,7 +25,7 @@ class Product
 
     public static function updateProduct($id, $row)
     {
-        $fieldsList = ['count', 'name', 'price', 'id_category', 'brief_description', 'full_description', 'visibility'];
+        $fieldsList = ['count', 'name', 'price', 'id_category', 'brief_description', 'full_description', 'visibility','id_mark'];
         $row = Utils::filterArray($row, $fieldsList);
         Core::getInstance()->db->update(self::$tableName, $row, [
             'id' => $id

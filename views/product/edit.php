@@ -2,6 +2,8 @@
 /** @var array $product */
 /** @var array $categories */
 /** @var array $productPhoto */
+/** @var array $marks*/
+
 ?>
 
 
@@ -10,8 +12,7 @@
 
     <div class="">
         <label for="name" class="form-label">Назва товару</label>
-        <input type="text" class="form-control" value="<?= $product['name'] ?>" name="name"
-               aria-label="Пример размера поля ввода">
+        <input type="text" class="form-control" value="<?= $product['name'] ?>" name="name" aria-label="Пример размера поля ввода">
         <?php if (!empty($errors['name']) and $_POST): ?>
             <div class="text-danger form-text mb-1"><?= $errors['name'] ?></div>
         <?php endif; ?>
@@ -19,7 +20,7 @@
 
     <div class="mt-3">
         <label for="id_category" class="form-label">Категорія товару</label>
-        <select class="form-select" id="id_category" name="id_category">
+        <select class="form-select category_select" id="id_category" name="id_category">
             <?php foreach ($categories as $category): ?>
                 <option value="<?= $category['id'] ?>"
                     <?php if ($category['id'] == $product['id_category']): ?>
@@ -49,6 +50,22 @@
                aria-label="Пример размера поля ввода">
         <?php if (!empty($errors['price']) and $_POST): ?>
             <div class="text-danger form-text mb-1"><?= $errors['price'] ?></div>
+        <?php endif; ?>
+    </div>
+
+    <div class="mt-3">
+        <label for="id_mark" class="form-label">Марка товару</label>
+        <select class="form-select mark-select" id="id_mark" name="id_mark">
+            <?php foreach ($marks as $mark): ?>
+                <option value="<?= $mark['id'] ?>"
+                <?php if ($mark['id']==+$product['id_mark']):?>
+                    <?php echo "selected"?>
+                <?php endif;?>
+                ><?= $mark['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+        <?php if (!empty($errors['id_mark']) and $_POST): ?>
+            <div class="text-danger form-text mb-1"><?= $errors['id_mark'] ?></div>
         <?php endif; ?>
     </div>
     <div class="mt-3">

@@ -31,12 +31,12 @@ class User
     public static function selectUser($fieldsList = "*", $conditionsArray = null, $orderByArray = null, $limit = null, $offset = null)
     {
         $users = \core\Core::getInstance()->db->select(
-            self::$tableName,
-            $fieldsList,
-            $conditionsArray,
-            $orderByArray,
-            $limit,
-            $offset
+                self::$tableName,
+                $fieldsList,
+                $conditionsArray,
+                $orderByArray,
+                $limit,
+                $offset
         );
         return $users;
     }

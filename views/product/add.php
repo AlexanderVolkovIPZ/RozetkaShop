@@ -3,6 +3,9 @@
 /** @var array $errors */
 /** @var array $categories */
 /** @var array $products */
+/** @var array $marks */
+
+//var_dump($marks);
 ?>
 <form action="" method="post" enctype="multipart/form-data" class="container">
     <h2 class="mt-3">Додавання товару</h2>
@@ -16,13 +19,17 @@
     </div>
 
     <div class="mt-3">
-        <label for="id_category" class="form-label">Категорія товару</label>
-        <select class="form-select" id="id_category" name="id_category">
+        <label for="category_select" class="form-label">Категорія товару</label>
+        <select class="form-select category_select" id="category_select" name="id_category">
+            <?php $i = true;?>
             <?php foreach ($categories as $category): ?>
                 <option value="<?= $category['id'] ?>"
                 <?php
-                    if($category['id']==$products['id_category'])
-                        echo "selected"
+                    if($i===true){
+                        echo "selected";
+                        $i=false;
+                    }
+
                 ?>
                 ><?= $category['name'] ?></option>
             <?php endforeach; ?>
@@ -49,6 +56,19 @@
             <div class="text-danger form-text mb-1"><?= $errors['price'] ?></div>
         <?php endif; ?>
     </div>
+
+    <div class="mt-3">
+        <label for="id_mark" class="form-label">Марка товару</label>
+        <select class="form-select mark-select" id="id_mark" name="id_mark">
+            <?php foreach ($marks as $mark): ?>
+                <option value="<?= $mark['id'] ?>"><?= $mark['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+        <?php if (!empty($errors['id_mark']) and $_POST): ?>
+            <div class="text-danger form-text mb-1"><?= $errors['id_mark'] ?></div>
+        <?php endif; ?>
+    </div>
+
     <div class="mt-3">
         <label for="brief_description" class="form-label">Короткий опис товару</label>
         <textarea class="form-control ckeditor" name="brief_description" id="brief_description" cols="30"

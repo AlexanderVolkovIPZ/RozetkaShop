@@ -183,4 +183,7 @@ class UserController extends Controller
         return $this->render();
     }
 
+    public function statisticAction(){
+        return $this->render();
+    }
 }

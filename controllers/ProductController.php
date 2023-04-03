@@ -7,8 +7,11 @@ use core\Core;
 use models\Basket;
 use models\Category;
 use models\Comment;
+use models\Filter;
+use models\Mark;
 use models\PhotoProduct;
 use models\Product;
+use models\Produtc_Filter_Value;
 use models\User;
 
 class ProductController extends Controller
@@ -20,10 +23,12 @@ class ProductController extends Controller
 
     public function addAction()
     {
+
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
         $categories = Category::getCategories();
+        $marks = Mark::getMark();
         if (Core::getInstance()->requestMethod === 'POST') {
             $productInfo = $_POST;
             $errors = [];
@@ -42,6 +47,9 @@ class ProductController extends Controller
                 $errors['count'] = 'Некоректно задана кількість товару';
             }
 
+            if(empty($_POST['id_mark'])){
+                $errors['id_mark'] = 'Відсутній вказівник на марку товару';
+            }
             if (!empty($_POST['brief_description'])) {
                 if (strlen($_POST['brief_description']) < 30 || strlen($_POST['brief_description']) > 800) {
                     $errors['brief_description'] = "Кількість введених символів повинна бути не менша 30 та не більше 800!";
@@ -56,6 +64,20 @@ class ProductController extends Controller
             if (empty($errors)) {
                 Product::addProduct($_POST);
                 PhotoProduct::addPhoto($_POST['name'], $_FILES['file']['tmp_name']);
+                $idProduct = Product::selectProduct([
+                    'name'=>$_POST['name']
+                ],'id')[0]['id'];
+                $i = 1;
+                foreach (array_keys($_POST) as $key=>$value){
+                    if($i>5&&$i<=count(array_keys($_POST))-3){
+                        preg_match('/\d+/',$_POST[$value],$idVal);
+                        Produtc_Filter_Value::insertRecord($idProduct,Filter::selectFilter('id',[
+                            'table_name'=>$value
+                        ])[0]['id'],$idVal[0]);
+                    }
+                        $i++;
+                }
+
                 $this->redirect('/');
             } else {
                 $model = $_POST;
@@ -63,26 +85,33 @@ class ProductController extends Controller
                     'errors' => $errors,
                     'model' => $model,
                     'categories' => $categories,
-                    'products' => $productInfo
+                    'products' => $productInfo,
+                    'marks'=>$marks
                 ]);
             }
         }
         return $this->render(null, [
-            'categories' => $categories
+            'categories' => $categories,
+            'marks'=>$marks
         ]);
     }
 
     public function editAction($params)
     {
+
         $id = intval($params[0]);
+
+
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
         if ($id > 0) {
 
             $product = Product::getProductById($id);
+
             $photos = PhotoProduct::getProductPhotoByName($product['name']);
             $categories = Category::getCategories();
+            $marks = Mark::getMark();
             if (Core::getInstance()->requestMethod === 'POST') {
                 $errors = [];
                 $_POST['name'] = trim($_POST['name']);
@@ -93,6 +122,10 @@ class ProductController extends Controller
                 if (empty($_POST['id_category'])) {
                     $errors['id_category'] = 'Відсутня категорія товару';
                 }
+                if(empty($_POST['id_mark'])){
+                    $errors['id_mark'] = 'Відсутній вказівник на марку товару';
+                }
+
                 if ($_POST['count'] < 0) {
                     $errors['count'] = 'Відсутня кількість товару';
                 }
@@ -102,19 +135,37 @@ class ProductController extends Controller
 
                 if (empty($errors)) {
 
-                    Product::updateProduct($id, $_POST);
 
                     if (!empty($_FILES)) {
                         PhotoProduct::changePhoto($_POST['name'], $_FILES['file']['tmp_name']);
                     }
+
+                    Product::updateProduct($id, $_POST);
+
+                    Produtc_Filter_Value::deleteRecord([
+                        'product_id' => $product['id']
+                    ]);
+
+                    $i = 1;
+                    foreach (array_keys($_POST) as $key => $value) {
+                        if ($i > 5 && $i <= count(array_keys($_POST)) - 3) {
+                            preg_match('/\d+/', $_POST[$value], $idVal);
+                            Produtc_Filter_Value::insertRecord($product['id'], Filter::selectFilter('id', [
+                                'table_name' => $value
+                            ])[0]['id'], $idVal[0]);
+                        }
+                        $i++;
+                    }
                     return $this->redirect('/');
                 } else {
                     $model = $_POST;
+
                     return $this->render(null, [
                         'errors' => $errors,
                         'categories' => $categories,
                         'product' => $product,
-                        'productPhoto' => $photos
+                        'productPhoto' => $photos,
+                        'marks'=>$marks
                     ]);
                 }
             }
@@ -122,7 +173,8 @@ class ProductController extends Controller
             return $this->render(null, [
                 'categories' => $categories,
                 'product' => $product,
-                'productPhoto' => $photos
+                'productPhoto' => $photos,
+                'marks'=>$marks
             ]);
         } else {
             return $this->error(403);
@@ -211,7 +263,11 @@ class ProductController extends Controller
                         unlink($filePath);
                     }
                 }
+                Produtc_Filter_Value::deleteRecord([
+                    'product_id'=>$id
+                ]);
                 Product::deleteProductById($id);
+
                 $this->redirect("/category/view/" . $product['id_category']);
             }
             return $this->render(null, [

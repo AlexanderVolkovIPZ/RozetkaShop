@@ -3,6 +3,7 @@
 namespace models;
 
 use core\Core;
+use core\Utils;
 
 class PhotoProduct
 {
@@ -52,12 +53,24 @@ class PhotoProduct
         else
             return null;
     }
+    public static function updatePhoto( $updatesArray,$conditionsArray=null){
+        $updatesArray = Utils::filterArray($updatesArray, ['name', 'product_name']);
+        \core\Core::getInstance()->db->update(
+            self::$tableName,
+            $updatesArray,
+            $conditionsArray
+        );
+    }
+
+
+
+
 
     public static function changePhoto($name, $photoPath)
     {
         $rows = self::getProductPhotoByName($name);
 
-        echo count($rows);
+
 
         foreach ($rows as $row) {
             $path = "files/product/" . $row['name'];

@@ -57,9 +57,16 @@ class Category
     }
 
 
-    public static function getCategories()
+    public static function getCategories($fieldsList = "*", $conditionsArray = null, $orderByArray = null, $limit = null, $offset = null)
     {
-        $rows = Core::getInstance()->db->select(self::$tableName);
+        $rows = Core::getInstance()->db->select(
+            self::$tableName,
+            $fieldsList,
+            $conditionsArray,
+            $orderByArray,
+            $limit,
+            $offset
+        );
         return $rows;
     }
 

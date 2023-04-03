@@ -572,7 +572,6 @@ reitingScores.forEach(value => {
 //////////////////////////////////////////////////////SELECT TOWN AND DESTINATION////////////////////////////////////////
 function requestGetDestinations(id, selectDestination) {
     const xhr = new XMLHttpRequest();
-    // console.log(xhr.responseText)
     xhr.open("GET", `/basket/destinations?id=${id}`);
     xhr.onload = () => {
         let objs = JSON.parse(xhr.response)
@@ -692,3 +691,67 @@ if (searchProductInput !== null) {
 }
 
 
+////////////////////////////////INSERT FILTER VALUE BY PRODUCT/////////////////////////////////
+
+let selectCategory = document.querySelector('.category_select');
+
+if (selectCategory != null) {
+    selectCategory.addEventListener('change', (event)=>{
+        SelectAction(+event.target.value)
+    })
+   window.addEventListener('load', ()=>{
+       let elem = document.querySelector('.category_select');
+       for (let i = 0;i<elem.children.length;i++){
+           if(elem.children[i].hasAttribute('selected')){
+               SelectAction(+elem.children[i].getAttribute('value'))
+               break;
+           }
+       }
+   })
+}
+
+function SelectAction(value){
+    let selectFilterElem = document.querySelectorAll(".filter");
+    if(selectFilterElem!=null){
+        for (let i = 0;i<selectFilterElem.length;i++){
+            selectFilterElem[i].remove();
+        }
+    }
+
+    let selectedValue = +value;
+    console.log(selectedValue)
+    if (selectedValue != null) {
+        requestGetCategoryFilters(selectedValue)
+    }
+}
+
+function requestGetCategoryFilters(id){
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/filter/filters?id=${id}`);
+
+    let markSelect = document.querySelector(".mark-select")
+
+    xhr.onload = () => {
+
+        let objs = JSON.parse(xhr.response)
+        console.log(objs)
+        for (const objsKey in objs) {
+
+
+            let div = document.createElement("div");
+            div.classList.add("mt-3")
+            div.classList.add("filter")
+            markSelect.parentElement.nextElementSibling.before(div)
+            div.innerHTML+=`<label for=\`${objs[objsKey]['table_name']}\` class=\"form-label\">${objs[objsKey]['name']}</label>`
+            let select  = document.createElement('select');
+            select.classList.add('form-select')
+            select.name = objs[objsKey]['table_name'];
+
+            for (let j in objs[objsKey]['values']){
+                select.innerHTML+=`<option value=\`${objs[objsKey]['values'][j]['id']}\`>${objs[objsKey]['values'][j]['value']}</option>`;
+            }
+            div.append(select)
+        }
+    }
+    xhr.send();
+}
