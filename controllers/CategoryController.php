@@ -9,6 +9,7 @@ use models\CategoryFilter;
 use models\Filter;
 use models\PhotoProduct;
 use models\Product;
+use models\Produtc_Filter_Value;
 use models\User;
 
 class CategoryController extends Controller
@@ -113,6 +114,12 @@ class CategoryController extends Controller
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
+
+        $filters = Filter::selectFilter();
+        $categoryFilter = CategoryFilter::selectCategoryFilter(['filter_id'],[
+            'category_id'=>$id
+        ]);
+
         if ($id > 0) {
             $category = Category::getCategoryById($id);
             if (Core::getInstance()->requestMethod === 'POST') {
@@ -130,18 +137,32 @@ class CategoryController extends Controller
                     }
                     Category::updateCategoryById($id, $_POST['name']);
                     Category::changePhoto($id, $_FILES['file']['tmp_name']);
+                    CategoryFilter::deleteCategoryFilter([
+                        'category_id'=>$id
+                    ]);
+
+                    if (!empty($_POST['filters'])){
+                        foreach ($_POST['filters'] as $key=>$value){
+                            CategoryFilter::addCategoryFilter($id, $value);
+                        }
+                    }
+
                     $this->redirect('/');
                 } else {
                     $model = $_POST;
                     return $this->render(null, [
                         'errors' => $errors,
                         'model' => $model,
-                        'category' => $category
+                        'category' => $category,
+                        'filters'=>$filters,
+                        'categoryFilter'=>$categoryFilter
                     ]);
                 }
             }
             return $this->render(null, [
-                'category' => $category
+                'category' => $category,
+                'filters'=>$filters,
+                'categoryFilter'=>$categoryFilter
             ]);
         } else {
             return $this->error(403);
@@ -151,6 +172,11 @@ class CategoryController extends Controller
 
     public function viewAction($params)
     {
+//        echo "<pre>";
+//        var_dump($_POST);
+//        die();
+//    var_dump($_GET);
+//    die();
         if (Core::getInstance()->requestMethod === "GET" && $_GET['findProducts']) {
             if (!empty($_GET['searchName'])) {
                 $products = Product::selectProduct(null, null, [
@@ -181,9 +207,43 @@ class CategoryController extends Controller
             }
         }
 
+
         $id = intval($params[0]);
         $category = Category::getCategoryById($id);
-        $products = Product::getProductInCategory(['id_category' => $id, 'visibility' => 0]);
+        $array = [];
+        if($_GET['submitFilter']){
+            $countFilters = count($_GET)-2;
+            foreach ($_GET as $key=>$value){
+                if($key=='submitFilter'||$key=='path'){
+                    continue;
+                }else{
+
+                    $idFilter = Filter::selectFilter('id',[
+                        'table_name'=>$key
+                    ])[0]['id'];
+
+                    foreach ($value as $keyWork=>$valueWord){
+
+                       $product_filter_value =  Produtc_Filter_Value::selectRecord('product_id',[
+                            'filter_id'=>$idFilter,
+                            'value_id'=>$valueWord
+                        ])[0]['product_id'];
+                       if($product_filter_value!=null){
+                           $array[$product_filter_value]++;
+                       }
+                    }
+
+                    foreach ($array as $key1=>$value1){
+                        if($value1==$countFilters){
+                            $products[] = Product::getProductInCategory(['id' => $key1, 'visibility' => 0])[0];
+                        }
+                    }
+                }
+            }
+        }else{
+            $products = Product::getProductInCategory(['id_category' => $id, 'visibility' => 0]);
+
+        }
 
         if (!empty($products)) {
             if (is_array($products)) {
@@ -200,10 +260,32 @@ class CategoryController extends Controller
         }
 
         $rows = PhotoProduct::getProductPhotoByName($productsNameInCategory, 'name');
+
+                        $filters = Filter::selectFilter();
+                $categoryFilter = CategoryFilter::selectCategoryFilter(['filter_id'],[
+                    'category_id'=>$id
+                ]);
+
+                $arrayFilterValues = [];
+                foreach ($filters as $key=>$value){
+                    $arrayFilterValues[$filters[$key]['table_name']] = Core::getInstance()->db->select($filters[$key]['table_name']);
+                }
+
+
+
+
+
+
+
+
+
         return $this->render(null, [
             'category' => $category,
             'products' => $products,
-            'rows' => $rows
+            'rows' => $rows,
+            'filters'=>$filters,
+            'categoryFilter'=>$categoryFilter,
+            'arrayFilterValues'=>$arrayFilterValues
         ]);
     }
 }

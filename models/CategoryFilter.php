@@ -29,4 +29,12 @@ class CategoryFilter
         ]);
     }
 
+
+    public static function deleteCategoryFilter($where = null){
+        \core\Core::getInstance()->db->delete(
+            self::$tableName,
+            $where
+        );
+    }
+
 }

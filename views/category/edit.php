@@ -2,7 +2,9 @@
 /** @var array $category */
 /** @var array $model */
 /** @var array $errors */
-
+/** @var array $filters*/
+/** @var array $categoryFilter*/
+die();
 ?>
 
 <form action="" method="post" enctype="multipart/form-data" class="container">
@@ -25,5 +27,25 @@
         <label for="formFile" class="form-label w-100">Файл з фотографією для категорії</label>
         <input class="form-control" value="" type="file" name="file" id="formFile" accept="image/svg+xml, image/png">
     </div>
+
+    <?php if(!empty($filters)):?>
+        <div class="mt-3 mb-3">
+            <?php foreach ($filters as $key=>$value):?>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" name="filters[]"
+
+                           <?php foreach ($categoryFilter as $keyFilter=>$valueFilter):?>
+                                <?php if ($value['id']==$valueFilter['filter_id']): ?>
+                                    <?="checked"?>
+                                <?endif;?>
+                            <?php endforeach;?>
+                           value="<?=$value['id']?>" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault"><?=$value['name']?></label>
+                </div>
+            <?php endforeach;?>
+        </div>
+    <?php endif;?>
+
+
     <button class="btn btn-primary" type="submit">Змінити категорію</button>
 </form>
