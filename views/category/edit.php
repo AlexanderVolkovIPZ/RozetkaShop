@@ -4,7 +4,6 @@
 /** @var array $errors */
 /** @var array $filters*/
 /** @var array $categoryFilter*/
-die();
 ?>
 
 <form action="" method="post" enctype="multipart/form-data" class="container">

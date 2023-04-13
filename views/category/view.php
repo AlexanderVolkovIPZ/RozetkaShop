@@ -4,11 +4,8 @@
 /** @var array $filters */
 /** @var array $categoryFilter */
 /** @var array $arrayFilterValues */
+/** @var array $filterSelected */
 
-
-//var_dump($categoryFilter);
-//echo "<pre>";
-//var_dump($filters);
 use \models\User;
 
 ?>
@@ -16,13 +13,30 @@ use \models\User;
     <?php if (!User::isUserAdmin()&&!empty($filters)): ?>
         <div class="filter-list" style="width: 212px; height: 500px; border-right: 1px solid black; padding-right: 10px">
             <form action="" method="get" enctype="multipart/form-data" name="filters">
+<!--                <div>-->
+<!--                    <label for="customRange1" class="form-label">Example range</label>-->
+<!--                    <input type="range" class="form-range" id="customRange1" max="" min="">-->
+<!--                </div>-->
                 <?php foreach ($filters as $key => $value): ?>
                     <div class="mt-3" style="font-size: 14px"><?= $filters[$key]['name'] ?></div>
                         <?php foreach ($arrayFilterValues as $k => $val): ?>
                             <?php if ($filters[$key]['table_name'] == $k): ?>
                                 <?php foreach ($arrayFilterValues[$k] as $id => $v): ?>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="<?= $v['id'] ?>" id=" <?= $v['value'] ?>" name="<?=$filters[$key]['table_name'].'[]'?>">
+
+                                    <input class="form-check-input filter-check" type="checkbox" value="<?= $v['id'] ?>" id=" <?= $v['value'] ?>" name="<?=$filters[$key]['table_name'].'[]'?>"
+                                        <?php if ($filterSelected!=null): ?>
+                                            <?php foreach ($filterSelected as $key1=>$value1):?>
+                                                <?php if ($filters[$key]['table_name']==$key1): ?>
+                                                    <?php foreach ($value1 as $key2=>$value2):?>
+                                                        <?php if ($value2==$v['id']): ?>
+                                                            <?="checked"?>
+                                                        <?php endif;?>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    >
                                     <label class="form-check-label" for=" <?= $v['value'] ?>" style="font-size: 12px">
                                         <?= $v['value'] ?>
                                     </label>
@@ -33,8 +47,8 @@ use \models\User;
                 <?php endforeach; ?>
                 <div class="text-center">
                     <input type="submit" class="btn btn-warning mt-3" value="Знайти" name="submitFilter">
+                   <input type="reset" class="btn btn-danger mt-3 btn-reset-filters" value="Скинути" name="resetFilter">
                 </div>
-
             </form>
         </div>
     <?php endif; ?>

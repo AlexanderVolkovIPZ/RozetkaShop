@@ -755,3 +755,16 @@ function requestGetCategoryFilters(id){
     }
     xhr.send();
 }
+
+
+/////////////////////////////////////////RESET FELTERS/////////////////////////////////////
+
+let btn_reset_filters = document.querySelector(".btn-reset-filters");
+
+
+btn_reset_filters.addEventListener('click',(event)=>{
+    let filter_check = document.querySelectorAll('.filter-check');
+    filter_check.forEach((elem)=>{
+        elem.removeAttribute('checked');
+    })
+})

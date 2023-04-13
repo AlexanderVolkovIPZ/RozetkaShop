@@ -42,13 +42,13 @@ class CategoryController extends Controller
 
                 Category::addCategory($_POST['name'], $_FILES['file']['tmp_name']);
 
-                $categoryId = Category::getCategories('id',[
-                    'name'=>$_POST['name']
+                $categoryId = Category::getCategories('id', [
+                    'name' => $_POST['name']
                 ])[0]['id'];
 
-                if (!empty($_POST['filters'])){
-                    foreach ($_POST['filters'] as $key=>$value){
-                       CategoryFilter::addCategoryFilter($categoryId, $value);
+                if (!empty($_POST['filters'])) {
+                    foreach ($_POST['filters'] as $key => $value) {
+                        CategoryFilter::addCategoryFilter($categoryId, $value);
                     }
                 }
 
@@ -61,8 +61,8 @@ class CategoryController extends Controller
                 ]);
             }
         }
-        return $this->render(null,[
-            'filters'=>$filters
+        return $this->render(null, [
+            'filters' => $filters
         ]);
     }
 
@@ -110,14 +110,18 @@ class CategoryController extends Controller
 
     public function editAction($params)
     {
+//        echo "<pre>";
+//        var_dump(Produtc_Filter_Value::selectRecord('product_id'));
+
+
         $id = intval($params[0]);
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
 
         $filters = Filter::selectFilter();
-        $categoryFilter = CategoryFilter::selectCategoryFilter(['filter_id'],[
-            'category_id'=>$id
+        $categoryFilter = CategoryFilter::selectCategoryFilter(['filter_id'], [
+            'category_id' => $id
         ]);
 
         if ($id > 0) {
@@ -137,14 +141,51 @@ class CategoryController extends Controller
                     }
                     Category::updateCategoryById($id, $_POST['name']);
                     Category::changePhoto($id, $_FILES['file']['tmp_name']);
-                    CategoryFilter::deleteCategoryFilter([
-                        'category_id'=>$id
+                    $categoryFilterBefore = CategoryFilter::selectCategoryFilter('filter_id',[
+                        'category_id' => $id
                     ]);
 
-                    if (!empty($_POST['filters'])){
-                        foreach ($_POST['filters'] as $key=>$value){
+                    CategoryFilter::deleteCategoryFilter([
+                        'category_id' => $id
+                    ]);
+
+                    if (!empty($_POST['filters'])) {
+                        foreach ($_POST['filters'] as $key => $value) {
                             CategoryFilter::addCategoryFilter($id, $value);
                         }
+                    }
+                    $categoryFilterAfter = CategoryFilter::selectCategoryFilter('filter_id',[
+                        'category_id' => $id
+                    ]);
+
+                    $arrayDiff = [];
+                    foreach ($categoryFilterBefore as $beforeKey=>$beforeValue){
+                        $isInAfterArray = false;
+                        foreach ($categoryFilterAfter as $afterKey=>$afterValue){
+                            if($beforeValue['filter_id']==$afterValue['filter_id']){
+                                $isInAfterArray = true;
+                            }
+                        }
+                        if(!$isInAfterArray){
+                            $arrayDiff[] = $beforeValue['filter_id'];
+                        }
+                    }
+
+                    if(!empty($arrayDiff)){
+
+                        $products = Product::selectProduct([
+                            'id_category' => $id
+                        ],['id']);
+
+
+                            foreach ($arrayDiff as $keyWord=>$val){
+                                  foreach ($products as $key=>$value){
+                                      Produtc_Filter_Value::deleteRecord([
+                                          'product_id'=>$value['id'],
+                                          'filter_id'=>$val
+                                      ]);
+                                  }
+                            }
                     }
 
                     $this->redirect('/');
@@ -154,15 +195,15 @@ class CategoryController extends Controller
                         'errors' => $errors,
                         'model' => $model,
                         'category' => $category,
-                        'filters'=>$filters,
-                        'categoryFilter'=>$categoryFilter
+                        'filters' => $filters,
+                        'categoryFilter' => $categoryFilter
                     ]);
                 }
             }
             return $this->render(null, [
                 'category' => $category,
-                'filters'=>$filters,
-                'categoryFilter'=>$categoryFilter
+                'filters' => $filters,
+                'categoryFilter' => $categoryFilter
             ]);
         } else {
             return $this->error(403);
@@ -172,11 +213,6 @@ class CategoryController extends Controller
 
     public function viewAction($params)
     {
-//        echo "<pre>";
-//        var_dump($_POST);
-//        die();
-//    var_dump($_GET);
-//    die();
         if (Core::getInstance()->requestMethod === "GET" && $_GET['findProducts']) {
             if (!empty($_GET['searchName'])) {
                 $products = Product::selectProduct(null, null, [
@@ -211,38 +247,45 @@ class CategoryController extends Controller
         $id = intval($params[0]);
         $category = Category::getCategoryById($id);
         $array = [];
-        if($_GET['submitFilter']){
-            $countFilters = count($_GET)-2;
-            foreach ($_GET as $key=>$value){
-                if($key=='submitFilter'||$key=='path'){
-                    continue;
-                }else{
+        $filtersSelected = null;
 
-                    $idFilter = Filter::selectFilter('id',[
-                        'table_name'=>$key
+        if ($_GET['submitFilter'] && count($_GET) - 2 > 0) {
+            $filtersSelected = array_slice($_GET, 1, -1);
+            $countFilters = count($_GET) - 2;
+            foreach ($_GET as $key => $value) {
+                if ($key == 'submitFilter' || $key == 'path') {
+                    continue;
+                } else {
+
+                    $idFilter = Filter::selectFilter('id', [
+                        'table_name' => $key
                     ])[0]['id'];
 
-                    foreach ($value as $keyWork=>$valueWord){
+                    foreach ($value as $keyWork => $valueWord) {
 
-                       $product_filter_value =  Produtc_Filter_Value::selectRecord('product_id',[
-                            'filter_id'=>$idFilter,
-                            'value_id'=>$valueWord
-                        ])[0]['product_id'];
-                       if($product_filter_value!=null){
-                           $array[$product_filter_value]++;
-                       }
+                        $product_filter_value = Produtc_Filter_Value::selectRecord('product_id', [
+                            'filter_id' => $idFilter,
+                            'value_id' => $valueWord
+                        ]);
+
+                        if ($product_filter_value != null) {
+                            foreach ($product_filter_value as $key2 => $value2) {
+                                $array[$value2['product_id']]++;
+                            }
+                        }
                     }
 
-                    foreach ($array as $key1=>$value1){
-                        if($value1==$countFilters){
+                    foreach ($array as $key1 => $value1) {
+
+                        if ($value1 == $countFilters) {
                             $products[] = Product::getProductInCategory(['id' => $key1, 'visibility' => 0])[0];
+
                         }
                     }
                 }
             }
-        }else{
+        } else {
             $products = Product::getProductInCategory(['id_category' => $id, 'visibility' => 0]);
-
         }
 
         if (!empty($products)) {
@@ -261,31 +304,34 @@ class CategoryController extends Controller
 
         $rows = PhotoProduct::getProductPhotoByName($productsNameInCategory, 'name');
 
-                        $filters = Filter::selectFilter();
-                $categoryFilter = CategoryFilter::selectCategoryFilter(['filter_id'],[
-                    'category_id'=>$id
-                ]);
+        $filtersAll = Filter::selectFilter();
+        $filters = null;
+        $categoryFilter = CategoryFilter::selectCategoryFilter(['filter_id'], [
+            'category_id' => $id
+        ]);
 
-                $arrayFilterValues = [];
-                foreach ($filters as $key=>$value){
-                    $arrayFilterValues[$filters[$key]['table_name']] = Core::getInstance()->db->select($filters[$key]['table_name']);
+        foreach ($filtersAll as $key => $value) {
+            foreach ($categoryFilter as $key1 => $value1) {
+                if ($value['id'] == $value1['filter_id']) {
+                    $filters[$key] = $value;
                 }
+            }
+        }
 
-
-
-
-
-
-
+        $arrayFilterValues = [];
+        foreach ($filters as $key => $value) {
+            $arrayFilterValues[$filters[$key]['table_name']] = Core::getInstance()->db->select($filters[$key]['table_name']);
+        }
 
 
         return $this->render(null, [
             'category' => $category,
             'products' => $products,
             'rows' => $rows,
-            'filters'=>$filters,
-            'categoryFilter'=>$categoryFilter,
-            'arrayFilterValues'=>$arrayFilterValues
+            'filters' => $filters,
+            'categoryFilter' => $categoryFilter,
+            'arrayFilterValues' => $arrayFilterValues,
+            'filterSelected' => $filtersSelected
         ]);
     }
 }
