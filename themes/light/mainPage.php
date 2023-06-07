@@ -223,12 +223,11 @@ else
         <?php endif; ?>
     </header>
 
-
     <div class="main <?php if (!User::isUserAdmin()) echo "container-fluid" ?> <?php if (User::isUserAdmin()) echo "d-flex" ?>">
         <?php if (User::isUserAdmin()): ?>
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 col-sm-4 col-12 d-md-block bg-light sidebar collapse h-75">
+            <nav id="sidebarMenu"  class="col-md-3 col-lg-2 col-sm-4 col-12 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
-                    <ul class="nav flex-column" style="height: 500px">
+                    <ul class="nav flex-column" style="height: 100%;">
                         <li class="nav-item">
                             <a aria-current="page" href="#"
                                class=" nav-link btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
@@ -363,6 +362,66 @@ else
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/product/goods_left">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                                </svg>
+                                Залишок за к-рією
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a aria-current="page" href="#"
+                               class=" nav-link btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                               data-bs-toggle="collapse" data-bs-target="#statistics" aria-expanded="false">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                                    <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+                                </svg>
+
+                                <span class="px-1">Статистика</span>
+                            </a>
+                            <div class="collapse mx-5" id="statistics" style="">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a href="/statistics/index"
+                                           class="link-success d-inline-flex text-decoration-none rounded">Обіг</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse mx-5" id="statistics" style="">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a href="/statistics/volume_by_category"
+                                           class="link-success d-inline-flex text-decoration-none rounded">Обсяг за кат-єю</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="collapse mx-5" id="statistics" style="">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a href="/statistics/type_payment"
+                                           class="link-success d-inline-flex text-decoration-none rounded">Типи оплат</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="statistics" style="margin: 0 10px 0 48px">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a href="/statistics/reiting_by_category"
+                                           class="link-success d-inline-flex text-decoration-none rounded">Рейтинг за кат-єю</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/backup/index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                                </svg>
+                                Резервне коп-ня
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/user/settings">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                      class="bi bi-gear" viewBox="0 0 16 16">
@@ -378,8 +437,6 @@ else
         <?php endif; ?>
         <?= $content ?>
     </div>
-
-
     <div class="container footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="facebook" viewBox="0 0 16 16">
@@ -417,10 +474,6 @@ else
         </footer>
     </div>
 </div>
-
-
-
-
 <script src="/themes/light/js/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

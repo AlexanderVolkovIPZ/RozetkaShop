@@ -1,7 +1,7 @@
 <?php
 /** @var array $product */
 ?>
-<div class="alert alert-danger container mt-3 mx-3 h-25" role="alert">
+<div class="alert alert-danger container mt-3 mx-3" style="height: 170px" role="alert">
     <h4 class="alert-heading">Чи дійсно ви бажаєте видалити товар "<b><?= $product['name'] ?></b>"?</h4>
     <p>Після видалення товару, відповідні фото товару будуть видалені!</p>
     <hr>

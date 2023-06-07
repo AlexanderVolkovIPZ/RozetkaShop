@@ -9,6 +9,7 @@ use models\Category;
 use models\Comment;
 use models\Filter;
 use models\Mark;
+use models\Order;
 use models\PhotoProduct;
 use models\Product;
 use models\Produtc_Filter_Value;
@@ -100,8 +101,6 @@ class ProductController extends Controller
     {
 
         $id = intval($params[0]);
-
-
         if (!User::isUserAdmin()) {
             return $this->error(403);
         }
@@ -188,6 +187,7 @@ class ProductController extends Controller
         $user = User::getCarrentAuthenticatedUser();
         $rows = PhotoProduct::getProductPhotoByName(Product::getProductById($id)['name'], 'name');
         $product = Product::getProductById($id);
+        $isBoughtByUser = Order::isBoughtByUser($id, $user['id']);
 
         if (Core::getInstance()->requestMethod == 'POST') {
             $reitingRadio = $_POST['reitingRadio'];
@@ -241,6 +241,7 @@ class ProductController extends Controller
             'errors' => $errors,
             'user' => $user,
             'comments' => $comments,
+            'isBoughtByUser'=>$isBoughtByUser
         ]);
     }
 
@@ -285,5 +286,25 @@ class ProductController extends Controller
             'name' => $wordSearch
         ]);
         exit (json_encode($rows));
+    }
+
+    public function goods_leftAction(){
+        if (!User::isUserAdmin()) {
+            return $this->error(403);
+        }
+        $products = Product::selectProduct(null, ['id_category', 'sum(product.count) as totalCount','sum(price*count) AS totalPrice'], null,['id_category'],[
+           'totalCount'=>'>0'
+       ]);
+        $categories = Category::getCategories(['id','name']);
+        $categoryName = [];
+        if(!empty($categories)){
+            foreach ($categories as $key=>$value){
+                $categoryName[$value['id']]=$value['name'];
+            }
+        }
+        return $this->render(null,[
+            'products'=>$products,
+            'categories'=>$categoryName
+        ]);
     }
 }

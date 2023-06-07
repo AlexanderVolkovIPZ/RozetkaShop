@@ -9,9 +9,9 @@ class Produtc_Filter_Value
 {
     protected static string $tableName = 'product_filter_value';
 
-    public static function selectRecord($fieldsList = "*", $conditionsArray = null, $orderByArray = null, $limit = null, $offset = null)
+    public static function selectRecord($fieldsList = "*", $conditionsArray = null, $arrayConditionLike = null,$groupByArray=null,$havingArray = null, $orderByArray = null, $limit = null, $offset = null, $joinCondition=null)
     {
-        $values= Core::getInstance()->db->select(self::$tableName,$fieldsList, $conditionsArray, $orderByArray, $limit, $offset);
+        $values = Core::getInstance()->db->select(self::$tableName,$fieldsList, $conditionsArray,$arrayConditionLike,$groupByArray,$havingArray, $orderByArray, $limit, $offset,$joinCondition);
         return $values;
     }
 

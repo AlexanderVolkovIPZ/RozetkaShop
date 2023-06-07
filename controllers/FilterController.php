@@ -20,7 +20,6 @@ class FilterController extends \core\Controller
                 foreach ($values as $value){
                     array_push($array,intval($value['filter_id']));
                 }
-//                exit(json_encode($array));
             }
 
             $arrayFilter = [];

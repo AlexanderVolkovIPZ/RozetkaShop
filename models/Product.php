@@ -52,9 +52,9 @@ class Product
         return $rows;
     }
 
-    public static function selectProduct($arrayCondition = null, $fieldsList = "*", $arrayConditionLike = null)
+    public static function selectProduct($arrayCondition = null, $fieldsList = "*", $arrayConditionLike = null,$groupByArray=null,$havingArray = null, $orderByArray = null, $limit = null, $offset = null)
     {
-        $rows = Core::getInstance()->db->select(self::$tableName, $fieldsList, $arrayCondition, $arrayConditionLike);
+        $rows = Core::getInstance()->db->select(self::$tableName, $fieldsList, $arrayCondition, $arrayConditionLike,$groupByArray,$havingArray, $orderByArray, $limit, $offset);
         return $rows;
     }
 }

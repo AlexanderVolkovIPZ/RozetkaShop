@@ -8,6 +8,7 @@ use \models\Comment;
 /** @var array $comments */
 /** @var array $user */
 /** @var array $errors */
+/** @var array $isBoughtByUser */
 ?>
 
 <div class="container">
@@ -156,7 +157,7 @@ use \models\Comment;
                     </div>
                     <div>
                         <button type="button"
-                                class="btn btn-secondary btnOpenModelCommentWindow <?php if (!User::isAuthenticatedUser() || $user['typeAccess'] == 10 || Comment::isLevedCommentByUser($product['id'], $user['id'])) echo "disabled" ?>"
+                                class="btn btn-secondary btnOpenModelCommentWindow <?php if (!User::isAuthenticatedUser() || $user['typeAccess'] == 10 || Comment::isLevedCommentByUser($product['id'], $user['id'])||$isBoughtByUser==false) echo "disabled" ?>"
                                 data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
                             Написати відгук
@@ -310,7 +311,7 @@ use \models\Comment;
                                         Недоліки:
                                     </div>
                                     <div class="text-dark">
-                                        <?= $comment['advantages'] ?>
+                                        <?= $comment['disadvantages'] ?>
                                     </div>
                                 </div>
                                 <div>

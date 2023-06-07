@@ -29,8 +29,6 @@ class CategoryController extends Controller
         }
 
         $filters = Filter::selectFilter();
-
-
         if (Core::getInstance()->requestMethod === 'POST') {
             $errors = [];
             $_POST['name'] = trim($_POST['name']);
@@ -265,9 +263,9 @@ class CategoryController extends Controller
 
                         $product_filter_value = Produtc_Filter_Value::selectRecord('product_id', [
                             'filter_id' => $idFilter,
-                            'value_id' => $valueWord
-                        ]);
-
+                            'value_id' => $valueWord,
+                            'product.id_category'=>explode('/',$_GET['path'])[2]
+                        ],null,null,null,null,null,null,"JOIN product on product_filter_value.product_id = product.id");
                         if ($product_filter_value != null) {
                             foreach ($product_filter_value as $key2 => $value2) {
                                 $array[$value2['product_id']]++;

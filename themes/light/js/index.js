@@ -673,8 +673,6 @@ if (searchProductInput !== null) {
             } else {
                 listItems.style.display = "none"
             }
-
-
             for (const value of listItems.children) {
                 value.addEventListener('click', (event) => {
                     event.currentTarget.style.active = "none"
@@ -734,7 +732,7 @@ function requestGetCategoryFilters(id){
     xhr.onload = () => {
 
         let objs = JSON.parse(xhr.response)
-        console.log(objs)
+
         for (const objsKey in objs) {
 
 
@@ -760,11 +758,54 @@ function requestGetCategoryFilters(id){
 /////////////////////////////////////////RESET FELTERS/////////////////////////////////////
 
 let btn_reset_filters = document.querySelector(".btn-reset-filters");
-
-
-btn_reset_filters.addEventListener('click',(event)=>{
-    let filter_check = document.querySelectorAll('.filter-check');
-    filter_check.forEach((elem)=>{
-        elem.removeAttribute('checked');
+if(btn_reset_filters!=null){
+    btn_reset_filters.addEventListener('click',(event)=>{
+        let filter_check = document.querySelectorAll('.filter-check');
+        console.log(filter_check.length)
+        filter_check.forEach((elem)=>{
+            if(elem.checked){
+                elem.checked = false;
+            }
+        })
     })
-})
+}
+
+/////////////////////////////////////////STATISTICS/////////////////////////////////////
+function sendRequestGetMonths(year) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/statistics/volume_by_category?year=${year}`);
+    xhr.onload = () => {
+        let objs = JSON.parse(xhr.response)
+        let innerHTML = `<option selected disabled value="default">Місяць</option>`;
+        for (const obj in objs) {
+            innerHTML+=`<option value= '${obj}'>${objs[obj]}</option>`
+        }
+        let statisticsDays = document.querySelector('.statistics_days_select');
+        if(statisticsDays!=null){
+            statisticsDays.innerHTML = "";
+
+            statisticsDays.innerHTML = innerHTML;
+        }
+    }
+    xhr.send();
+}
+
+let statisticsYear = document.querySelector('.statistics_year_select');
+if(statisticsYear!=null){
+    statisticsYear.addEventListener('change', (event)=>{
+        let year = +event.target.value;
+        sendRequestGetMonths(year)
+    });
+    // window.addEventListener('load',(event)=>{
+    //     let year = +statisticsYear.value;
+    //     sendRequestGetMonths(year)
+    // })
+}
+let nav = document.querySelector('#sidebarMenu')
+let header = document.querySelector('.header')
+if(nav){
+    nav.style.height = window.innerHeight-header.offsetHeight+'px'
+}
+
+
+

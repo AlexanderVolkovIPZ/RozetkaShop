@@ -61,7 +61,6 @@ class UserController extends Controller
         } else {
             return $this->render();
         }
-
     }
 
     public function loginAction()

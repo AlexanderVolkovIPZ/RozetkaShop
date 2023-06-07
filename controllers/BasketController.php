@@ -12,10 +12,14 @@ class BasketController extends \core\Controller
 {
     public function indexAction()
     {
+
         $basket = Basket::getProductsInBasket();
-        return $this->render(null, [
-            'basket' => $basket
-        ]);
+        if(count($basket['products'])>0){
+            return $this->render(null, [
+                'basket' => $basket
+            ]);
+        }
+        return $this->redirect('/basket/empty');
     }
 
     public function addAction()
@@ -183,5 +187,10 @@ class BasketController extends \core\Controller
             'id' => $id
         ]);
     }
+    public function emptyAction()
+    {
+        return $this->render();
+    }
+
 }
 

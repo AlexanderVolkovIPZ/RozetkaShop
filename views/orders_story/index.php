@@ -10,7 +10,7 @@ use \models\PhotoProduct;
 ?>
 
 <div class="container" style="max-width: 700px">
-    <?php foreach ($orders as $order): ?>
+    <?php foreach (array_reverse($orders) as $order): ?>
         <div class="accordion accordion-flush mt-2" id="accordionFlush<?= $order['id'] ?>">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">

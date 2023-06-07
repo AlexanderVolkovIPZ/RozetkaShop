@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="@fancyapps/ui" level="application" />
+    <orderEntry type="library" name="chart.js" level="application" />
   </component>
 </module>

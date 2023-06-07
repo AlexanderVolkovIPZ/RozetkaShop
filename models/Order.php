@@ -49,9 +49,9 @@ class Order
         return $destinations;
     }
 
-    public static function getAllOrders($condition = null)
+    public static function getAllOrders($condition = null, $fields = "*", $arrayConditionLike = null,$groupByArray=null,$havingArray = null, $orderByArray = null, $limit = null, $offset = null, $joinCondition=null)
     {
-        $orders = Core::getInstance()->db->select(self::$tableName, "*", $condition);
+        $orders = Core::getInstance()->db->select(self::$tableName, $fields, $condition, $arrayConditionLike,$groupByArray,$havingArray, $orderByArray, $limit, $offset, $joinCondition);
         if (!empty($orders)) {
             return $orders;
         } else {
@@ -62,5 +62,19 @@ class Order
     public static function updateOrderById($fields, $conditions = null)
     {
         Core::getInstance()->db->update(self::$tableName, $fields, $conditions);
+    }
+
+    public static function isBoughtByUser($productId, $userId)
+    {
+        $rows = null;
+        $rows = Core::getInstance()->db->select(self::$tableName,'*',[
+            'id_product'=>$productId,
+            'id_user'=>$userId
+        ]);
+        if($rows){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

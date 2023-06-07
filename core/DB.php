@@ -33,7 +33,21 @@ class DB
             $sql .= ' WHERE ' . $conditionsArray;
         return array($key, $value, $sql);
     }
+    public function extractedHaving($havingArray, string $sql): array
+    {
+        if (is_array($havingArray) && count($havingArray) > 0) {
+            $whereParts = [];
+            foreach ($havingArray as $key => $value) {
+                $whereParts[] = "{$key} {$value}";
+            }
+            $whereStr = implode(' AND ', $whereParts);
+            $sql .= ' HAVING ' . $whereStr;
 
+        }
+        if (is_string($havingArray))
+            $sql .= ' HAVING ' . $havingArray;
+        return array($key, $value, $sql);
+    }
     /**
      * Виконання запиту на отримання даних з вказаної таблиці БД
      * @param string $tableName Назва таблиці бази даних
@@ -41,8 +55,7 @@ class DB
      * @param array|null $conditionArray Асоціативний масив з умовою для пошуку
      * @return array|false
      */
-
-    public function select($tableName, $fieldsList = "*", $conditionsArray = null, array $conditionLikeArray = null, $orderByArray = null, $limit = null, $offset = null)
+    public function select($tableName, $fieldsList = "*", $conditionsArray = null, array $conditionLikeArray = null,$groupByArray=null,$havingArray = null, $orderByArray = null, $limit = null, $offset = null, $joinCondition = null)
     {
         $fieldsStr = "*";
         if (is_string($fieldsList)) {
@@ -52,16 +65,36 @@ class DB
             $fieldsStr = implode(', ', $fieldsList);
         }
         $sql = "SELECT {$fieldsStr} FROM {$tableName}";
+        if(!empty($joinCondition)){
+            $sql.=" {$joinCondition}";
+        }
         list($key, $value, $sql) = $this->extracted($conditionsArray, $sql);
 
         if (empty($conditionsArray) && !empty($conditionLikeArray)) {
             list($key, $value, $sql) = $this->extractedLike($conditionLikeArray, $sql);
         }
 
+        if(!empty($groupByArray)){
+            if (is_array($groupByArray)&&count($groupByArray) > 0) {
+                $groupByParts = [];
+                foreach ($groupByArray as $key => $value) {
+                    $groupByParts [] = "{$value}";
+                }
+                $sql .= ' GROUP BY ' . implode(', ', $groupByParts);
+            }
+            if (is_string($groupByArray)) {
+                $sql .= ' GROUP BY ' .  $groupByArray;
+            }
+        }
+
+        if(isset($havingArray)){
+            list($key, $value, $sql)  = $this->extractedHaving($havingArray, $sql);
+        }
+
         if (is_array($orderByArray)) {
             $orderByParts = [];
             foreach ($orderByArray as $key => $value) {
-                $orderByParts [] = "{$key} {$value}";
+                $orderByParts [] = "{$value}";
             }
             $sql .= ' ORDER BY ' . implode(', ', $orderByParts);
         }
@@ -73,8 +106,8 @@ class DB
                 $sql .= " LIMIT {$limit}";
             }
         }
-
         $res = $this->pdo->prepare($sql);
+
         if (is_array($conditionsArray) && count($conditionsArray) > 0)
             $res->execute(array_values($conditionsArray));
         else if (isset($conditionLikeArray) && count($conditionLikeArray) > 0)
@@ -97,7 +130,6 @@ class DB
         $valuesListString = implode(', ', $paramsArray);
         $res = $this->pdo->prepare("INSERT INTO {$tableName} ($fieldsListString) VALUES($valuesListString)");
         $res->execute($fieldsList);
-
     }
 
     public function delete($table, $conditionArray = null)
@@ -109,7 +141,6 @@ class DB
             $res->execute(array_values($conditionArray));
         else
             $res->execute();
-
     }
 
     public function update($table, $fieldsList, $conditionArray)
@@ -151,5 +182,17 @@ class DB
         if (is_string($conditionsArray))
             $sql .= ' WHERE ' . $conditionsArray;
         return array($key, $value, $sql);
+    }
+
+    public function createBackup($backupFilePath, $username, $password, $database): bool
+    {
+        $backupFileName = 'backup_' ."{$database}_".date('Y-m-d_H-i-s') . '.sql';
+        $command = "mysqldump --user=$username --password=$password --databases $database > $backupFilePath/$backupFileName";
+        system($command, $result);
+        if ($result === 0) {
+            return true;
+        } else {
+           return false;
+        }
     }
 }

@@ -15,6 +15,9 @@ class SliderController extends Controller
 {
     public function indexAction()
     {
+        if (!User::isUserAdmin()) {
+            return $this->error(403);
+        }
         return $this->render();
     }
 

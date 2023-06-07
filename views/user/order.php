@@ -1,6 +1,5 @@
 <?php
 /** @var array $orders */
-//var_dump($orders);
 use \models\User;
 use \models\Product;
 use \models\Order;
@@ -10,7 +9,7 @@ $counter = 1
 
 
 <div class="container" style="overflow-x: scroll">
-    <table class="table table-danger table-striped table-hover mt-3 table-bordered ordersAdmin">
+    <table class="table table-success table-striped table-hover table-bordered mt-3 ordersAdmin">
         <thead>
         <tr class="tHeadOrders">
             <th class="align-middle text-center">#</th>
@@ -27,6 +26,7 @@ $counter = 1
         </tr>
         </thead>
         <tbody class="tBodyOrders">
+        <?php if (!empty($orders)):?>
         <?php foreach ($orders as $order): ?>
             <?php if ($order['status'] == 0): ?>
                 <tr class="" data-order="<?= $order['id'] ?>">
@@ -62,6 +62,7 @@ $counter = 1
                 <?php $counter += 1 ?>
             <?php endif; ?>
         <?php endforeach; ?>
+        <?php endif;?>
         </tbody>
         <tfoot>
         </tfoot>

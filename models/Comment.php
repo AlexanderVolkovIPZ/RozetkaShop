@@ -41,4 +41,10 @@ class Comment
         ]);
         return $rows;
     }
+
+    public static function selectComments($fieldsList = "*", $conditionsArray = null, $arrayConditionLike = null,$groupByArray=null,$havingArray = null, $orderByArray = null, $limit = null, $offset = null, $joinCondition=null)
+    {
+        $rows = Core::getInstance()->db->select(self::$tableName,$fieldsList, $conditionsArray,$arrayConditionLike,$groupByArray,$havingArray, $orderByArray, $limit, $offset,$joinCondition);
+        return $rows;
+    }
 }

@@ -4,66 +4,65 @@
 /** @var array $filters */
 /** @var array $categoryFilter */
 /** @var array $arrayFilterValues */
+
 /** @var array $filterSelected */
 
 use \models\User;
 
 ?>
 <div class="wrapper d-flex flex-row">
-    <?php if (!User::isUserAdmin()&&!empty($filters)): ?>
-        <div class="filter-list" style="width: 212px; height: 500px; border-right: 1px solid black; padding-right: 10px">
-            <form action="" method="get" enctype="multipart/form-data" name="filters">
-<!--                <div>-->
-<!--                    <label for="customRange1" class="form-label">Example range</label>-->
-<!--                    <input type="range" class="form-range" id="customRange1" max="" min="">-->
-<!--                </div>-->
-                <?php foreach ($filters as $key => $value): ?>
-                    <div class="mt-3" style="font-size: 14px"><?= $filters[$key]['name'] ?></div>
+    <?php if (!User::isUserAdmin() && !empty($filters)): ?>
+        <div class="d-flex flex-column">
+            <div class="filter-list"
+                 style="width: 212px; height: 400px; border-right: 1px solid black; padding-right: 10px; overflow-y: scroll">
+                <form action="" method="get" enctype="multipart/form-data" name="filters" id="filters">
+                    <?php foreach ($filters as $key => $value): ?>
+                        <div class="mt-3 fw-bolder text-dark" style="font-size: 14px"><?= $filters[$key]['name'] ?></div>
                         <?php foreach ($arrayFilterValues as $k => $val): ?>
                             <?php if ($filters[$key]['table_name'] == $k): ?>
                                 <?php foreach ($arrayFilterValues[$k] as $id => $v): ?>
-                                <div class="form-check">
-
-                                    <input class="form-check-input filter-check" type="checkbox" value="<?= $v['id'] ?>" id=" <?= $v['value'] ?>" name="<?=$filters[$key]['table_name'].'[]'?>"
-                                        <?php if ($filterSelected!=null): ?>
-                                            <?php foreach ($filterSelected as $key1=>$value1):?>
-                                                <?php if ($filters[$key]['table_name']==$key1): ?>
-                                                    <?php foreach ($value1 as $key2=>$value2):?>
-                                                        <?php if ($value2==$v['id']): ?>
-                                                            <?="checked"?>
-                                                        <?php endif;?>
-                                                    <?php endforeach; ?>
-                                                <?php endif; ?>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    >
-                                    <label class="form-check-label" for=" <?= $v['value'] ?>" style="font-size: 12px">
-                                        <?= $v['value'] ?>
-                                    </label>
-                                </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input filter-check" type="checkbox"
+                                               value="<?= $v['id'] ?>" id=" <?= $v['value'] ?>"
+                                               name="<?= $filters[$key]['table_name'] . '[]' ?>"
+                                            <?php if ($filterSelected != null): ?>
+                                                <?php foreach ($filterSelected as $key1 => $value1): ?>
+                                                    <?php if ($filters[$key]['table_name'] == $key1): ?>
+                                                        <?php foreach ($value1 as $key2 => $value2): ?>
+                                                            <?php if ($value2 == $v['id']): ?>
+                                                                <?= "checked" ?>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        >
+                                        <label class="form-check-label" for=" <?= $v['value'] ?>"
+                                               style="font-size: 12px">
+                                            <?= $v['value'] ?>
+                                        </label>
+                                    </div>
                                 <?php endforeach; ?>
                             <? endif; ?>
                         <?php endforeach; ?>
-                <?php endforeach; ?>
-                <div class="text-center">
-                    <input type="submit" class="btn btn-warning mt-3" value="Знайти" name="submitFilter">
-                   <input type="reset" class="btn btn-danger mt-3 btn-reset-filters" value="Скинути" name="resetFilter">
-                </div>
-            </form>
+                    <?php endforeach; ?>
+
+                </form>
+            </div>
+            <div class="text-center" style="margin-left: -25px">
+                <input type="submit" class="btn btn-warning mt-3" value="Знайти" name="submitFilter" form="filters">
+                <input type="reset" class="btn btn-danger mt-3 btn-reset-filters" value="Скинути" name="resetFilter">
+            </div>
         </div>
     <?php endif; ?>
-
-
     <div class="row row-cols-1 g-3 mx-2 mt-2 product-list w-100">
-
-
         <?php foreach ($products as $product): ?>
             <?php if (User::isUserAdmin() || (!User::isUserAdmin() && $product['visibility'] == 0)): ?>
                 <div class="col col-sm-6 col-md-4 col-lg-3
     <?php if (User::isUserAdmin()): ?>
         <?= "col-xl-3 " ?>
     <?php else: ?>
-        <?= "col-xl-2 " ?>
+        <?= "col-xl-3" ?>
     <?php endif; ?>
 ">
                     <div class="card rounded-5">
